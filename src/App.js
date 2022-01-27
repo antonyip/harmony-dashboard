@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -7,69 +7,73 @@ import {
   Link
 } from "react-router-dom";
 import {
-  Offcanvas,
-  OffcanvasHeader,
-  OffcanvasBody,
-  Button
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  //UncontrolledDropdown,
+  //DropdownToggle,
+  //DropdownMenu,
+  //DropdownItem
 } from "reactstrap"
 
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
+import Summary from "./pages/Summary";
+import DefiKingdoms from "./pages/DefiKingdoms";
+import Tranquil from "./pages/Tranquil";
 
 function App() {
   
-  
+  const [isOpen, setIsOpen] = useState(true);
   
   return (
     <>
-    <Button
-      color="primary"
-      onClick={function noRefCheck(){}}
-    >
-      Open
-    </Button>
-    <Offcanvas toggle={function noRefCheck(){}}>
-      <OffcanvasHeader toggle={function noRefCheck(){}}>
-        Offcanvas
-      </OffcanvasHeader>
-      <OffcanvasBody>
-        <strong>
-          This is the Offcanvas body.
-        </strong>
-      </OffcanvasBody>
-    </Offcanvas>
+    <Navbar color="light" light expand="md">
+          <NavbarBrand href="/">MetricsDAO - Harmony Dashboard</NavbarBrand>
+          <NavbarToggler onClick={() => isOpen ? setIsOpen(false) : setIsOpen(true) } />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink href="/">Summary</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/dfk">Defi-Kingdoms</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/tranquil">Tranquil Finance</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="https://metricsdao.xyz">MetricsDAO</NavLink>
+              </NavItem>
+              {/* <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Options
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    Option 1
+                  </DropdownItem>
+                  <DropdownItem>
+                    Option 2
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    Reset
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown> */}
+            </Nav>
+          </Collapse>
+        </Navbar>
   
     <BrowserRouter>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>
-
         <Routes>
-          <Route path="/about" element={<About />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/dfk" element={<DefiKingdoms />} />
+          <Route path="/tranquil" element={<Tranquil />} />
+          <Route path="/" element={<Summary />} />
         </Routes>
-      </div>
     </BrowserRouter>
     </>
   );
