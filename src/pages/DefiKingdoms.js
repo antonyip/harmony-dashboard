@@ -420,18 +420,6 @@ function BankWatch() {
     ],
   };
 
-  const chartDataJewel = {
-    labels: xAxisData.reverse(),
-    datasets: [
-      {
-        label: "Total Jewel Staked",
-        data: yAxisDataBalance.reverse(),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      }
-    ],
-  };
-
 /*
 // balance = jewels, total supply = xjewels
 {"ratio":1.6543417801800981,"balance":15549588.234933916,"timestamp":1641686524792,"totalSupply":9399259.82721728}
@@ -451,7 +439,7 @@ function PoolWatch() {
   const [fetchData, setFetchData] = useState("");
 
   useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_new_profiles").then( 
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_one_lp").then( 
       res => {
       setFetchData(res);
     }).catch( err => {
@@ -465,13 +453,15 @@ function PoolWatch() {
 
   var limit = 7;
   var xAxisData = []
-  var yAxisData= []
+  var yAxisData1= []
+  var yAxisData2= []
 
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
       xAxisData.push(element.DAY_DATE.substr(0,10))
-      yAxisData.push(element.DAILY_NEW_PROFILES);
+      yAxisData1.push(element.JEWEL);
+      yAxisData2.push(element.WONE);
       limit -= 1;
     }
   })
@@ -493,7 +483,25 @@ function PoolWatch() {
       },
       title: {
         display: false,
-        text: 'Daily New Profiles',
+        text: 'JEWEL-ONE LP',
+      },
+      scales: {
+        y1: {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          grid: {
+            drawOnChartArea: false,
+          },
+        },
+        y2: {
+          type: 'linear',
+          display: true,
+          position: 'right',
+          grid: {
+            drawOnChartArea: false,
+          },
+        },
       },
     },
   };
@@ -502,8 +510,34 @@ function PoolWatch() {
     labels: xAxisData,
     datasets: [
       {
-        label: "Daily New Profiles",
-        data: yAxisData,
+        label: "Jewel",
+        data: yAxisData1,
+        borderColor: 'rgb(0, 99, 0)',
+        backgroundColor: 'rgba(0, 99, 0, 0.5)',
+        yAxisID: 'y1',
+      },
+      {
+        label: "One",
+        data: yAxisData2,
+        borderColor: 'rgb(0, 0, 132)',
+        backgroundColor: 'rgba(0, 0, 132, 0.5)',
+        yAxisID: 'y2',
+      }
+    ],
+  };
+
+  const chartData2 = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: "Jewel-tmp",
+        data: yAxisData1,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: "One-tmp",
+        data: yAxisData2,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       }
@@ -514,8 +548,8 @@ function PoolWatch() {
   return (
     <Row>
       <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
+      <Col xs='4'><Line data={chartData2} options={chartOptions}></Line></Col>
+      <Col xs='4'><Line data={chartData2} options={chartOptions}></Line></Col>
     </Row>
   )
 }
