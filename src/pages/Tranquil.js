@@ -5,7 +5,7 @@ import {
 function Tranquil() {
   return (
     <div>
-      <Card>hello world - Tranquil</Card>
+      <Card>[WIP] Tranquil Finance</Card>
     </div>
   );
 }

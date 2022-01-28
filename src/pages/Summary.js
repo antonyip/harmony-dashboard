@@ -45,7 +45,7 @@ function DailyTransactions() {
   
   var xAxisData = []
   var yAxisData = []
-  fetchData.data.map( item => {
+  fetchData.data.forEach( item => {
     xAxisData.push(item.METRIC_DATE.substr(0,10))
     yAxisData.push(item.TXS_COUNT)
   });
@@ -118,7 +118,7 @@ function DailyBlocks() {
   
   var xAxisData = []
   var yAxisData = []
-  fetchData.data.map( item => {
+  fetchData.data.forEach( item => {
     xAxisData.push(item.METRIC_DATE.substr(0,10))
     yAxisData.push(item.DAILY_BLOCKS)
   });
@@ -191,7 +191,7 @@ function DailyGas() {
   
   var xAxisData = []
   var yAxisData = []
-  fetchData.data.map( item => {
+  fetchData.data.forEach( item => {
     xAxisData.push(item.METRIC_DATE.substr(0,10))
     yAxisData.push(item.GAS_COUNT)
   });
@@ -264,7 +264,7 @@ function DailyHRC20() {
   
   var xAxisData = []
   var yAxisData = []
-  fetchData.data.map( item => {
+  fetchData.data.forEach( item => {
     xAxisData.push(item.METRIC_DATE.substr(0,10))
     yAxisData.push(item.TRANSFERS_COUNT)
   });
