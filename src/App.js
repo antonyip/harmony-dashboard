@@ -14,6 +14,7 @@ import {
   Nav,
   NavItem,
   NavLink,
+  CardImg
   //UncontrolledDropdown,
   //DropdownToggle,
   //DropdownMenu,
@@ -23,6 +24,7 @@ import {
 import Summary from "./pages/Summary";
 import DefiKingdoms from "./pages/DefiKingdoms";
 import Tranquil from "./pages/Tranquil";
+import miniIcon from "./img/logo192.png"
 
 function App() {
   
@@ -31,7 +33,7 @@ function App() {
   return (
     <>
     <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">MetricsDAO - Harmony Dashboard</NavbarBrand>
+          <NavbarBrand href="/"><img src={miniIcon} height={32}></img> MetricsDAO - Harmony Dashboard</NavbarBrand>
           <NavbarToggler onClick={() => isOpen ? setIsOpen(false) : setIsOpen(true) } />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>

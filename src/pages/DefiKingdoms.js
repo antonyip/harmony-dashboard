@@ -17,8 +17,9 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  BarElement,
 } from 'chart.js';
-import { Line, Pie } from 'react-chartjs-2';
+import { Bar, Line, Pie } from 'react-chartjs-2';
 
 function PriceCol(props) {
 
@@ -553,6 +554,7 @@ function HeroWatch() {
     LinearScale,
     PointElement,
     LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend
@@ -671,6 +673,7 @@ function GameWatch() {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
   const [fetchDataHero, setFetchDataHero] = useState("");
+  const [fetchDataQuest, setFetchDataQuest] = useState("");
 
   useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_new_profiles").then( 
@@ -692,10 +695,33 @@ function GameWatch() {
     })
   } ,[]);
 
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_quest_completed").then( 
+      res => {
+        setFetchDataQuest(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+  
+
   if (error) return <CardBody>Error Loading...</CardBody>;
   if (fetchData === "") return <CardBody>Loading...</CardBody>;
   if (fetchDataHero === "") return <CardBody>Loading...</CardBody>;
+  if (fetchDataQuest === "") return <CardBody>Loading...</CardBody>;
   
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
   var limit = 7;
   var xAxisData = []
   var yAxisData= []
@@ -720,15 +746,19 @@ function GameWatch() {
       limit -= 1;
     }
   })
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+
+  var xAxisData3 = []
+  var yAxisData3= []
+  limit = 7
+  fetchDataQuest.data.forEach( element => {
+    if (limit > 0)
+    {
+      xAxisData3.push(element.DAY_DATE.substr(0,10))
+      yAxisData3.push(element.QUEST_COMPLETED);
+      limit -= 1;
+    }
+  })
+  
 
   const chartOptions = {
     responsive: true,
@@ -780,12 +810,37 @@ function GameWatch() {
     ],
   };
 
+  const chartOptions3 = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily Quests Completed',
+      },
+    },
+  };
+
+  const chartData3 = {
+    labels: xAxisData3,
+    datasets: [
+      {
+        label: "Daily Quests Completed",
+        data: yAxisData3,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+
   
   return (
     <Row>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
-      <Col xs='4'><Line data={chartData2} options={chartOptions2}></Line></Col>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
+      <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
+      <Col xs='4'><Bar data={chartData2} options={chartOptions2}></Bar></Col>
+      <Col xs='4'><Bar data={chartData3} options={chartOptions3}></Bar></Col>
     </Row>
   )
 }
