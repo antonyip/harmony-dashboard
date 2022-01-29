@@ -21,6 +21,63 @@ import {
 } from 'chart.js';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 
+function generateLPChartOptions(title)
+{
+  return {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: title,
+      },
+      scales: {
+        y1: {
+          type: 'linear',
+          display: false,
+          position: 'left',
+          grid: {
+            drawOnChartArea: false,
+          },
+        },
+        y2: {
+          type: 'linear',
+          display: false,
+          position: 'right',
+          grid: {
+            drawOnChartArea: false,
+          },
+        },
+      },
+    },
+  };
+}
+
+function generateLPChartData(options)
+{
+  return {
+    labels: options.xAxis,
+    datasets: [
+      {
+        label: options.y1Name,
+        data: options.data1,
+        borderColor: 'rgb(0, 99, 0)',
+        backgroundColor: 'rgba(0, 99, 0, 0.5)',
+        yAxisID: 'y1',
+      },
+      {
+        label: options.y2Name,
+        data: options.data2,
+        borderColor: 'rgb(0, 0, 132)',
+        backgroundColor: 'rgba(0, 0, 132, 0.5)',
+        yAxisID: 'y2',
+      }
+    ],
+  };
+}
+
 function PriceCol(props) {
 
   var xAxisData = []
@@ -34,12 +91,12 @@ function PriceCol(props) {
         xAxisData.push(element.JEWEL_PRICE)
         yAxisData.push(element.MDDATE.substr(0,10))
       }
-      if (props.type === 'GaiaTear')
+      if (props.type === 'GaiaTears')
       {
         xAxisData.push(element.GAIA_PRICE)
         yAxisData.push(element.MDDATE.substr(0,10))
       }
-      if (props.type === 'ShvaRune')
+      if (props.type === 'ShvasRune')
       {
         xAxisData.push(element.RUNE_PRICE)
         yAxisData.push(element.MDDATE.substr(0,10))
@@ -116,8 +173,8 @@ function PriceWatch() {
   return (
     <Row>
       <PriceCol type='Jewel' data={fetchData}></PriceCol>
-      <PriceCol type='GaiaTear' data={fetchData}></PriceCol>
-      <PriceCol type='ShvaRune' data={fetchData}></PriceCol>
+      <PriceCol type='GaiaTears' data={fetchData}></PriceCol>
+      <PriceCol type='ShvasRune' data={fetchData}></PriceCol>
       <PriceCol type='Gold' data={fetchData}></PriceCol>
     </Row>
   )
@@ -127,6 +184,7 @@ function BankPie() {
 
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
+  const [totalJewelSupply, setTotalJewelSupply] = useState(500000000);
   const [unlockedJewelSupply, setUnlockedJewelSupply] = useState(100);
   const [lockedJewelSupply, setLockedJewelSupply] = useState(100);
   const [lpJewelSupply, setLpJewelSupply] = useState(100);
@@ -213,12 +271,13 @@ function BankPie() {
   var jLP = lpJewelSupply;
   var jLocked = lockedJewelSupply
   var jWallet = unlockedJewelSupply - jDevTeam - jBank - jLP - jQuestRewards
+  var jUnallocated = totalJewelSupply - jWallet - jLocked - jDevTeam - jBank - jLP - jQuestRewards
   const pieData = {
-    labels: ['DevTeam', 'Bank', 'LP', 'Players', 'QuestRewards', 'Locked'],
+    labels: ['DevTeam', 'Bank', 'LP', 'Players', 'QuestRewards', 'Locked', 'Unallocated'],
     datasets: [
       {
         label: '# of Votes',
-        data: [jDevTeam, jBank, jLP, jWallet, jQuestRewards, jLocked],
+        data: [jDevTeam, jBank, jLP, jWallet, jQuestRewards, jLocked, jUnallocated],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -226,6 +285,7 @@ function BankPie() {
           'rgba(75, 192, 192, 0.2)',
           'rgba(153, 102, 255, 0.2)',
           'rgba(255, 159, 64, 0.2)',
+          'rgba(155, 155, 155, 0.2)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -234,6 +294,7 @@ function BankPie() {
           'rgba(75, 192, 192, 1)',
           'rgba(153, 102, 255, 1)',
           'rgba(255, 159, 64, 1)',
+          'rgba(155, 155, 155, 1)',
         ],
         borderWidth: 1,
       },
@@ -409,7 +470,7 @@ function BankWatch() {
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const chartDataRatio = {
-    labels: xAxisData.reverse(),
+    labels: xAxisData,
     datasets: [
       {
         label: "Jewel:xJewel Ratio",
@@ -437,6 +498,11 @@ function BankWatch() {
 function PoolWatch() {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
+  const [fetchData2, setFetchData2] = useState("");
+  const [fetchData3, setFetchData3] = useState("");
+  const [fetchData4, setFetchData4] = useState("");
+  const [fetchData5, setFetchData5] = useState("");
+  const [fetchData6, setFetchData6] = useState("");
 
   useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_one_lp").then( 
@@ -448,23 +514,156 @@ function PoolWatch() {
     })
   } ,[]);
 
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ust_lp").then( 
+      res => {
+      setFetchData2(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_wmatic_lp").then( 
+      res => {
+      setFetchData3(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_bscbnb_lp").then( 
+      res => {
+      setFetchData4(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_busd_lp").then( 
+      res => {
+      setFetchData5(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_avax_lp").then( 
+      res => {
+      setFetchData6(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+
   if (error) return <CardBody>Error Loading...</CardBody>;
   if (fetchData === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData2 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData3 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData4 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData5 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData6 === "") return <CardBody>Loading...</CardBody>;
 
   var limit = 7;
-  var xAxisData = []
-  var yAxisData1= []
-  var yAxisData2= []
+  var x1AxisData = []
+  var y1AxisData1= []
+  var y1AxisData2= []
 
+  var x2AxisData = []
+  var y2AxisData1= []
+  var y2AxisData2= []
+
+  var x3AxisData = []
+  var y3AxisData1= []
+  var y3AxisData2= []
+
+  var x4AxisData = []
+  var y4AxisData1= []
+  var y4AxisData2= []
+
+  var x5AxisData = []
+  var y5AxisData1= []
+  var y5AxisData2= []
+
+  var x6AxisData = []
+  var y6AxisData1= []
+  var y6AxisData2= []
+
+  limit = 7;
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
-      xAxisData.push(element.DAY_DATE.substr(0,10))
-      yAxisData1.push(element.JEWEL);
-      yAxisData2.push(element.WONE);
+      x1AxisData.push(element.DAY_DATE.substr(0,10))
+      y1AxisData1.push(element.JEWEL);
+      y1AxisData2.push(element.WONE);
       limit -= 1;
     }
   })
+
+  limit = 7;
+  fetchData2.data.forEach( element => {
+    if (limit > 0)
+    {
+      x2AxisData.push(element.DAY_DATE.substr(0,10))
+      y2AxisData1.push(element.JEWEL);
+      y2AxisData2.push(element.UST);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData3.data.forEach( element => {
+    if (limit > 0)
+    {
+      x3AxisData.push(element.DAY_DATE.substr(0,10))
+      y3AxisData1.push(element.JEWEL);
+      y3AxisData2.push(element.WMATIC);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData4.data.forEach( element => {
+    if (limit > 0)
+    {
+      x4AxisData.push(element.DAY_DATE.substr(0,10))
+      y4AxisData1.push(element.JEWEL);
+      y4AxisData2.push(element.BNB);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData5.data.forEach( element => {
+    if (limit > 0)
+    {
+      x5AxisData.push(element.DAY_DATE.substr(0,10))
+      y5AxisData1.push(element.JEWEL);
+      y5AxisData2.push(element.BUSD);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData6.data.forEach( element => {
+    if (limit > 0)
+    {
+      x6AxisData.push(element.DAY_DATE.substr(0,10))
+      y6AxisData1.push(element.JEWEL);
+      y6AxisData2.push(element.AVAX);
+      limit -= 1;
+    }
+  })
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -475,81 +674,235 @@ function PoolWatch() {
     Legend
   );
 
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: false,
-        text: 'JEWEL-ONE LP',
-      },
-      scales: {
-        y1: {
-          type: 'linear',
-          display: true,
-          position: 'left',
-          grid: {
-            drawOnChartArea: false,
-          },
-        },
-        y2: {
-          type: 'linear',
-          display: true,
-          position: 'right',
-          grid: {
-            drawOnChartArea: false,
-          },
-        },
-      },
-    },
-  };
+  const chartOptions = generateLPChartOptions("JEWEL-ONE LP")
+  const chartOptions2 = generateLPChartOptions("JEWEL-UST LP")
+  const chartOptions3 = generateLPChartOptions("JEWEL-MATIC LP")
+  const chartOptions4 = generateLPChartOptions("JEWEL-BNB LP")
+  const chartOptions5 = generateLPChartOptions("JEWEL-BUSD LP")
+  const chartOptions6 = generateLPChartOptions("JEWEL-AVAX LP")
 
-  const chartData = {
-    labels: xAxisData,
-    datasets: [
-      {
-        label: "Jewel",
-        data: yAxisData1,
-        borderColor: 'rgb(0, 99, 0)',
-        backgroundColor: 'rgba(0, 99, 0, 0.5)',
-        yAxisID: 'y1',
-      },
-      {
-        label: "One",
-        data: yAxisData2,
-        borderColor: 'rgb(0, 0, 132)',
-        backgroundColor: 'rgba(0, 0, 132, 0.5)',
-        yAxisID: 'y2',
-      }
-    ],
-  };
-
-  const chartData2 = {
-    labels: xAxisData,
-    datasets: [
-      {
-        label: "Jewel-tmp",
-        data: yAxisData1,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: "One-tmp",
-        data: yAxisData2,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      }
-    ],
-  };
+  const chartData = generateLPChartData({xAxis: x1AxisData, data1: y1AxisData1, data2: y1AxisData2, y1Name: "JEWEL", y2Name:"ONE"})
+  const chartData2 = generateLPChartData({xAxis: x2AxisData, data1: y2AxisData1, data2: y2AxisData2, y1Name: "JEWEL", y2Name:"UST"})
+  const chartData3 = generateLPChartData({xAxis: x3AxisData, data1: y3AxisData1, data2: y3AxisData2, y1Name: "JEWEL", y2Name:"MATIC"})
+  const chartData4 = generateLPChartData({xAxis: x4AxisData, data1: y4AxisData1, data2: y4AxisData2, y1Name: "JEWEL", y2Name:"BNB"})
+  const chartData5 = generateLPChartData({xAxis: x5AxisData, data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"BUSD"})
+  const chartData6 = generateLPChartData({xAxis: x6AxisData, data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"AVAX"})
 
   
   return (
     <Row>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
-      <Col xs='4'><Line data={chartData2} options={chartOptions}></Line></Col>
-      <Col xs='4'><Line data={chartData2} options={chartOptions}></Line></Col>
+      <Col xs='2'><Line data={chartData} options={chartOptions}></Line></Col>
+      <Col xs='2'><Line data={chartData2} options={chartOptions2}></Line></Col>
+      <Col xs='2'><Line data={chartData3} options={chartOptions3}></Line></Col>
+      <Col xs='2'><Line data={chartData4} options={chartOptions4}></Line></Col>
+      <Col xs='2'><Line data={chartData5} options={chartOptions5}></Line></Col>
+      <Col xs='2'><Line data={chartData6} options={chartOptions6}></Line></Col>
+    </Row>
+  )
+}
+
+function PoolWatch2() {
+  const [error, setError] = useState(false);
+  const [fetchData, setFetchData] = useState("");
+  const [fetchData2, setFetchData2] = useState("");
+  const [fetchData3, setFetchData3] = useState("");
+  const [fetchData4, setFetchData4] = useState("");
+  const [fetchData5, setFetchData5] = useState("");
+  const [fetchData6, setFetchData6] = useState("");
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ftm_lp").then( 
+      res => {
+      setFetchData(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1usdc_lp").then( 
+      res => {
+      setFetchData2(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1eth_lp").then( 
+      res => {
+      setFetchData3(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1btc_lp").then( 
+      res => {
+      setFetchData4(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_busd_lp").then( 
+      res => {
+      setFetchData5(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_avax_lp").then( 
+      res => {
+      setFetchData6(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+
+  if (error) return <CardBody>Error Loading...</CardBody>;
+  if (fetchData === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData2 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData3 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData4 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData5 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData6 === "") return <CardBody>Loading...</CardBody>;
+
+  var limit = 7;
+  var x1AxisData = []
+  var y1AxisData1= []
+  var y1AxisData2= []
+
+  var x2AxisData = []
+  var y2AxisData1= []
+  var y2AxisData2= []
+
+  var x3AxisData = []
+  var y3AxisData1= []
+  var y3AxisData2= []
+
+  var x4AxisData = []
+  var y4AxisData1= []
+  var y4AxisData2= []
+
+  var x5AxisData = []
+  var y5AxisData1= []
+  var y5AxisData2= []
+
+  var x6AxisData = []
+  var y6AxisData1= []
+  var y6AxisData2= []
+
+  limit = 7;
+  fetchData.data.forEach( element => {
+    if (limit > 0)
+    {
+      x1AxisData.push(element.DAY_DATE.substr(0,10))
+      y1AxisData1.push(element.JEWEL);
+      y1AxisData2.push(element.FTM);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData2.data.forEach( element => {
+    if (limit > 0)
+    {
+      x2AxisData.push(element.DAY_DATE.substr(0,10))
+      y2AxisData1.push(element.JEWEL);
+      y2AxisData2.push(element.USDC);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData3.data.forEach( element => {
+    if (limit > 0)
+    {
+      x3AxisData.push(element.DAY_DATE.substr(0,10))
+      y3AxisData1.push(element.JEWEL);
+      y3AxisData2.push(element.ETH);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData4.data.forEach( element => {
+    if (limit > 0)
+    {
+      x4AxisData.push(element.DAY_DATE.substr(0,10))
+      y4AxisData1.push(element.JEWEL);
+      y4AxisData2.push(element.BTC);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData5.data.forEach( element => {
+    if (limit > 0)
+    {
+      x5AxisData.push(element.DAY_DATE.substr(0,10))
+      y5AxisData1.push(element.JEWEL);
+      y5AxisData2.push(element.BUSD);
+      limit -= 1;
+    }
+  })
+
+  limit = 7;
+  fetchData6.data.forEach( element => {
+    if (limit > 0)
+    {
+      x6AxisData.push(element.DAY_DATE.substr(0,10))
+      y6AxisData1.push(element.JEWEL);
+      y6AxisData2.push(element.AVAX);
+      limit -= 1;
+    }
+  })
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const chartOptions = generateLPChartOptions("JEWEL-FTM LP")
+  const chartOptions2 = generateLPChartOptions("JEWEL-USDC LP")
+  const chartOptions3 = generateLPChartOptions("JEWEL-ETH LP")
+  const chartOptions4 = generateLPChartOptions("JEWEL-BTC LP")
+  const chartOptions5 = generateLPChartOptions("JEWEL-LUNA LP")
+  const chartOptions6 = generateLPChartOptions("unused")
+
+  const chartData = generateLPChartData({xAxis: x1AxisData, data1: y1AxisData1, data2: y1AxisData2, y1Name: "JEWEL", y2Name:"FTM"})
+  const chartData2 = generateLPChartData({xAxis: x2AxisData, data1: y2AxisData1, data2: y2AxisData2, y1Name: "JEWEL", y2Name:"USDC"})
+  const chartData3 = generateLPChartData({xAxis: x3AxisData, data1: y3AxisData1, data2: y3AxisData2, y1Name: "JEWEL", y2Name:"ETH"})
+  const chartData4 = generateLPChartData({xAxis: x4AxisData, data1: y4AxisData1, data2: y4AxisData2, y1Name: "JEWEL", y2Name:"BTC"})
+  const chartData5 = generateLPChartData({xAxis: x5AxisData, data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"LUNA"})
+  const chartData6 = generateLPChartData({xAxis: x6AxisData, data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"unused"})
+
+  
+  return (
+    <Row>
+      <Col xs='2'><Line data={chartData} options={chartOptions}></Line></Col>
+      <Col xs='2'><Line data={chartData2} options={chartOptions2}></Line></Col>
+      <Col xs='2'><Line data={chartData3} options={chartOptions3}></Line></Col>
+      <Col xs='2'><Line data={chartData4} options={chartOptions4}></Line></Col>
+      <Col xs='2'><Line data={chartData5} options={chartOptions5}></Line></Col>
+      <Col xs='2'><Line data={chartData6} options={chartOptions6}></Line></Col>
     </Row>
   )
 }
@@ -894,6 +1247,7 @@ function DefiKingdoms() {
       <Card>
         <CardHeader>DefiKingdoms - Liquidity Pools</CardHeader>
         <PoolWatch></PoolWatch>
+        <PoolWatch2></PoolWatch2>
       </Card>
       <Card>
         <CardHeader>DefiKingdoms - Game Stats</CardHeader>
