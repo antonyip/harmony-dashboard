@@ -5,7 +5,8 @@ import {
     CardBody,
     CardHeader,
     Row,
-    Col
+    Col,
+    Alert,
 } from "reactstrap";
 import {
   Chart as ChartJS,
@@ -19,7 +20,7 @@ import {
   ArcElement,
   BarElement,
 } from 'chart.js';
-import { Bar, Line, Pie, Chart } from 'react-chartjs-2';
+import { Bar, Line, Pie } from 'react-chartjs-2';
 
 function generateLPChartOptions(title)
 {
@@ -194,7 +195,7 @@ function BankPie() {
 
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
-  const [totalJewelSupply, setTotalJewelSupply] = useState(500000000);
+  var totalJewelSupply = 500000000;
   const [unlockedJewelSupply, setUnlockedJewelSupply] = useState(100);
   const [lockedJewelSupply, setLockedJewelSupply] = useState(100);
   const [lpJewelSupply, setLpJewelSupply] = useState(100);
@@ -472,7 +473,7 @@ function BankWatch() {
         label: "Total Jewel Staked",
         data: yAxisDataBalance.reverse(),
         borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: 'rgba(255, 99, 132, 0.8)',
       }
     ],
   };
@@ -485,8 +486,8 @@ function BankWatch() {
       {
         label: "Jewel:xJewel Ratio",
         data: yAxisDataRatio.reverse(),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(25, 127, 132)',
+        backgroundColor: 'rgba(25, 99, 127, 0.5)',
       }
     ],
   };
@@ -923,6 +924,7 @@ function PoolWatch2() {
 function HeroWatch() {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
+  const [fetchData2, setFetchData2] = useState("");
 
   useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_hero_sales").then( 
@@ -934,20 +936,47 @@ function HeroWatch() {
     })
   } ,[]);
 
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_hero_levels").then( 
+      res => {
+      setFetchData2(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
   if (error) return <CardBody>Error Loading...</CardBody>;
   if (fetchData === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData2 === "") return <CardBody>Loading...</CardBody>;
 
   var limit = 7;
   var xAxisData = []
   var yAxisData = []
   var yAxisData2 = []
 
+  var x2AxisData = []
+  var y2AxisData = []
+  var y2AxisData2 = []
+
+  limit = 7
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
       xAxisData.push(element.DAY_DATE.substr(0,10))
       yAxisData.push(element.HERO_SALES);
       yAxisData2.push(element.HERO_SALES_JEWEL);
+      limit -= 1;
+    }
+  })
+  
+  limit = 7
+  fetchData2.data.forEach( element => {
+    if (limit > 0)
+    {
+      x2AxisData.push(element.DAY_DATE.substr(0,10))
+      y2AxisData.push(element.HERO_LEVEL);
+      y2AxisData2.push(element.HERO_LEVEL_JEWEL);
       limit -= 1;
     }
   })
@@ -995,7 +1024,7 @@ function HeroWatch() {
     datasets: [
       {
         type: 'line',
-        label: "Daily Hero Sales (Jewels)",
+        label: "Daily Hero Sales (Jewels Spent)",
         data: yAxisData2,
         borderColor: 'rgb(25, 99, 132)',
         backgroundColor: 'rgba(25, 99, 132, 0.5)',
@@ -1012,12 +1041,32 @@ function HeroWatch() {
     ],
   };
 
-
+  const chartData2 = {
+    labels: x2AxisData,
+    datasets: [
+      {
+        type: 'line',
+        label: "Daily Hero Level-ups (Jewels Spent)",
+        data: y2AxisData2,
+        borderColor: 'rgb(25, 99, 132)',
+        backgroundColor: 'rgba(25, 99, 132, 0.5)',
+        yAxisID: 'y2',
+      },
+      {
+        type: 'bar',
+        label: "Daily Hero Level-ups",
+        data: y2AxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        yAxisID: 'y1',
+      },
+    ],
+  };
   
   return (
     <Row>
-      <Col xs='4'><Bar type='bar' data={chartData} options={chartOptions}></Bar></Col>
       <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
+      <Col xs='4'><Bar data={chartData2} options={chartOptions}></Bar></Col>
       <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
     </Row>
   )
@@ -1207,8 +1256,8 @@ function GameWatch() {
       {
         label: "Daily New Profiles",
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(255, 50, 12)',
+        backgroundColor: 'rgba(255, 50, 12, 0.8)',
       }
     ],
   };
@@ -1232,8 +1281,8 @@ function GameWatch() {
       {
         label: "Daily Hero Summon Count",
         data: yAxisData2,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(55, 179, 52)',
+        backgroundColor: 'rgba(55, 179, 52, 0.8)',
       }
     ],
   };
@@ -1257,8 +1306,8 @@ function GameWatch() {
       {
         label: "Daily Quests Completed",
         data: yAxisData3,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(25, 19, 232)',
+        backgroundColor: 'rgba(25, 19, 232, 0.8)',
       }
     ],
   };
@@ -1277,12 +1326,15 @@ function GameWatch() {
 function DefiKingdoms() {
   return (
     <div>
+      <Alert color="danger">
+        Data ingestion has some issues... so the "Game Stats" aren't accurate..
+      </Alert>
       <Card>
         <CardHeader>DefiKingdoms - Currency Prices</CardHeader>
         <PriceWatch></PriceWatch> 
       </Card>
       <Card>
-        <CardHeader>DefiKingdoms - Staked Jewel</CardHeader>
+        <CardHeader>DefiKingdoms - Jewels</CardHeader>
         <BankWatch></BankWatch>
       </Card>
       <Card>
@@ -1293,7 +1345,7 @@ function DefiKingdoms() {
       <Card>
         <CardHeader>DefiKingdoms - Game Stats</CardHeader>
         <GameWatch></GameWatch>
-        <QuestWatch></QuestWatch>
+        {/* <QuestWatch></QuestWatch> */}
         <HeroWatch></HeroWatch>
       </Card>
     </div>
