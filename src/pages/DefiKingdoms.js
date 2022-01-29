@@ -19,7 +19,7 @@ import {
   ArcElement,
   BarElement,
 } from 'chart.js';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Bar, Line, Pie, Chart } from 'react-chartjs-2';
 
 function generateLPChartOptions(title)
 {
@@ -701,12 +701,14 @@ function PoolWatch() {
   
   return (
     <Row>
-      <Col xs='2'><Line data={chartData} options={chartOptions}></Line></Col>
-      <Col xs='2'><Line data={chartData2} options={chartOptions2}></Line></Col>
-      <Col xs='2'><Line data={chartData3} options={chartOptions3}></Line></Col>
-      <Col xs='2'><Line data={chartData4} options={chartOptions4}></Line></Col>
-      <Col xs='2'><Line data={chartData5} options={chartOptions5}></Line></Col>
-      <Col xs='2'><Line data={chartData6} options={chartOptions6}></Line></Col>
+      <Row>
+        <Col xs='2'><Line data={chartData} options={chartOptions}></Line></Col>
+        <Col xs='2'><Line data={chartData2} options={chartOptions2}></Line></Col>
+        <Col xs='2'><Line data={chartData3} options={chartOptions3}></Line></Col>
+        <Col xs='2'><Line data={chartData4} options={chartOptions4}></Line></Col>
+        <Col xs='2'><Line data={chartData5} options={chartOptions5}></Line></Col>
+        <Col xs='2'><Line data={chartData6} options={chartOptions6}></Line></Col>
+      </Row>
     </Row>
   )
 }
@@ -923,7 +925,7 @@ function HeroWatch() {
   const [fetchData, setFetchData] = useState("");
 
   useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_new_profiles").then( 
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_hero_sales").then( 
       res => {
       setFetchData(res);
     }).catch( err => {
@@ -937,13 +939,15 @@ function HeroWatch() {
 
   var limit = 7;
   var xAxisData = []
-  var yAxisData= []
+  var yAxisData = []
+  var yAxisData2 = []
 
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
       xAxisData.push(element.DAY_DATE.substr(0,10))
-      yAxisData.push(element.DAILY_NEW_PROFILES);
+      yAxisData.push(element.HERO_SALES);
+      yAxisData2.push(element.HERO_SALES_JEWEL);
       limit -= 1;
     }
   })
@@ -966,7 +970,22 @@ function HeroWatch() {
       },
       title: {
         display: false,
-        text: 'Daily New Profiles',
+        text: 'Daily Hero Sales',
+      },
+    },
+    scales: {
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+      },
+      y2: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        grid: {
+          drawOnChartArea: false,
+        },
       },
     },
   };
@@ -975,20 +994,31 @@ function HeroWatch() {
     labels: xAxisData,
     datasets: [
       {
-        label: "Daily New Profiles",
+        type: 'line',
+        label: "Daily Hero Sales (Jewels)",
+        data: yAxisData2,
+        borderColor: 'rgb(25, 99, 132)',
+        backgroundColor: 'rgba(25, 99, 132, 0.5)',
+        yAxisID: 'y2',
+      },
+      {
+        type: 'bar',
+        label: "Daily Hero Sales",
         data: yAxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      }
+        yAxisID: 'y1',
+      },
     ],
   };
+
 
   
   return (
     <Row>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
+      <Col xs='4'><Bar type='bar' data={chartData} options={chartOptions}></Bar></Col>
+      <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
+      <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
     </Row>
   )
 }
