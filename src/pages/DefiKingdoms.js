@@ -24,7 +24,7 @@ import { Bar, Line, Pie } from 'react-chartjs-2';
 function generateLPChartOptions(title)
 {
   return {
-    responsive: true,
+    responsive: false,
     plugins: {
       legend: {
         position: 'top',
@@ -36,7 +36,7 @@ function generateLPChartOptions(title)
       scales: {
         y1: {
           type: 'linear',
-          display: false,
+          display: true,
           position: 'left',
           grid: {
             drawOnChartArea: false,
@@ -63,15 +63,15 @@ function generateLPChartData(options)
       {
         label: options.y1Name,
         data: options.data1,
-        borderColor: 'rgb(0, 99, 0)',
-        backgroundColor: 'rgba(0, 99, 0, 0.5)',
+        borderColor: 'rgba(0, 155, 0, 0.5)',
+        backgroundColor: 'rgba(0, 155, 0, 0.5)',
         yAxisID: 'y1',
       },
       {
         label: options.y2Name,
         data: options.data2,
-        borderColor: 'rgb(0, 0, 132)',
-        backgroundColor: 'rgba(0, 0, 132, 0.5)',
+        borderColor: options.y2Color,
+        backgroundColor: options.y2Color,
         yAxisID: 'y2',
       }
     ],
@@ -83,6 +83,8 @@ function PriceCol(props) {
   var xAxisData = []
   var yAxisData = []
   var limit = 7;
+  var chartBorderColor;
+  var chartBackgroundColor;
   props.data.data.forEach(element => {
     if (limit > 0)
     {
@@ -90,21 +92,29 @@ function PriceCol(props) {
       {
         xAxisData.push(element.JEWEL_PRICE)
         yAxisData.push(element.MDDATE.substr(0,10))
+        chartBorderColor = 'rgba(0, 155, 0, 0.5)';
+        chartBackgroundColor = 'rgba(0, 155, 0, 0.5)';
       }
       if (props.type === 'GaiaTears')
       {
         xAxisData.push(element.GAIA_PRICE)
         yAxisData.push(element.MDDATE.substr(0,10))
+        chartBorderColor = 'rgba(28, 111, 135, 0.5)';
+        chartBackgroundColor = 'rgba(28, 111, 135, 0.5)';
       }
       if (props.type === 'ShvasRune')
       {
         xAxisData.push(element.RUNE_PRICE)
         yAxisData.push(element.MDDATE.substr(0,10))
+        chartBorderColor = 'rgba(137, 145, 153, 0.8)';
+        chartBackgroundColor = 'rgba(137, 145, 153, 0.8)';
       }
       if (props.type === 'Gold')
       {
         xAxisData.push(element.GOLD_PRICE)
         yAxisData.push(element.MDDATE.substr(0,10))
+        chartBorderColor = 'rgba(205, 140, 0, 0.5)';
+        chartBackgroundColor = 'rgba(205, 140, 0, 0.5)';
       }
       limit -= 1;
     }
@@ -139,8 +149,8 @@ function PriceCol(props) {
       {
         label: props.type,
         data: xAxisData.reverse(),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: chartBorderColor,
+        backgroundColor: chartBackgroundColor,
       }
     ],
   };
@@ -681,12 +691,12 @@ function PoolWatch() {
   const chartOptions5 = generateLPChartOptions("JEWEL-BUSD LP")
   const chartOptions6 = generateLPChartOptions("JEWEL-AVAX LP")
 
-  const chartData = generateLPChartData({xAxis: x1AxisData, data1: y1AxisData1, data2: y1AxisData2, y1Name: "JEWEL", y2Name:"ONE"})
-  const chartData2 = generateLPChartData({xAxis: x2AxisData, data1: y2AxisData1, data2: y2AxisData2, y1Name: "JEWEL", y2Name:"UST"})
-  const chartData3 = generateLPChartData({xAxis: x3AxisData, data1: y3AxisData1, data2: y3AxisData2, y1Name: "JEWEL", y2Name:"MATIC"})
-  const chartData4 = generateLPChartData({xAxis: x4AxisData, data1: y4AxisData1, data2: y4AxisData2, y1Name: "JEWEL", y2Name:"BNB"})
-  const chartData5 = generateLPChartData({xAxis: x5AxisData, data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"BUSD"})
-  const chartData6 = generateLPChartData({xAxis: x6AxisData, data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"AVAX"})
+  const chartData = generateLPChartData({xAxis: x1AxisData,  y2Color:"rgba(10, 175, 225, 0.5)", data1: y1AxisData1, data2: y1AxisData2, y1Name: "JEWEL", y2Name:"ONE"})
+  const chartData2 = generateLPChartData({xAxis: x2AxisData, y2Color:"rgba(32, 50, 182, 0.5)",  data1: y2AxisData1, data2: y2AxisData2, y1Name: "JEWEL", y2Name:"UST"})
+  const chartData3 = generateLPChartData({xAxis: x3AxisData, y2Color:"rgba(130, 71, 240, 0.5)",  data1: y3AxisData1, data2: y3AxisData2, y1Name: "JEWEL", y2Name:"MATIC"})
+  const chartData4 = generateLPChartData({xAxis: x4AxisData, y2Color:"rgba(235, 180, 46, 0.5)",  data1: y4AxisData1, data2: y4AxisData2, y1Name: "JEWEL", y2Name:"BNB"})
+  const chartData5 = generateLPChartData({xAxis: x5AxisData, y2Color:"rgba(200, 150, 25, 0.5)",  data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"BUSD"})
+  const chartData6 = generateLPChartData({xAxis: x6AxisData, y2Color:"rgba(232, 60, 60, 0.5)",  data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"AVAX"})
 
   
   return (
@@ -751,7 +761,7 @@ function PoolWatch2() {
   } ,[]);
 
   useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_busd_lp").then( 
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_luna_lp").then( 
       res => {
       setFetchData5(res);
     }).catch( err => {
@@ -854,7 +864,7 @@ function PoolWatch2() {
     {
       x5AxisData.push(element.DAY_DATE.substr(0,10))
       y5AxisData1.push(element.JEWEL);
-      y5AxisData2.push(element.BUSD);
+      y5AxisData2.push(element.LUNA);
       limit -= 1;
     }
   })
@@ -887,22 +897,23 @@ function PoolWatch2() {
   const chartOptions5 = generateLPChartOptions("JEWEL-LUNA LP")
   const chartOptions6 = generateLPChartOptions("unused")
 
-  const chartData = generateLPChartData({xAxis: x1AxisData, data1: y1AxisData1, data2: y1AxisData2, y1Name: "JEWEL", y2Name:"FTM"})
-  const chartData2 = generateLPChartData({xAxis: x2AxisData, data1: y2AxisData1, data2: y2AxisData2, y1Name: "JEWEL", y2Name:"USDC"})
-  const chartData3 = generateLPChartData({xAxis: x3AxisData, data1: y3AxisData1, data2: y3AxisData2, y1Name: "JEWEL", y2Name:"ETH"})
-  const chartData4 = generateLPChartData({xAxis: x4AxisData, data1: y4AxisData1, data2: y4AxisData2, y1Name: "JEWEL", y2Name:"BTC"})
-  const chartData5 = generateLPChartData({xAxis: x5AxisData, data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"LUNA"})
-  const chartData6 = generateLPChartData({xAxis: x6AxisData, data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"unused"})
+  const chartData = generateLPChartData( {xAxis: x1AxisData, y2Color:"rgba(30, 100, 255, 0.5)", data1: y1AxisData1, data2: y1AxisData2, y1Name: "JEWEL", y2Name:"FTM"})
+  const chartData2 = generateLPChartData({xAxis: x2AxisData, y2Color:"rgba(40, 120, 200, 0.5)", data1: y2AxisData1, data2: y2AxisData2, y1Name: "JEWEL", y2Name:"USDC"})
+  const chartData3 = generateLPChartData({xAxis: x3AxisData, y2Color:"rgba(114, 114, 114, 0.5)", data1: y3AxisData1, data2: y3AxisData2, y1Name: "JEWEL", y2Name:"ETH"})
+  const chartData4 = generateLPChartData({xAxis: x4AxisData, y2Color:"rgba(240, 140, 25, 0.5)", data1: y4AxisData1, data2: y4AxisData2, y1Name: "JEWEL", y2Name:"BTC"})
+  const chartData5 = generateLPChartData({xAxis: x5AxisData, y2Color:"rgba(250, 210, 6, 0.5)", data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"LUNA"})
+  const chartData6 = generateLPChartData({xAxis: x6AxisData, y2Color:"rgba(0, 155, 0, 0.5)", data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"unused"})
 
-  
+  // pool2
   return (
     <Row>
+      <Col xs='1'></Col>
       <Col xs='2'><Line data={chartData} options={chartOptions}></Line></Col>
       <Col xs='2'><Line data={chartData2} options={chartOptions2}></Line></Col>
       <Col xs='2'><Line data={chartData3} options={chartOptions3}></Line></Col>
       <Col xs='2'><Line data={chartData4} options={chartOptions4}></Line></Col>
       <Col xs='2'><Line data={chartData5} options={chartOptions5}></Line></Col>
-      <Col xs='2'><Line data={chartData6} options={chartOptions6}></Line></Col>
+      {/* <Col xs='2'><Line data={chartData6} options={chartOptions6}></Line></Col> */}
     </Row>
   )
 }
