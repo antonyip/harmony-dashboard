@@ -1000,7 +1000,7 @@ function HeroWatch() {
     {
       x3AxisData.push(element.DAY_DATE.substr(0,10))
       y3AxisData.push(element.POTION_CRAFT_COUNT);
-      //y3AxisData2.push(element.HERO_LEVEL_JEWEL);
+      y3AxisData2.push(element.GOLD_USED);
       limit -= 1;
     }
   })
@@ -1090,14 +1090,14 @@ function HeroWatch() {
   const chartData3 = {
     labels: x3AxisData,
     datasets: [
-      // {
-      //   type: 'line',
-      //   label: "Daily Hero Level-ups (Jewels Spent)",
-      //   data: y2AxisData2,
-      //   borderColor: 'rgb(0, 155, 0)',
-      //   backgroundColor: 'rgba(0, 155, 0, 0.5)',
-      //   yAxisID: 'y2',
-      // },
+      {
+        type: 'line',
+        label: "Daily Potions Crafted (Gold Spent)",
+        data: y3AxisData2,
+        borderColor: 'rgba(205, 140, 0, 1)',
+        backgroundColor: 'rgba(205, 140, 0, 0.5)',
+        yAxisID: 'y2',
+      },
       {
         type: 'bar',
         label: "Daily Potions Crafted",
