@@ -83,7 +83,7 @@ function PriceCol(props) {
 
   var xAxisData = []
   var yAxisData = []
-  var limit = 7;
+  var limit = 8;
   var chartBorderColor;
   var chartBackgroundColor;
   props.data.data.forEach(element => {
@@ -427,7 +427,7 @@ function BankWatch() {
   if (error) return <CardBody>Error Loading</CardBody>;
   if (fetchData === "") return <CardBody>Loading...</CardBody>;
 
-  var limit = 7;
+  var limit = 8;
   var xAxisData = []
   var yAxisDataBalance = []
   var yAxisDataRatio = []
@@ -584,7 +584,7 @@ function PoolWatch() {
   if (fetchData5 === "") return <CardBody>Loading...</CardBody>;
   if (fetchData6 === "") return <CardBody>Loading...</CardBody>;
 
-  var limit = 7;
+  var limit = 8;
   var x1AxisData = []
   var y1AxisData1= []
   var y1AxisData2= []
@@ -609,7 +609,7 @@ function PoolWatch() {
   var y6AxisData1= []
   var y6AxisData2= []
 
-  limit = 7;
+  limit = 8;
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
@@ -620,7 +620,7 @@ function PoolWatch() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData2.data.forEach( element => {
     if (limit > 0)
     {
@@ -631,7 +631,7 @@ function PoolWatch() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData3.data.forEach( element => {
     if (limit > 0)
     {
@@ -642,7 +642,7 @@ function PoolWatch() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData4.data.forEach( element => {
     if (limit > 0)
     {
@@ -653,7 +653,7 @@ function PoolWatch() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData5.data.forEach( element => {
     if (limit > 0)
     {
@@ -664,7 +664,7 @@ function PoolWatch() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData6.data.forEach( element => {
     if (limit > 0)
     {
@@ -789,7 +789,7 @@ function PoolWatch2() {
   if (fetchData5 === "") return <CardBody>Loading...</CardBody>;
   if (fetchData6 === "") return <CardBody>Loading...</CardBody>;
 
-  var limit = 7;
+  var limit = 8;
   var x1AxisData = []
   var y1AxisData1= []
   var y1AxisData2= []
@@ -814,7 +814,7 @@ function PoolWatch2() {
   var y6AxisData1= []
   var y6AxisData2= []
 
-  limit = 7;
+  limit = 8;
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
@@ -825,7 +825,7 @@ function PoolWatch2() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData2.data.forEach( element => {
     if (limit > 0)
     {
@@ -836,7 +836,7 @@ function PoolWatch2() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData3.data.forEach( element => {
     if (limit > 0)
     {
@@ -847,7 +847,7 @@ function PoolWatch2() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData4.data.forEach( element => {
     if (limit > 0)
     {
@@ -858,7 +858,7 @@ function PoolWatch2() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData5.data.forEach( element => {
     if (limit > 0)
     {
@@ -869,7 +869,7 @@ function PoolWatch2() {
     }
   })
 
-  limit = 7;
+  limit = 8;
   fetchData6.data.forEach( element => {
     if (limit > 0)
     {
@@ -922,6 +922,7 @@ function HeroWatch() {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
   const [fetchData2, setFetchData2] = useState("");
+  const [fetchData3, setFetchData3] = useState("");
 
   useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_hero_sales").then( 
@@ -943,11 +944,22 @@ function HeroWatch() {
     })
   } ,[]);
 
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_potions_crafted").then( 
+      res => {
+      setFetchData3(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
   if (error) return <CardBody>Error Loading...</CardBody>;
   if (fetchData === "") return <CardBody>Loading...</CardBody>;
   if (fetchData2 === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData3 === "") return <CardBody>Loading...</CardBody>;
 
-  var limit = 7;
+  var limit = 8;
   var xAxisData = []
   var yAxisData = []
   var yAxisData2 = []
@@ -956,7 +968,11 @@ function HeroWatch() {
   var y2AxisData = []
   var y2AxisData2 = []
 
-  limit = 7
+  var x3AxisData = []
+  var y3AxisData = []
+  var y3AxisData2 = []
+
+  limit = 8
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
@@ -967,13 +983,24 @@ function HeroWatch() {
     }
   })
   
-  limit = 7
+  limit = 8
   fetchData2.data.forEach( element => {
     if (limit > 0)
     {
       x2AxisData.push(element.DAY_DATE.substr(0,10))
       y2AxisData.push(element.HERO_LEVEL);
       y2AxisData2.push(element.HERO_LEVEL_JEWEL);
+      limit -= 1;
+    }
+  })
+
+  limit = 8
+  fetchData3.data.forEach( element => {
+    if (limit > 0)
+    {
+      x3AxisData.push(element.DAY_DATE.substr(0,10))
+      y3AxisData.push(element.POTION_CRAFT_COUNT);
+      //y3AxisData2.push(element.HERO_LEVEL_JEWEL);
       limit -= 1;
     }
   })
@@ -1059,12 +1086,34 @@ function HeroWatch() {
       },
     ],
   };
+
+  const chartData3 = {
+    labels: x3AxisData,
+    datasets: [
+      // {
+      //   type: 'line',
+      //   label: "Daily Hero Level-ups (Jewels Spent)",
+      //   data: y2AxisData2,
+      //   borderColor: 'rgb(0, 155, 0)',
+      //   backgroundColor: 'rgba(0, 155, 0, 0.5)',
+      //   yAxisID: 'y2',
+      // },
+      {
+        type: 'bar',
+        label: "Daily Potions Crafted",
+        data: y3AxisData,
+        borderColor: 'rgb(115, 32, 10)',
+        backgroundColor: 'rgba(115, 32, 10, 0.9)',
+        yAxisID: 'y1',
+      },
+    ],
+  };
   
   return (
     <Row>
       <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
       <Col xs='4'><Bar data={chartData2} options={chartOptions}></Bar></Col>
-      {/* <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col> */}
+      <Col xs='4'><Bar data={chartData3} options={chartOptions}></Bar></Col>
     </Row>
   )
 }
@@ -1086,7 +1135,7 @@ function QuestWatch() {
   if (error) return <CardBody>Error Loading...</CardBody>;
   if (fetchData === "") return <CardBody>Loading...</CardBody>;
 
-  var limit = 7;
+  var limit = 8;
   var xAxisData = []
   var yAxisData= []
 
@@ -1196,7 +1245,7 @@ function GameWatch() {
     Legend
   );
 
-  var limit = 7;
+  var limit = 8;
   var xAxisData = []
   var yAxisData= []
 
@@ -1211,7 +1260,7 @@ function GameWatch() {
 
   var xAxisData2 = []
   var yAxisData2= []
-  limit = 7
+  limit = 8
   fetchDataHero.data.forEach( element => {
     if (limit > 0)
     {
@@ -1223,7 +1272,7 @@ function GameWatch() {
 
   var xAxisData3 = []
   var yAxisData3= []
-  limit = 7
+  limit = 8
   fetchDataQuest.data.forEach( element => {
     if (limit > 0)
     {
