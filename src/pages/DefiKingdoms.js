@@ -1373,7 +1373,7 @@ function DefiKingdoms() {
   return (
     <div>
       <Alert color="danger">
-        Data ingestion has some issues... so the "Game Stats" aren't accurate..
+        Data ingestion has some issues... so the "Game Stats" aren't accurate.. (26-28 Jan 2022)
       </Alert>
       <Card>
         <CardHeader>DefiKingdoms - Currency Prices</CardHeader>
