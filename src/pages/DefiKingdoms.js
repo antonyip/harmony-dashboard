@@ -191,7 +191,7 @@ function PriceWatch() {
   )
 }
 
-function BankPie() {
+function BankPie(props) {
 
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
@@ -278,7 +278,7 @@ function BankPie() {
 
   var jQuestRewards = 2387129;
   var jDevTeam = 6784755 +  4822886;
-  var jBank = 16851601;
+  var jBank = props.bank;
   var jLP = lpJewelSupply;
   var jLocked = lockedJewelSupply
   var jWallet = unlockedJewelSupply - jDevTeam - jBank - jLP - jQuestRewards
@@ -317,7 +317,7 @@ function BankPie() {
   )
 }
 
-function BankPie2() {
+function BankPie2(props) {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
   const [unlockedJewelSupply, setUnlockedJewelSupply] = useState(100)
@@ -375,7 +375,7 @@ function BankPie2() {
 
   var jQuestRewards = 2387129;
   var jDevTeam = 6784755 + 4822886;
-  var jBank = 16851601;
+  var jBank = props.bank;
   var jLP = lpJewelSupply;
   var jWallet = unlockedJewelSupply - jDevTeam - jBank - jLP - jQuestRewards
 
@@ -498,10 +498,10 @@ function BankWatch() {
 */
   return (
     <Row>
-      <Col xs='2'><BankPie/></Col>
+      <Col xs='2'><BankPie bank={yAxisDataBalance.at(-1)}/></Col>
       <Col xs='4'><Line options={chartOptions} data={chartDataTotalJewel} /></Col>
       <Col xs='4'><Line options={chartOptions} data={chartDataRatio} /></Col>
-      <Col xs='2'><BankPie2/></Col>
+      <Col xs='2'><BankPie2 bank={yAxisDataBalance.at(-1)}/></Col>
     </Row>
   );
 }
@@ -699,17 +699,14 @@ function PoolWatch() {
   const chartData5 = generateLPChartData({xAxis: x5AxisData, y2Color:"rgba(200, 150, 25, 0.5)",  data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"BUSD"})
   const chartData6 = generateLPChartData({xAxis: x6AxisData, y2Color:"rgba(232, 60, 60, 0.5)",  data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"AVAX"})
 
-  
   return (
     <Row>
-      <Row>
         <Col xs='2'><Line data={chartData} options={chartOptions}></Line></Col>
         <Col xs='2'><Line data={chartData2} options={chartOptions2}></Line></Col>
         <Col xs='2'><Line data={chartData3} options={chartOptions3}></Line></Col>
         <Col xs='2'><Line data={chartData4} options={chartOptions4}></Line></Col>
         <Col xs='2'><Line data={chartData5} options={chartOptions5}></Line></Col>
-        <Col xs='2'><Line data={chartData6} options={chartOptions6}></Line></Col>
-      </Row>
+        <Col xs='2'><Line data={chartData6} options={chartOptions6}></Line></Col> 
     </Row>
   )
 }
@@ -1026,16 +1023,16 @@ function HeroWatch() {
         type: 'line',
         label: "Daily Hero Sales (Jewels Spent)",
         data: yAxisData2,
-        borderColor: 'rgb(25, 99, 132)',
-        backgroundColor: 'rgba(25, 99, 132, 0.5)',
+        borderColor: 'rgb(0, 155, 0)',
+        backgroundColor: 'rgba(0, 155, 0, 0.5)',
         yAxisID: 'y2',
       },
       {
         type: 'bar',
         label: "Daily Hero Sales",
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(115, 23, 54)',
+        backgroundColor: 'rgba(115, 23, 54, 0.9)',
         yAxisID: 'y1',
       },
     ],
@@ -1048,16 +1045,16 @@ function HeroWatch() {
         type: 'line',
         label: "Daily Hero Level-ups (Jewels Spent)",
         data: y2AxisData2,
-        borderColor: 'rgb(25, 99, 132)',
-        backgroundColor: 'rgba(25, 99, 132, 0.5)',
+        borderColor: 'rgb(0, 155, 0)',
+        backgroundColor: 'rgba(0, 155, 0, 0.5)',
         yAxisID: 'y2',
       },
       {
         type: 'bar',
         label: "Daily Hero Level-ups",
         data: y2AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(115, 132, 110)',
+        backgroundColor: 'rgba(115, 132, 110, 0.9)',
         yAxisID: 'y1',
       },
     ],
@@ -1067,7 +1064,7 @@ function HeroWatch() {
     <Row>
       <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
       <Col xs='4'><Bar data={chartData2} options={chartOptions}></Bar></Col>
-      <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
+      {/* <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col> */}
     </Row>
   )
 }
@@ -1256,8 +1253,8 @@ function GameWatch() {
       {
         label: "Daily New Profiles",
         data: yAxisData,
-        borderColor: 'rgb(255, 50, 12)',
-        backgroundColor: 'rgba(255, 50, 12, 0.8)',
+        borderColor: 'rgb(223, 113, 38)',
+        backgroundColor: 'rgba(223, 113, 38, 0.8)',
       }
     ],
   };
@@ -1281,8 +1278,8 @@ function GameWatch() {
       {
         label: "Daily Hero Summon Count",
         data: yAxisData2,
-        borderColor: 'rgb(55, 179, 52)',
-        backgroundColor: 'rgba(55, 179, 52, 0.8)',
+        borderColor: 'rgb(44, 128, 52)',
+        backgroundColor: 'rgba(44, 128, 52, 0.8)',
       }
     ],
   };
@@ -1306,8 +1303,8 @@ function GameWatch() {
       {
         label: "Daily Quests Completed",
         data: yAxisData3,
-        borderColor: 'rgb(25, 19, 232)',
-        backgroundColor: 'rgba(25, 19, 232, 0.8)',
+        borderColor: 'rgb(25, 132, 168)',
+        backgroundColor: 'rgba(25, 132, 168, 0.8)',
       }
     ],
   };
