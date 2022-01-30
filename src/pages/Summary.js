@@ -193,7 +193,7 @@ function DailyGas() {
   var yAxisData = []
   fetchData.data.forEach( item => {
     xAxisData.push(item.METRIC_DATE.substr(0,10))
-    yAxisData.push(item.GAS_COUNT)
+    yAxisData.push(item.GAS_TOTAL)
   });
 
   ChartJS.register(
