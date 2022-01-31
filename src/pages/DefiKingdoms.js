@@ -29,7 +29,7 @@ import { Bar, Line, Pie } from 'react-chartjs-2';
 function generateLPChartOptions(title)
 {
   return {
-    responsive: false,
+    responsive: true,
     plugins: {
       legend: {
         position: 'top',
@@ -43,15 +43,13 @@ function generateLPChartOptions(title)
           type: 'linear',
           display: true,
           position: 'left',
-          grid: {
-            drawOnChartArea: false,
-          },
         },
         y2: {
           type: 'linear',
           display: false,
           position: 'right',
           grid: {
+            display: false,
             drawOnChartArea: false,
           },
         },
@@ -66,19 +64,22 @@ function generateLPChartData(options)
     labels: options.xAxis,
     datasets: [
       {
+        type:'line',
+        label: options.y2Name,
+        data: options.data2,
+        borderColor: options.y2Color,
+        backgroundColor: options.y2Color,
+        yAxisID: 'y2',
+      },
+      {
+        type:'line',
         label: options.y1Name,
         data: options.data1,
         borderColor: 'rgba(0, 155, 0, 0.5)',
         backgroundColor: 'rgba(0, 155, 0, 0.5)',
         yAxisID: 'y1',
       },
-      {
-        label: options.y2Name,
-        data: options.data2,
-        borderColor: options.y2Color,
-        backgroundColor: options.y2Color,
-        yAxisID: 'y2',
-      }
+      
     ],
   };
 }
