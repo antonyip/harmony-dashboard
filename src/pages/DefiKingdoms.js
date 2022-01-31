@@ -7,8 +7,9 @@ import {
     Row,
     Col,
     Container,
-    Carousel,
+    //Carousel,
     CardImg,
+    Spinner,
     //Alert,
 } from "reactstrap";
 import {
@@ -182,7 +183,7 @@ function PriceWatch() {
   } ,[]);
 
   if (error) return <CardBody>Error Loading</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
 
   return (
     <Row>
@@ -262,7 +263,7 @@ function BankPie(props) {
   
 
   if (error) return <CardBody>Error Loading</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
 
 
   const pieChartOptions = {
@@ -360,7 +361,7 @@ function BankPie2(props) {
   } ,[]);
 
   if (error) return <CardBody>Error Loading</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
 
   const pieChartOptions = {
     responsive: true,
@@ -428,7 +429,7 @@ function BankWatch() {
   } ,[]);
 
   if (error) return <CardBody>Error Loading</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
 
   var limit = 8;
   var xAxisData = []
@@ -579,13 +580,13 @@ function PoolWatch() {
   } ,[]);
 
 
-  if (error) return <CardBody>Error Loading...</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData2 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData3 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData4 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData5 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData6 === "") return <CardBody>Loading...</CardBody>;
+  if (error) return <CardBody>Error <Spinner /></CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData2 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData3 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData4 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData5 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData6 === "") return <CardBody><Spinner /></CardBody>;
 
   var limit = 8;
   var x1AxisData = []
@@ -788,13 +789,13 @@ function PoolWatch2() {
   } ,[]);
 
 
-  if (error) return <CardBody>Error Loading...</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData2 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData3 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData4 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData5 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData6 === "") return <CardBody>Loading...</CardBody>;
+  if (error) return <CardBody>Error <Spinner /></CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData2 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData3 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData4 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData5 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData6 === "") return <CardBody><Spinner /></CardBody>;
 
   var limit = 8;
   var x1AxisData = []
@@ -965,10 +966,10 @@ function HeroWatch() {
     })
   } ,[]);
 
-  if (error) return <CardBody>Error Loading...</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData2 === "") return <CardBody>Loading...</CardBody>;
-  if (fetchData3 === "") return <CardBody>Loading...</CardBody>;
+  if (error) return <CardBody>Error <Spinner /></CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData2 === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData3 === "") return <CardBody><Spinner /></CardBody>;
 
   var limit = 8;
   var xAxisData = []
@@ -1143,8 +1144,8 @@ function ItemGraph(props) {
     })
   } ,[props.token_address]);
 
-  if (error) return <CardBody>Error Loading...</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
+  if (error) return <CardBody>Error <Spinner /></CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
 
   var limit = 8;
   var xAxisData = []
@@ -1301,10 +1302,10 @@ function GameWatch() {
   } ,[]);
   
 
-  if (error) return <CardBody>Error Loading...</CardBody>;
-  if (fetchData === "") return <CardBody>Loading...</CardBody>;
-  if (fetchDataHero === "") return <CardBody>Loading...</CardBody>;
-  if (fetchDataQuest === "") return <CardBody>Loading...</CardBody>;
+  if (error) return <CardBody>Error <Spinner /></CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchDataHero === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchDataQuest === "") return <CardBody><Spinner /></CardBody>;
   
   ChartJS.register(
     CategoryScale,

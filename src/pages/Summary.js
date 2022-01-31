@@ -3,7 +3,9 @@ import {
     CardHeader,
     CardBody,
     Col,
-    Row
+    Row,
+    Container,
+    Spinner
 } from "reactstrap";
 import axios from "axios"
 import { useEffect, useState } from "react";
@@ -34,7 +36,7 @@ function DailyTransactions() {
   }, []);
 
   if (error) return <div>Something went wrong...</div>;
-  if (fetchData === "") return <div>Loading...</div>;
+  if (fetchData === "") return <div><Spinner /></div>;
 
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
@@ -107,7 +109,7 @@ function DailyBlocks() {
   }, []);
 
   if (error) return <div>Something went wrong...</div>;
-  if (fetchData === "") return <div>Loading...</div>;
+  if (fetchData === "") return <div><Spinner /></div>;
 
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
@@ -180,7 +182,7 @@ function DailyGas() {
   }, []);
 
   if (error) return <div>Something went wrong...</div>;
-  if (fetchData === "") return <div>Loading...</div>;
+  if (fetchData === "") return <div><Spinner /></div>;
 
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
@@ -253,7 +255,7 @@ function DailyHRC20() {
   }, []);
 
   if (error) return <div>Something went wrong...</div>;
-  if (fetchData === "") return <div>Loading...</div>;
+  if (fetchData === "") return <div><Spinner /></div>;
 
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
@@ -326,7 +328,7 @@ function StakingPage() {
   }, []);
 
   if (error) return <div>Something went wrong...</div>;
-  if (fetchData === "") return <div>Loading...</div>;
+  if (fetchData === "") return <Row><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col></Row>;
 
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
@@ -379,7 +381,7 @@ function StakingPage() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'MEDIAN_STAKED',
+        label: 'Median Staked Value',
         data: y2AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -391,7 +393,7 @@ function StakingPage() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'TOTAL_STAKED',
+        label: 'Total Staked Value',
         data: y3AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -403,7 +405,7 @@ function StakingPage() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'CIRCULATING_SUPPLY',
+        label: 'Circulating Supply',
         data: y4AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -415,7 +417,7 @@ function StakingPage() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'TOTAL_SUPPLY',
+        label: 'Total Supply',
         data: y5AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -425,27 +427,36 @@ function StakingPage() {
 
 
   return (
+    <>
     <Row>
-      <Col xs='3'><Line options={chartOptions} data={chartData} /></Col>
-      <Col xs='3'><Line options={chartOptions} data={chartData2} /></Col>
-      <Col xs='3'><Line options={chartOptions} data={chartData3} /></Col>
-      <Col xs='3'><Line options={chartOptions} data={chartData4} /></Col>
+      <Col xs='6'><Line options={chartOptions} data={chartData} /></Col>
+      <Col xs='6'><Line options={chartOptions} data={chartData2} /></Col>
     </Row>
+    <Row>
+      <Col xs='6'><Line options={chartOptions} data={chartData3} /></Col>
+      <Col xs='6'><Line options={chartOptions} data={chartData4} /></Col>
+    </Row>
+    </>
   );
 }
 
 function Summary() {
   return (
+    <Container>
+      <br></br>
     <Card>
-      <CardHeader>Summary Page</CardHeader>
+      <CardHeader>Harmony Blockchain Statictics</CardHeader>
       <Row>
-        <Col xs='3'><DailyBlocks /></Col>
-        <Col xs='3'><DailyGas /></Col>
-        <Col xs='3'><DailyTransactions /></Col>
-        <Col xs='3'><DailyHRC20 /></Col>
+        <Col xs='6'><DailyBlocks /></Col>
+        <Col xs='6'><DailyGas /></Col>
+      </Row>
+      <Row>
+        <Col xs='6'><DailyTransactions /></Col>
+        <Col xs='6'><DailyHRC20 /></Col>
       </Row>
       <StakingPage></StakingPage>
     </Card>
+    </Container>
   );
 }
 
