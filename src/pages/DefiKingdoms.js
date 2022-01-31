@@ -1479,7 +1479,7 @@ function DefiKingdoms() {
       </Card>
       <br></br>
       <Card>
-        <CardHeader>DefiKingdoms - Item Stats</CardHeader>
+        <CardHeader>DefiKingdoms - Circulating Items Inventory</CardHeader>
         <ItemWatch></ItemWatch>
       </Card>
     </Container>
