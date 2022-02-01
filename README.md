@@ -1,11 +1,30 @@
 ## Requirements
 - Daily number of wallets (wallets with > 0 balance)
+    - no backfill, can't calculate.
+    - i don't know how flipside does it
 - Daily number of active wallets (wallets with any transactions in/out that day)
+    - ok
 - Total value locked on all wallets
+    - no backfill, can't calculate.
+    - i don't know how flipside does it
 - Daily number of transactions
+    - ok
 - Locked assets and number of transactions
+    - what is defined as locked
+    - whats the difference between this and qn above
 - Locked assets and number of transactions (monthly) per project (DFK, Tranquil)
+    - what is defined as locked
+    - how to get contract addresses for tranquil
+    - can currently take information from defilama, but data seems broken...
 - Locked assets $ on ETH bridge
+    - is this on eth chain or one chain?
+    - which bridges? (Multichain, bridge.harmony.one, more?)
+    - how does the token contract (bridge.harmony.one) work?
+    - probably needs backfill to calculate / new sources to ingest
+    - how to get pricing data?
 - Number of on-chain delegators
+    - no data ingested
 - Total $ staked
+    - no data ingested
 - Number of validator pools
+    - no data ingested

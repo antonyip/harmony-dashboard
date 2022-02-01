@@ -1155,7 +1155,7 @@ function ItemGraph(props) {
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
-      xAxisData.push(element.DAY_DATE.substr(0,16))
+      xAxisData.push(element.DAY_DATE.substr(0,10))
       yAxisData.push(element.SUPPLY);
       limit -= 1;
     }
