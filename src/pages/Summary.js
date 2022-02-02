@@ -5,7 +5,8 @@ import {
     Col,
     Row,
     Container,
-    Spinner
+    Spinner,
+    Collapse
 } from "reactstrap";
 import axios from "axios"
 import { useEffect, useState } from "react";
@@ -15,11 +16,12 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 
 function DailyTransactions() {
   const [error, setError] = useState(false);
@@ -83,6 +85,181 @@ function DailyTransactions() {
         data: yAxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+  
+  return (
+    <CardBody>
+      <Line options={chartOptions} data={chartData} />
+    </CardBody>
+  );
+}
+
+function DailyAddresses() {
+  const [error, setError] = useState(false);
+  const [fetchData, setFetchData] = useState("");
+
+  useEffect( () => {
+  axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_active_addresses").then(
+    res => {
+      setFetchData(res);
+    }).catch( err => {
+      setError(true);
+      console.log(err)
+    })
+  }, []);
+
+  if (error) return <div>Something went wrong...</div>;
+  if (fetchData === "") return <div><Spinner /></div>;
+
+  /*
+  METRIC_DATE: "2022-01-27 00:00:00.000"
+  METRIC_PERIOD: "daily"
+  TXS_COUNT: 1258
+  */
+  //console.log(data.data);
+  
+  var xAxisData = []
+  var yAxisData = []
+  fetchData.data.forEach( item => {
+    xAxisData.push(item.DAY_DATE.substr(0,10))
+    yAxisData.push(item.ACTIVE_ADDRESSES)
+  });
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily Blocks',
+      },
+    },
+  };
+
+  const chartData = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'Daily Active Addresses',
+        data: yAxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+  
+  return (
+    <CardBody>
+      <Line options={chartOptions} data={chartData} />
+    </CardBody>
+  );
+}
+
+function DailyNewAddresses() {
+  const [error, setError] = useState(false);
+  const [fetchData, setFetchData] = useState("");
+
+  useEffect( () => {
+  axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_new_addresses").then(
+    res => {
+      setFetchData(res);
+    }).catch( err => {
+      setError(true);
+      console.log(err)
+    })
+  }, []);
+
+  if (error) return <div>Something went wrong...</div>;
+  if (fetchData === "") return <div><Spinner /></div>;
+
+  /*
+  METRIC_DATE: "2022-01-27 00:00:00.000"
+  METRIC_PERIOD: "daily"
+  TXS_COUNT: 1258
+  */
+  //console.log(data.data);
+  
+  var xAxisData = []
+  var yAxisData = []
+  var y2AxisData = []
+  fetchData.data.forEach( item => {
+    xAxisData.push(item.DAY_DATE.substr(0,10))
+    yAxisData.push(item.DAILY_NEW_ADDRESS)
+    y2AxisData.push(item.CUMMULATIVE_COUNT)
+  });
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily Blocks',
+      },
+      scales: {
+        y1: {
+          type: 'linear',
+          display: true,
+          position: 'left',
+        },
+        y2: {
+          type: 'linear',
+          display: false,
+          position: 'right',
+          grid: {
+            display: false,
+            drawOnChartArea: false,
+          },
+        },
+      },
+    },
+  };
+
+  const chartData = {
+    labels: xAxisData,
+    datasets: [
+      {
+        type:'bar',
+        label: 'Daily New Addresses',
+        data: yAxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        yAxisID: 'y2',
+      },
+      {
+        type:'line',
+        label: 'Cumulative New Addresses',
+        data: y2AxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        yAxisID: 'y1',
       }
     ],
   };
@@ -344,7 +521,7 @@ function StakingPage() {
   var y4AxisData = []
   var y5AxisData = []
   fetchData.data.forEach( item => {
-    xAxisData.push(item.DAY_DATE)
+    xAxisData.push(item.DAY_DATE.substr(0,10))
     yAxisData.push(item.EPOCH_LAST_BLOCK)
     y2AxisData.push(parseFloat(item.MEDIAN_RAW_STAKE) / 10**18)
     y3AxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18)
@@ -467,7 +644,7 @@ function StakingPage2() {
   var y4AxisData = []
   var y5AxisData = []
   fetchData.data.forEach( item => {
-    xAxisData.push(item.DAY_DATE)
+    xAxisData.push(item.DAY_DATE.substr(0,10))
     yAxisData.push(item.DELEGATIONS_COUNT)
     //y2AxisData.push(parseFloat(item.SUM_TOTAL_DELEGATION) / 10**18)
     y4AxisData.push(parseInt(item.SUM_ACTIVE_VALIDATORS))
@@ -525,7 +702,7 @@ function StakingPage2() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'Number of On-Chain Validators',
+        label: 'Number of Registered Validators',
         data: y5AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -555,18 +732,8 @@ function Summary() {
     <Card>
       <CardHeader>Harmony Blockchain Statictics</CardHeader>
       <Row>
-        <Col xs='6'>
-          <Card>
-            <CardHeader>Daily number of wallets</CardHeader>
-            <CardBody>TODO</CardBody>
-          </Card>
-        </Col>
-        <Col xs='6'>
-          <Card>
-            <CardHeader>Daily number of active wallets</CardHeader>
-            <CardBody>TODO</CardBody>
-          </Card>
-        </Col>
+        <Col xs='6'><DailyAddresses /></Col>
+        <Col xs='6'><DailyNewAddresses /></Col>
       </Row>
       <Row>
         <Col xs='6'><DailyBlocks /></Col>
@@ -584,8 +751,11 @@ function Summary() {
           <Card><CardHeader>TVL Harmony</CardHeader></Card>
           <Card><CardHeader>TVL DFK</CardHeader></Card>
           <Card>
-            <CardHeader>TVL [WIP]</CardHeader>
+            <CardHeader>TVL Others [WIP]</CardHeader>
+            <Collapse isOpen={false}>
             <CardBody>
+              <Card>
+              <CardBody>
               <Row>Tranquil Finance (TRANQ)</Row>
               <Row>SushiSwap (SUSHI)</Row>
               <Row>Multichain (MULTI)</Row>
@@ -601,7 +771,10 @@ function Summary() {
               <Row>Fuzz Finance (FUZZ)</Row>
               <Row>Beefy Finance (BIFI)</Row>
               <Row>OpenSwap (OPENX)</Row>
+              </CardBody>
+              </Card>
             </CardBody>
+            </Collapse>
           </Card>
         </CardBody>
       </Card>
@@ -609,9 +782,9 @@ function Summary() {
       <Card>
         <CardHeader>Bridges</CardHeader>
         <CardBody>
-          <Card><CardHeader>ETH Bridge</CardHeader></Card>
-          <Card><CardHeader>ONE Bridge</CardHeader></Card>
           <Card><CardHeader>Anyswap / Multichain Bridge</CardHeader></Card>  
+          <Card><CardHeader>ETH Bridge [WIP]</CardHeader></Card>
+          <Card><CardHeader>ONE Bridge [WIP]</CardHeader></Card>
         </CardBody>
       </Card>
       

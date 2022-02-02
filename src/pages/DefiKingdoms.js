@@ -201,9 +201,9 @@ function BankPie(props) {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
   var totalJewelSupply = 500000000;
-  const [unlockedJewelSupply, setUnlockedJewelSupply] = useState(100);
-  const [lockedJewelSupply, setLockedJewelSupply] = useState(100);
-  const [lpJewelSupply, setLpJewelSupply] = useState(100);
+  const [unlockedJewelSupply, setUnlockedJewelSupply] = useState(64055396);
+  const [lockedJewelSupply, setLockedJewelSupply] = useState(268522000);
+  const [lpJewelSupply, setLpJewelSupply] = useState(22973000);
   useEffect( () => {
 
     // unlockedSupply
@@ -281,8 +281,8 @@ function BankPie(props) {
     },
   };
 
-  var jQuestRewards = 2387129;
-  var jDevTeam = 6784755 +  4822886;
+  var jQuestRewards = 2387129; // rough estimate based on kingdom watch  TODO: pull data from blockchain
+  var jDevTeam = 6784755 +  4822886 + 701050; // rough estimate based on kingdom watch  TODO: pull data from blockchain
   var jBank = props.bank;
   var jLP = lpJewelSupply;
   var jLocked = lockedJewelSupply
@@ -325,8 +325,8 @@ function BankPie(props) {
 function BankPie2(props) {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
-  const [unlockedJewelSupply, setUnlockedJewelSupply] = useState(100)
-  const [lpJewelSupply,setLpJewelSupply] = useState(100)
+  const [unlockedJewelSupply, setUnlockedJewelSupply] = useState(64055396)
+  const [lpJewelSupply,setLpJewelSupply] = useState(22973000)
   useEffect( () => {
 
     // unlockedSupply
@@ -378,8 +378,8 @@ function BankPie2(props) {
     },
   };
 
-  var jQuestRewards = 2387129;
-  var jDevTeam = 6784755 + 4822886;
+  var jQuestRewards = 2387129; // rough estimate based on kingdom watch  TODO: pull data from blockchain
+  var jDevTeam = 6784755 + 4822886 + 701050; // rough estimate based on kingdom watch  TODO: pull data from blockchain
   var jBank = props.bank;
   var jLP = lpJewelSupply;
   var jWallet = unlockedJewelSupply - jDevTeam - jBank - jLP - jQuestRewards
