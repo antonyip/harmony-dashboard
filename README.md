@@ -1,27 +1,23 @@
 ## Requirements
 - Daily number of wallets (wallets with > 0 balance)
     - Current Plan:
-        - Assumption -- sum of the count of all unique addresses that has sent / recieved one or a token
-        - [INPROGRESS]
+        - Assumption -- sum of the count of all unique addresses in harmony.dev.txs (from_address / to_address)
+        - [OK]
     - Questions / Problems:
-        - no backfill, can't go before 8 dec
-        - i don't know how flipside does it
+        - no backfill, can't get data before 8 dec 2021
 - Daily number of active wallets (wallets with any transactions in/out that day)
     - Current Plan:
         - [OK]
-- Total value locked on all wallets 
+- Total value locked on all wallets
     - Current Plan:
         - Assumption -- total value locked on all wallets = ONE circulating supply
         - [OK]
-    - Questions / Problems:
-        - no backfill, can't calculate.
-        - i don't know how flipside does it
-- Daily number of transactions 
+- Daily number of transactions
     - Current Plan:
         - [OK]
 - Locked assets and number of transactions
     - Current Plan:
-        - Assumption -- same as above... and thus no need to do anything...
+        - Assumption -- same as "Daily number of transactions". Thus no work needed...
         - [OK]
     - Questions
         - what is defined as locked
@@ -30,10 +26,11 @@
     - Current Plan:
         - Read sync events from the blockchain / total balances in specific wallets for staked coins
         - [INPROGRESS]
+        - Kinda want to use this as bounty questions and lessen my workload.
     - Questions / Problems:
         - what is defined as locked
         - how to get contract addresses for tranquil
-        - can currently take information from defilama, but data seems broken...
+        - can currently take information from defilama, but data seems broken on defilama...
 - Locked assets $ on ETH bridge
     - Current Plan:
         - [INPROGRESS]
@@ -48,19 +45,21 @@
         - how to get pricing data? (ant_ingest?)
 - Number of on-chain delegators
     - Current Plan:
-        - [INPROGRESS]
+        - Assumption: I've only started collecting / ingesting data from 1 Feb 2021
+        - [OK]
         - ant_ingest
     - Questions / Problems:
         - mdao snowflake: no data ingested
 - Total $ staked
     - Current Plan:
-        - [INPROGRESS]
+        - [OK]
         - ant_ingest
     - Questions / Problems:
         - mdao snowflake: no data ingested
 - Number of validator pools
     - Current Plan:
-        - [INPROGRESS]
+        - Assumption: I've only started collecting / ingesting data from 1 Feb 2021
+        - [OK]
         - ant_ingest
     - Questions / Problems:
         - mdao snowflake: no data ingested

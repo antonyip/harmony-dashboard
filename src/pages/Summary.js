@@ -21,7 +21,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 function DailyTransactions() {
   const [error, setError] = useState(false);
@@ -505,7 +505,7 @@ function StakingPage() {
   }, []);
 
   if (error) return <div>Something went wrong...</div>;
-  if (fetchData === "") return <Row><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col></Row>;
+  if (fetchData === "") return <div><Spinner /></div>;
 
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
@@ -630,7 +630,7 @@ function StakingPage2() {
   }, []);
 
   if (error) return <div>Something went wrong...</div>;
-  if (fetchData === "") return <Row><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col></Row>;
+  if (fetchData === "") return <div><Spinner /></div>;
 
   /*
   [{"DAY_DATE":"2022-02-01 00:00:00.000","DELEGATIONS_COUNT":56028,"SUM_TOTAL_DELEGATION":4.88326240500678e+27,
@@ -732,16 +732,16 @@ function Summary() {
     <Card>
       <CardHeader>Harmony Blockchain Statictics</CardHeader>
       <Row>
-        <Col xs='6'><DailyAddresses /></Col>
-        <Col xs='6'><DailyNewAddresses /></Col>
-      </Row>
-      <Row>
         <Col xs='6'><DailyBlocks /></Col>
         <Col xs='6'><DailyGas /></Col>
       </Row>
       <Row>
         <Col xs='6'><DailyTransactions /></Col>
         <Col xs='6'><DailyHRC20 /></Col>
+      </Row>
+      <Row>
+        <Col xs='6'><DailyAddresses /></Col>
+        <Col xs='6'><DailyNewAddresses /></Col>
       </Row>
       <StakingPage></StakingPage>
       <StakingPage2></StakingPage2>
