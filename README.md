@@ -1,30 +1,66 @@
 ## Requirements
 - Daily number of wallets (wallets with > 0 balance)
-    - no backfill, can't calculate.
-    - i don't know how flipside does it
+    - Current Plan:
+        - Assumption -- sum of the count of all unique addresses that has sent / recieved one or a token
+        - [INPROGRESS]
+    - Questions / Problems:
+        - no backfill, can't go before 8 dec
+        - i don't know how flipside does it
 - Daily number of active wallets (wallets with any transactions in/out that day)
-    - ok
-- Total value locked on all wallets
-    - no backfill, can't calculate.
-    - i don't know how flipside does it
-- Daily number of transactions
-    - ok
+    - Current Plan:
+        - [OK]
+- Total value locked on all wallets 
+    - Current Plan:
+        - Assumption -- total value locked on all wallets = ONE circulating supply
+        - [OK]
+    - Questions / Problems:
+        - no backfill, can't calculate.
+        - i don't know how flipside does it
+- Daily number of transactions 
+    - Current Plan:
+        - [OK]
 - Locked assets and number of transactions
-    - what is defined as locked
-    - whats the difference between this and qn above
-- Locked assets and number of transactions (monthly) per project (DFK, Tranquil)
-    - what is defined as locked
-    - how to get contract addresses for tranquil
-    - can currently take information from defilama, but data seems broken...
+    - Current Plan:
+        - Assumption -- same as above... and thus no need to do anything...
+        - [OK]
+    - Questions
+        - what is defined as locked
+        - whats the difference between this and qn above
+- Locked assets and number of transactions (monthly) per project (DFK, Tranquil) 
+    - Current Plan:
+        - Read sync events from the blockchain / total balances in specific wallets for staked coins
+        - [INPROGRESS]
+    - Questions / Problems:
+        - what is defined as locked
+        - how to get contract addresses for tranquil
+        - can currently take information from defilama, but data seems broken...
 - Locked assets $ on ETH bridge
-    - is this on eth chain or one chain?
-    - which bridges? (Multichain, bridge.harmony.one, more?)
-    - how does the token contract (bridge.harmony.one) work?
-    - probably needs backfill to calculate / new sources to ingest
-    - how to get pricing data?
+    - Current Plan:
+        - [INPROGRESS]
+        - Scrape data from anyswap / multichain (<https://netapi.anyswap.net/bridge/v2/info>)
+            - ant_ingest
+        - unsure about the other bridges
+    - Questions / Problems:
+        - is this on eth chain or one chain?
+        - which bridges? (Multichain, bridge.harmony.one, more?)
+        - how does the token contract (bridge.harmony.one) work?
+        - probably needs backfill to calculate / new sources to ingest
+        - how to get pricing data? (ant_ingest?)
 - Number of on-chain delegators
-    - no data ingested
+    - Current Plan:
+        - [INPROGRESS]
+        - ant_ingest
+    - Questions / Problems:
+        - mdao snowflake: no data ingested
 - Total $ staked
-    - no data ingested
+    - Current Plan:
+        - [INPROGRESS]
+        - ant_ingest
+    - Questions / Problems:
+        - mdao snowflake: no data ingested
 - Number of validator pools
-    - no data ingested
+    - Current Plan:
+        - [INPROGRESS]
+        - ant_ingest
+    - Questions / Problems:
+        - mdao snowflake: no data ingested

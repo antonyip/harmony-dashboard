@@ -352,7 +352,127 @@ function StakingPage() {
     y5AxisData.push(parseInt(item.TOTAL_SUPPLY))
   });
 
-  console.log(y2AxisData);
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily HRC20 Transfers',
+      },
+    },
+  };
+
+  const chartData = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'Median Staked Value (ONE)',
+        data: y2AxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+
+  const chartData2 = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'Total Staked Value (ONE)',
+        data: y3AxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+
+  const chartData3 = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'Circulating Supply (ONE)',
+        data: y4AxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+
+  const chartData4 = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'Total Supply (ONE)',
+        data: y5AxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+
+
+  return (
+    <>
+    <Row>
+      <Col xs='6'><Line options={chartOptions} data={chartData} /></Col>
+      <Col xs='6'><Line options={chartOptions} data={chartData2} /></Col>
+    </Row>
+    <Row>
+      <Col xs='6'><Line options={chartOptions} data={chartData3} /></Col>
+      <Col xs='6'><Line options={chartOptions} data={chartData4} /></Col>
+    </Row>
+    </>
+  );
+}
+
+function StakingPage2() {
+  const [error, setError] = useState(false);
+  const [fetchData, setFetchData] = useState("");
+
+  useEffect( () => {
+  axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_staking_stats").then(
+    res => {
+      setFetchData(res);
+    }).catch( err => {
+      setError(true);
+      console.log(err)
+    })
+  }, []);
+
+  if (error) return <div>Something went wrong...</div>;
+  if (fetchData === "") return <Row><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col><Col xs='3'><Spinner /></Col></Row>;
+
+  /*
+  [{"DAY_DATE":"2022-02-01 00:00:00.000","DELEGATIONS_COUNT":56028,"SUM_TOTAL_DELEGATION":4.88326240500678e+27,
+  "SUM_ACTIVE_VALIDATORS":264,"SUM_TOTAL_VALIDATORS":698}]
+  */
+  //console.log(data.data);
+  
+  var xAxisData = []
+  var yAxisData = []
+  //var y2AxisData = []
+  var y4AxisData = []
+  var y5AxisData = []
+  fetchData.data.forEach( item => {
+    xAxisData.push(item.DAY_DATE)
+    yAxisData.push(item.DELEGATIONS_COUNT)
+    //y2AxisData.push(parseFloat(item.SUM_TOTAL_DELEGATION) / 10**18)
+    y4AxisData.push(parseInt(item.SUM_ACTIVE_VALIDATORS))
+    y5AxisData.push(parseInt(item.SUM_TOTAL_VALIDATORS))
+  });
 
   ChartJS.register(
     CategoryScale,
@@ -381,20 +501,8 @@ function StakingPage() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'Median Staked Value',
-        data: y2AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      }
-    ],
-  };
-
-  const chartData2 = {
-    labels: xAxisData,
-    datasets: [
-      {
-        label: 'Total Staked Value',
-        data: y3AxisData,
+        label: 'Number of On-Chain Active Delgators',
+        data: yAxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       }
@@ -405,7 +513,7 @@ function StakingPage() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'Circulating Supply',
+        label: 'Number of On-Chain Active Validators',
         data: y4AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -417,7 +525,7 @@ function StakingPage() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'Total Supply',
+        label: 'Number of On-Chain Validators',
         data: y5AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -429,8 +537,7 @@ function StakingPage() {
   return (
     <>
     <Row>
-      <Col xs='6'><Line options={chartOptions} data={chartData} /></Col>
-      <Col xs='6'><Line options={chartOptions} data={chartData2} /></Col>
+      <Col xs='12'><Line options={chartOptions} data={chartData} /></Col>
     </Row>
     <Row>
       <Col xs='6'><Line options={chartOptions} data={chartData3} /></Col>
@@ -440,12 +547,27 @@ function StakingPage() {
   );
 }
 
+
 function Summary() {
   return (
     <Container>
       <br></br>
     <Card>
       <CardHeader>Harmony Blockchain Statictics</CardHeader>
+      <Row>
+        <Col xs='6'>
+          <Card>
+            <CardHeader>Daily number of wallets</CardHeader>
+            <CardBody>TODO</CardBody>
+          </Card>
+        </Col>
+        <Col xs='6'>
+          <Card>
+            <CardHeader>Daily number of active wallets</CardHeader>
+            <CardBody>TODO</CardBody>
+          </Card>
+        </Col>
+      </Row>
       <Row>
         <Col xs='6'><DailyBlocks /></Col>
         <Col xs='6'><DailyGas /></Col>
@@ -455,6 +577,44 @@ function Summary() {
         <Col xs='6'><DailyHRC20 /></Col>
       </Row>
       <StakingPage></StakingPage>
+      <StakingPage2></StakingPage2>
+      <Card>
+        <CardHeader>TVL</CardHeader>
+        <CardBody>
+          <Card><CardHeader>TVL Harmony</CardHeader></Card>
+          <Card><CardHeader>TVL DFK</CardHeader></Card>
+          <Card>
+            <CardHeader>TVL [WIP]</CardHeader>
+            <CardBody>
+              <Row>Tranquil Finance (TRANQ)</Row>
+              <Row>SushiSwap (SUSHI)</Row>
+              <Row>Multichain (MULTI)</Row>
+              <Row>ViperSwap (VIPER)</Row>
+              <Row>Hundred Finance (HND)</Row>
+              <Row>Curve (CRV)</Row>
+              <Row>Synapse (SYN)</Row>
+              <Row>FarmersOnly (FOX)</Row>
+              <Row>Euphoria (WAGMI)</Row>
+              <Row>StakeDAO (SDT)</Row>
+              <Row>LootSwap (LOOT)</Row>
+              <Row>WagmiDAO (GMI)</Row>
+              <Row>Fuzz Finance (FUZZ)</Row>
+              <Row>Beefy Finance (BIFI)</Row>
+              <Row>OpenSwap (OPENX)</Row>
+            </CardBody>
+          </Card>
+        </CardBody>
+      </Card>
+      
+      <Card>
+        <CardHeader>Bridges</CardHeader>
+        <CardBody>
+          <Card><CardHeader>ETH Bridge</CardHeader></Card>
+          <Card><CardHeader>ONE Bridge</CardHeader></Card>
+          <Card><CardHeader>Anyswap / Multichain Bridge</CardHeader></Card>  
+        </CardBody>
+      </Card>
+      
     </Card>
     </Container>
   );
