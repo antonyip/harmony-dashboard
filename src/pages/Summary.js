@@ -702,7 +702,7 @@ function StakingPage2() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'Number of Registered Validators',
+        label: 'Total Number of Registered Validators',
         data: y5AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -714,16 +714,210 @@ function StakingPage2() {
   return (
     <>
     <Row>
-      <Col xs='12'><Line options={chartOptions} data={chartData} /></Col>
-    </Row>
-    <Row>
-      <Col xs='6'><Line options={chartOptions} data={chartData3} /></Col>
-      <Col xs='6'><Line options={chartOptions} data={chartData4} /></Col>
+      <Col xs='4'><Line options={chartOptions} data={chartData} /></Col>
+      <Col xs='4'><Line options={chartOptions} data={chartData3} /></Col>
+      <Col xs='4'><Line options={chartOptions} data={chartData4} /></Col>
     </Row>
     </>
   );
 }
 
+function MultiChainPage()
+{
+  const [error, setError] = useState(false);
+  const [fetchData, setFetchData] = useState("");
+
+  useEffect( () => {
+  axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_multichain_bridge").then(
+    res => {
+      setFetchData(res);
+    }).catch( err => {
+      setError(true);
+      console.log(err)
+    })
+  }, []);
+
+  if (error) return <div>Something went wrong...</div>;
+  if (fetchData === "") return <div><Spinner /></div>;
+
+  /*
+  METRIC_DATE: "2022-01-27 00:00:00.000"
+  METRIC_PERIOD: "daily"
+  TXS_COUNT: 1258
+  */
+  //console.log(data.data);
+  
+  var xAxisData = []
+  var yAxisData = []
+  fetchData.data.forEach( item => {
+    xAxisData.push(item.DAY_DATE.substr(0,10))
+    yAxisData.push(item.DAILY_TVL)
+  });
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily HRC20 Transfers',
+      },
+    },
+  };
+
+  const chartData = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'Multichain Bridge TVL',
+        data: yAxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+  
+  return (
+    <Card>
+      <CardHeader>Multichain Bridge TVL</CardHeader>
+      <CardBody>
+        <Line options={chartOptions} data={chartData} />
+      </CardBody>
+    </Card>
+    
+  );
+}
+function DfkTvlPage()
+{
+  const [error, setError] = useState(false);
+  const [fetchData, setFetchData] = useState("");
+  const [fetchData2, setFetchData2] = useState("");
+
+  useEffect( () => {
+  axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tvl_dfk_lp").then(
+    res => {
+      setFetchData(res);
+    }).catch( err => {
+      setError(true);
+      console.log(err)
+    })
+  }, []);
+
+  useEffect( () => {
+    axios.get("https://us-east1-dfkwatch-328521.cloudfunctions.net/xJewelRatioHistory").then( 
+      res => {
+      setFetchData2(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+
+  if (error) return <div>Something went wrong...</div>;
+  if (fetchData === "") return <div><Spinner /></div>;
+  if (fetchData2 === "") return <div><Spinner /></div>;
+
+  /*
+  METRIC_DATE: "2022-01-27 00:00:00.000"
+  METRIC_PERIOD: "daily"
+  TXS_COUNT: 1258
+  */
+  //console.log(data.data);
+  
+  var limit = 8
+  var xAxisData = []
+  var yAxisData = []
+
+  fetchData.data.forEach( item => {
+    if (limit > 0)
+    {
+      xAxisData.push(item.DAY_DATE.substr(0,10))
+      yAxisData.push(item.TOTAL_VALUE_LOCKED)
+      limit-=1;
+    }
+  });
+
+  var y2AxisData = []
+  var y3AxisData = []
+  limit = 8;
+  fetchData2.data.forEach( item => {
+    if (limit > 0)
+    {
+      y2AxisData.push(item.balance * 7)
+      y3AxisData.push(item.balance * 7 + yAxisData[8-limit])
+      limit-=1;
+    }
+  });
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily HRC20 Transfers',
+      },
+    },
+  };
+
+  const chartData = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'DFK LP TVL',
+        data: yAxisData,
+        borderColor: 'rgb(255, 0, 0)',
+        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+      },
+      {
+        label: 'DFK Staked TVL',
+        data: y2AxisData,
+        borderColor: 'rgb(0, 99, 0)',
+        backgroundColor: 'rgba(0, 99, 0, 0.5)',
+      },
+      {
+        label: 'DFK Total TVL',
+        data: y3AxisData,
+        borderColor: 'rgb(0, 0, 132)',
+        backgroundColor: 'rgba(0, 0, 132, 0.5)',
+      }
+    ],
+  };
+  
+  return (
+    <Card>
+      <CardHeader>DFK LP TVL</CardHeader>
+      <CardBody>
+        <Line options={chartOptions} data={chartData} />
+      </CardBody>
+    </Card>
+    
+  );
+}
 
 function Summary() {
   return (
@@ -749,7 +943,7 @@ function Summary() {
         <CardHeader>TVL</CardHeader>
         <CardBody>
           <Card><CardHeader>TVL Harmony</CardHeader></Card>
-          <Card><CardHeader>TVL DFK</CardHeader></Card>
+          <DfkTvlPage></DfkTvlPage>
           <Card>
             <CardHeader>TVL Others [WIP]</CardHeader>
             <Collapse isOpen={false}>
@@ -782,7 +976,8 @@ function Summary() {
       <Card>
         <CardHeader>Bridges</CardHeader>
         <CardBody>
-          <Card><CardHeader>Anyswap / Multichain Bridge</CardHeader></Card>  
+          <MultiChainPage></MultiChainPage>
+          <Card><CardHeader>BTC Bridge [WIP]</CardHeader></Card>
           <Card><CardHeader>ETH Bridge [WIP]</CardHeader></Card>
           <Card><CardHeader>ONE Bridge [WIP]</CardHeader></Card>
         </CardBody>
