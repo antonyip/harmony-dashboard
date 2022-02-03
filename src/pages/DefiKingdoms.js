@@ -1256,11 +1256,16 @@ function ItemWatch() {
         <ItemGraph token_address='0xc0214b37fcd01511e6283af5423cf24c96bb9808' token_color='rgba(50,50,150,0.8)' token_name="Milkweed" />
         <ItemGraph token_address='0xc5891912718ccffcc9732d1942ccd98d5934c2e1' token_color='rgba(50,50,150,0.8)' token_name="Redgill" />
         <ItemGraph token_address='0xcdffe898e687e941b124dfb7d24983266492ef1d' token_color='rgba(50,50,150,0.8)' token_name="Swift-Thistle" />
-        </Row>
-        <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0xdc2c698af26ff935cd1c50eef3a4a933c62af18d' token_color='rgba(50,50,150,0.8)' token_name="Full Mana" />
         <ItemGraph token_address='0xe4cfee5bf05cef3418da74cfb89727d8e4fee9fa' token_color='rgba(50,50,150,0.8)' token_name="Ironscale" />
         <ItemGraph token_address='0xfb03c364969a0bb572ce62b8cd616a7ddeb4c09a' token_color='rgba(50,50,150,0.8)' token_name="Toughness Potion" />
+        </Row>
+        <Row>
+        <ItemGraph token_address='0x27dc6aaad95580edf25f8b9676f1b984e09e413d' token_color='rgba(50,50,150,0.8)' token_name="Atonement Crystal" />
+        <ItemGraph token_address='0x1f3f655079b70190cb79ce5bc5ae5f19daf2a6cf' token_color='rgba(50,50,150,0.8)' token_name="Lesser Atonement Crystal" />
+        {/* <ItemGraph token_address='0xfb03c364969a0bb572ce62b8cd616a7ddeb4c09a' token_color='rgba(50,50,150,0.8)' token_name="Toughness Potion" /> */}
         </Row>
       </>
   )
