@@ -1265,7 +1265,7 @@ function ItemWatch() {
         <Row>
         <ItemGraph token_address='0x27dc6aaad95580edf25f8b9676f1b984e09e413d' token_color='rgba(50,50,150,0.8)' token_name="Atonement Crystal" />
         <ItemGraph token_address='0x1f3f655079b70190cb79ce5bc5ae5f19daf2a6cf' token_color='rgba(50,50,150,0.8)' token_name="Lesser Atonement Crystal" />
-        {/* <ItemGraph token_address='0xfb03c364969a0bb572ce62b8cd616a7ddeb4c09a' token_color='rgba(50,50,150,0.8)' token_name="Toughness Potion" /> */}
+        <ItemGraph token_address='0x9edb3da18be4b03857f3d39f83e5c6aad67bc148' token_color='rgba(50,50,150,0.8)' token_name="Golden Egg" />
         </Row>
       </>
   )
