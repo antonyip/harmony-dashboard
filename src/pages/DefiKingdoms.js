@@ -502,10 +502,10 @@ function BankWatch() {
 */
   return (
     <Row>
-      <Col xs='2'><BankPie bank={yAxisDataBalance.at(-1)}/></Col>
+      <Col xs='2'><BankPie bank={yAxisDataBalance[yAxisDataBalance.length - 1]}/></Col>
       <Col xs='4'><Line options={chartOptions} data={chartDataTotalJewel} /></Col>
       <Col xs='4'><Line options={chartOptions} data={chartDataRatio} /></Col>
-      <Col xs='2'><BankPie2 bank={yAxisDataBalance.at(-1)}/></Col>
+      <Col xs='2'><BankPie2 bank={yAxisDataBalance[yAxisDataBalance.length - 1]}/></Col>
     </Row>
   );
 }

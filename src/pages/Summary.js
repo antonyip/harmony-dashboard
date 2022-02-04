@@ -783,7 +783,7 @@ function TVLPageInner(props)
 {
   if(props.data === "") return (<div><Spinner/></div>);
 
-  const TVLONE = props.data[0].data.at(-1).TOTAL_STAKING / 10**18 * 0.33;
+  const TVLONE = props.data[0].data[props.data[0].data.length - 1].TOTAL_STAKING / 10**18 * 0.33;
   const TVLDFL = 500000000;
   const TVLMultiBridge = 45000000
   const TVLTranq = 167365845.321767
