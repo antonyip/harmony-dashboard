@@ -6,7 +6,8 @@ import {
     Row,
     Container,
     Spinner,
-    Collapse
+    Collapse,
+    Alert,
 } from "reactstrap";
 import axios from "axios"
 import { useEffect, useState } from "react";
@@ -21,6 +22,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+
 import { Line , Bar } from 'react-chartjs-2';
 
 ChartJS.register(
@@ -247,6 +249,7 @@ function DailyNewAddresses() {
   
   return (
     <CardBody>
+      <Alert color='danger'>Cummulative inaccurate as data only start from block 20217726...</Alert>
       <Line options={chartOptions} data={chartData} />
     </CardBody>
   );
@@ -720,33 +723,221 @@ function MultiChainPage()
     
   );
 }
-function DfkTvlPage()
+
+function StakedOneTVLPage(props)
+{
+  if(props.data === "") return (<div><Spinner/></div>);
+
+  var xAxisData = [];
+  var yAxisData = [];
+
+  props.data[0].data.forEach( item => {
+    xAxisData.push(item.DAY_DATE.substr(0,10))
+    yAxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18 * 0.33)
+  });
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily HRC20 Transfers',
+      },
+    },
+  };
+
+  const chartData = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'Total Staked ONE ($)',
+        data: yAxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+
+  return (
+    <Card><CardHeader>Staked ONE TVL</CardHeader>
+    <CardBody>
+      <Line data={chartData} options={chartOptions} />
+    </CardBody>
+    </Card>
+  )
+}
+
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 2, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 2, // (causes 2500.99 to be printed as $2,501)
+});
+
+function TVLPageInner(props)
+{
+  if(props.data === "") return (<div><Spinner/></div>);
+
+  const TVLONE = props.data[0].data.at(-1).TOTAL_STAKING / 10**18 * 0.33;
+  const TVLDFL = 500000000;
+  const TVLMultiBridge = 45000000
+  const TVLTranq = 167365845.321767
+  const TVL = TVLONE+TVLDFL+TVLMultiBridge+TVLTranq;
+  return (<Card><CardHeader>Total Value Locked</CardHeader>
+  <CardBody tag='h1'>{formatter.format(TVL)}</CardBody>
+  </Card>)
+}
+
+function TranquilFinancePage(props)
+{
+  if(props.data === "") return (<div><Spinner/></div>);
+
+  if(props.data === "") return (<div><Spinner/></div>);
+
+  var xAxisData = [];
+  var yAxisData = [
+    137981827.5585,
+    141003257.627989,
+    145921995.902802,
+    142472184.51456,
+    147596425.796277,
+    161257580.321767,
+    159933766.428641,
+    164365845.749821,
+    167365845.321767
+  ];
+
+  props.data[0].data.forEach( item => {
+    xAxisData.push(item.DAY_DATE.substr(0,10))
+    //yAxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18 * 0.33)
+  });
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily HRC20 Transfers',
+      },
+    },
+  };
+
+  const chartData = {
+    labels: xAxisData,
+    datasets: [
+      {
+        label: 'Total Value Locked Tranquil ($)',
+        data: yAxisData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+  };
+
+  return (
+    <Card><CardHeader>Tranquil Finance TVL</CardHeader>
+    <CardBody>
+      <Line data={chartData} options={chartOptions} />
+    </CardBody>
+    </Card>
+  )
+
+}
+
+function TVLPage()
 {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
-  const [fetchData2, setFetchData2] = useState("");
 
   useEffect( () => {
-  axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tvl_dfk_lp").then(
-    res => {
-      setFetchData(res);
-    }).catch( err => {
-      setError(true);
-      console.log(err)
-    })
-  }, []);
+    axios.all([ axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_staked_data"),
+                axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tvl_dfk_lp"),
+                axios.get("https://us-east1-dfkwatch-328521.cloudfunctions.net/xJewelRatioHistory"),
+                axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_multichain_bridge"),
+                
+              ])
+        .then(axios.spread((...responses) => {
+          setFetchData(responses)
+        }))
+        .catch( err => {
+          setError(true);
+          console.log(err)
+        })
+  },[])
 
-  useEffect( () => {
-    axios.get("https://us-east1-dfkwatch-328521.cloudfunctions.net/xJewelRatioHistory").then( 
-      res => {
-      setFetchData2(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
+  if (error) return <div>Error occured!</div>;
 
-  if (error) return <div>Something went wrong...</div>;
+  return (
+      <Card>
+        <CardHeader>Total Value Locked</CardHeader>
+        <CardBody>
+          <TVLPageInner data={fetchData} />
+          <StakedOneTVLPage data={fetchData} />
+          <DfkTvlPage data={fetchData} />
+          <TranquilFinancePage data={fetchData} />
+          <Card>
+            <CardHeader>TVL Others [WIP]</CardHeader>
+            <Collapse isOpen={true}>
+            <CardBody>
+              <Card>
+              <CardBody>
+              <Row>SushiSwap (SUSHI)</Row>
+              <Row>ViperSwap (VIPER)</Row>
+              <Row>Hundred Finance (HND)</Row>
+              <Row>Curve (CRV)</Row>
+              <Row>Synapse (SYN)</Row>
+              <Row>FarmersOnly (FOX)</Row>
+              <Row>Euphoria (WAGMI)</Row>
+              <Row>StakeDAO (SDT)</Row>
+              <Row>LootSwap (LOOT)</Row>
+              <Row>WagmiDAO (GMI)</Row>
+              <Row>Fuzz Finance (FUZZ)</Row>
+              <Row>Beefy Finance (BIFI)</Row>
+              <Row>OpenSwap (OPENX)</Row>
+              </CardBody>
+              </Card>
+            </CardBody>
+            </Collapse>
+          </Card>
+          <BridgesPage></BridgesPage>
+        </CardBody>
+      </Card>
+      );
+}
+
+function BridgesPage()
+{
+  return (
+  <Card>
+  <CardHeader>Bridges</CardHeader>
+  <CardBody>
+    <MultiChainPage></MultiChainPage>
+    <Card><CardHeader>BTC Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
+    <Card><CardHeader>ETH Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
+    <Card><CardHeader>ONE Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
+  </CardBody>
+  </Card>
+  );
+}
+
+function DfkTvlPage(props)
+{
+  //const [fetchData, setFetchData] = useState("");
+  //const [fetchData2, setFetchData2] = useState("");
+
+  if(props.data === "") return (<div><Spinner/></div>);
+
+  const fetchData = props.data[1];
+  const fetchData2 = props.data[2];
+
   if (fetchData === "") return <div><Spinner /></div>;
   if (fetchData2 === "") return <div><Spinner /></div>;
 
@@ -773,6 +964,7 @@ function DfkTvlPage()
   var y2AxisData = []
   var y3AxisData = []
   limit = 8;
+  //console.log(fetchData2);
   fetchData2.data.forEach( item => {
     if (limit > 0)
     {
@@ -824,7 +1016,7 @@ function DfkTvlPage()
   
   return (
     <Card>
-      <CardHeader>DFK LP TVL</CardHeader>
+      <CardHeader>Defi-Kingdoms</CardHeader>
       <CardBody>
         <Line options={chartOptions} data={chartData} />
       </CardBody>
@@ -853,50 +1045,7 @@ function Summary() {
       </Row>
       <StakingPage></StakingPage>
       <StakingPage2></StakingPage2>
-      <Card>
-        <CardHeader>TVL</CardHeader>
-        <CardBody>
-          <Card><CardHeader>TVL Harmony</CardHeader></Card>
-          <DfkTvlPage></DfkTvlPage>
-          <Card>
-            <CardHeader>TVL Others [WIP]</CardHeader>
-            <Collapse isOpen={false}>
-            <CardBody>
-              <Card>
-              <CardBody>
-              <Row>Tranquil Finance (TRANQ)</Row>
-              <Row>SushiSwap (SUSHI)</Row>
-              <Row>Multichain (MULTI)</Row>
-              <Row>ViperSwap (VIPER)</Row>
-              <Row>Hundred Finance (HND)</Row>
-              <Row>Curve (CRV)</Row>
-              <Row>Synapse (SYN)</Row>
-              <Row>FarmersOnly (FOX)</Row>
-              <Row>Euphoria (WAGMI)</Row>
-              <Row>StakeDAO (SDT)</Row>
-              <Row>LootSwap (LOOT)</Row>
-              <Row>WagmiDAO (GMI)</Row>
-              <Row>Fuzz Finance (FUZZ)</Row>
-              <Row>Beefy Finance (BIFI)</Row>
-              <Row>OpenSwap (OPENX)</Row>
-              </CardBody>
-              </Card>
-            </CardBody>
-            </Collapse>
-          </Card>
-        </CardBody>
-      </Card>
-      
-      <Card>
-        <CardHeader>Bridges</CardHeader>
-        <CardBody>
-          <MultiChainPage></MultiChainPage>
-          <Card><CardHeader>BTC Bridge [WIP]</CardHeader></Card>
-          <Card><CardHeader>ETH Bridge [WIP]</CardHeader></Card>
-          <Card><CardHeader>ONE Bridge [WIP]</CardHeader></Card>
-        </CardBody>
-      </Card>
-      
+      <TVLPage></TVLPage>
     </Card>
     </Container>
   );

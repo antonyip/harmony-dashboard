@@ -38,13 +38,13 @@ function App() {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/">Summary</NavLink>
+                <NavLink href="/">Harmony-Ecosystem</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/dfk">Defi-Kingdoms</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/tranquil">Tranquil Finance</NavLink>
+                <NavLink href="/tranquil">Tranquil-Finance</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="https://metricsdao.xyz">MetricsDAO</NavLink>
