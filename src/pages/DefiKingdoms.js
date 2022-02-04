@@ -38,20 +38,19 @@ function generateLPChartOptions(title)
         display: false,
         text: title,
       },
-      scales: {
-        y1: {
-          type: 'linear',
-          display: true,
-          position: 'left',
-        },
-        y2: {
-          type: 'linear',
-          display: false,
-          position: 'right',
-          grid: {
-            display: false,
-            drawOnChartArea: false,
-          },
+    },
+    scales: {
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+      },
+      y2: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        grid: {
+          drawOnChartArea: false,
         },
       },
     },

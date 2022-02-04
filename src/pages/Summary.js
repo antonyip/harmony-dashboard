@@ -21,7 +21,18 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Line , Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function DailyTransactions() {
   const [error, setError] = useState(false);
@@ -54,16 +65,6 @@ function DailyTransactions() {
     yAxisData.push(item.TXS_COUNT)
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -91,7 +92,7 @@ function DailyTransactions() {
   
   return (
     <CardBody>
-      <Line options={chartOptions} data={chartData} />
+      <Bar options={chartOptions} data={chartData} />
     </CardBody>
   );
 }
@@ -127,16 +128,6 @@ function DailyAddresses() {
     yAxisData.push(item.ACTIVE_ADDRESSES)
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -164,7 +155,7 @@ function DailyAddresses() {
   
   return (
     <CardBody>
-      <Line options={chartOptions} data={chartData} />
+      <Bar options={chartOptions} data={chartData} />
     </CardBody>
   );
 }
@@ -202,16 +193,7 @@ function DailyNewAddresses() {
     y2AxisData.push(item.CUMMULATIVE_COUNT)
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+  
 
   const chartOptions = {
     responsive: true,
@@ -221,22 +203,21 @@ function DailyNewAddresses() {
       },
       title: {
         display: false,
-        text: 'Daily Blocks',
+        text: 'Daily Hero Sales',
       },
-      scales: {
-        y1: {
-          type: 'linear',
-          display: true,
-          position: 'left',
-        },
-        y2: {
-          type: 'linear',
-          display: false,
-          position: 'right',
-          grid: {
-            display: false,
-            drawOnChartArea: false,
-          },
+    },
+    scales: {
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+      },
+      y2: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        grid: {
+          drawOnChartArea: false,
         },
       },
     },
@@ -246,21 +227,21 @@ function DailyNewAddresses() {
     labels: xAxisData,
     datasets: [
       {
-        type:'bar',
-        label: 'Daily New Addresses',
-        data: yAxisData,
+        type: 'line',
+        label: 'Cumulative New Addresses',
+        data: y2AxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         yAxisID: 'y2',
       },
       {
-        type:'line',
-        label: 'Cumulative New Addresses',
-        data: y2AxisData,
+        type: 'bar',
+        label: 'Daily New Addresses',
+        data: yAxisData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         yAxisID: 'y1',
-      }
+      },
     ],
   };
   
@@ -302,16 +283,6 @@ function DailyBlocks() {
     yAxisData.push(item.DAILY_BLOCKS)
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -339,7 +310,7 @@ function DailyBlocks() {
   
   return (
     <CardBody>
-      <Line options={chartOptions} data={chartData} />
+      <Bar options={chartOptions} data={chartData} />
     </CardBody>
   );
 }
@@ -375,16 +346,6 @@ function DailyGas() {
     yAxisData.push(item.GAS_TOTAL)
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -412,7 +373,7 @@ function DailyGas() {
   
   return (
     <CardBody>
-      <Line options={chartOptions} data={chartData} />
+      <Bar options={chartOptions} data={chartData} />
     </CardBody>
   );
 }
@@ -448,16 +409,6 @@ function DailyHRC20() {
     yAxisData.push(item.TRANSFERS_COUNT)
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -485,7 +436,7 @@ function DailyHRC20() {
   
   return (
     <CardBody>
-      <Line options={chartOptions} data={chartData} />
+      <Bar options={chartOptions} data={chartData} />
     </CardBody>
   );
 }
@@ -528,16 +479,6 @@ function StakingPage() {
     y4AxisData.push(parseInt(item.CIRCULATING_SUPPLY))
     y5AxisData.push(parseInt(item.TOTAL_SUPPLY))
   });
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
 
   const chartOptions = {
     responsive: true,
@@ -604,12 +545,12 @@ function StakingPage() {
   return (
     <>
     <Row>
-      <Col xs='6'><Line options={chartOptions} data={chartData} /></Col>
-      <Col xs='6'><Line options={chartOptions} data={chartData2} /></Col>
+      <Col xs='6'><Bar options={chartOptions} data={chartData} /></Col>
+      <Col xs='6'><Bar options={chartOptions} data={chartData2} /></Col>
     </Row>
     <Row>
-      <Col xs='6'><Line options={chartOptions} data={chartData3} /></Col>
-      <Col xs='6'><Line options={chartOptions} data={chartData4} /></Col>
+      <Col xs='6'><Bar options={chartOptions} data={chartData3} /></Col>
+      <Col xs='6'><Bar options={chartOptions} data={chartData4} /></Col>
     </Row>
     </>
   );
@@ -650,16 +591,6 @@ function StakingPage2() {
     y4AxisData.push(parseInt(item.SUM_ACTIVE_VALIDATORS))
     y5AxisData.push(parseInt(item.SUM_TOTAL_VALIDATORS))
   });
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
 
   const chartOptions = {
     responsive: true,
@@ -714,9 +645,9 @@ function StakingPage2() {
   return (
     <>
     <Row>
-      <Col xs='4'><Line options={chartOptions} data={chartData} /></Col>
-      <Col xs='4'><Line options={chartOptions} data={chartData3} /></Col>
-      <Col xs='4'><Line options={chartOptions} data={chartData4} /></Col>
+      <Col xs='4'><Bar options={chartOptions} data={chartData} /></Col>
+      <Col xs='4'><Bar options={chartOptions} data={chartData3} /></Col>
+      <Col xs='4'><Bar options={chartOptions} data={chartData4} /></Col>
     </Row>
     </>
   );
@@ -754,16 +685,6 @@ function MultiChainPage()
     yAxisData.push(item.DAILY_TVL)
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -793,7 +714,7 @@ function MultiChainPage()
     <Card>
       <CardHeader>Multichain Bridge TVL</CardHeader>
       <CardBody>
-        <Line options={chartOptions} data={chartData} />
+        <Bar options={chartOptions} data={chartData} />
       </CardBody>
     </Card>
     
@@ -861,16 +782,6 @@ function DfkTvlPage()
     }
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -888,18 +799,21 @@ function DfkTvlPage()
     labels: xAxisData,
     datasets: [
       {
+        type:'bar',
         label: 'DFK LP TVL',
         data: yAxisData,
         borderColor: 'rgb(255, 0, 0)',
         backgroundColor: 'rgba(255, 0, 0, 0.5)',
       },
       {
+        type:'bar',
         label: 'DFK Staked TVL',
         data: y2AxisData,
         borderColor: 'rgb(0, 99, 0)',
         backgroundColor: 'rgba(0, 99, 0, 0.5)',
       },
       {
+        type:'line',
         label: 'DFK Total TVL',
         data: y3AxisData,
         borderColor: 'rgb(0, 0, 132)',
