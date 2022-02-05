@@ -64,20 +64,21 @@ function generateLPChartData(options)
     datasets: [
       {
         type:'line',
-        label: options.y2Name,
-        data: options.data2,
-        borderColor: options.y2Color,
-        backgroundColor: options.y2Color,
-        yAxisID: 'y2',
-      },
-      {
-        type:'line',
         label: options.y1Name,
         data: options.data1,
         borderColor: 'rgba(0, 155, 0, 0.5)',
         backgroundColor: 'rgba(0, 155, 0, 0.5)',
         yAxisID: 'y1',
       },
+      {
+        type:'line',
+        label: options.y2Name,
+        data: options.data2,
+        borderColor: options.y2Color,
+        backgroundColor: options.y2Color,
+        yAxisID: 'y2',
+      },
+      
       
     ],
   };
