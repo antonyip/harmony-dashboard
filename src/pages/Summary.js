@@ -25,6 +25,10 @@ import {
 
 import { Line , Bar } from 'react-chartjs-2';
 
+
+const TODO_JEWEL_PRICE = 7;
+const TODO_WONE_PRICE = 0.33;
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -249,7 +253,6 @@ function DailyNewAddresses() {
   
   return (
     <CardBody>
-      <Alert color='danger'>Cummulative inaccurate as data only start from block 20217726...</Alert>
       <Line options={chartOptions} data={chartData} />
     </CardBody>
   );
@@ -733,7 +736,7 @@ function StakedOneTVLPage(props)
 
   props.data[0].data.forEach( item => {
     xAxisData.push(item.DAY_DATE.substr(0,10))
-    yAxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18 * 0.33)
+    yAxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18 * TODO_WONE_PRICE)
   });
 
   const chartOptions = {
@@ -783,11 +786,12 @@ function TVLPageInner(props)
 {
   if(props.data === "") return (<div><Spinner/></div>);
 
-  const TVLONE = props.data[0].data[props.data[0].data.length - 1].TOTAL_STAKING / 10**18 * 0.33;
-  const TVLDFL = 500000000;
-  const TVLMultiBridge = 45000000
-  const TVLTranq = 167365845.321767
-  const TVL = TVLONE+TVLDFL+TVLMultiBridge+TVLTranq;
+  const TVLONE = props.data[0].data[props.data[0].data.length - 1].TOTAL_STAKING / 10**18 * TODO_WONE_PRICE;
+  const TVLDFK = props.data[1].data[props.data[1].data.length - 1].TOTAL_VALUE_LOCKED
+                  + props.data[2].data[0].balance * TODO_JEWEL_PRICE
+  const TVLMultiBridge = props.data[3].data[props.data[3].data.length - 1].DAILY_TVL;
+  const TVLTranq = props.data[4].data[props.data[4].data.length - 1].TRANQ_TVL;
+  const TVL = TVLONE+TVLDFK+TVLMultiBridge+TVLTranq;
   return (<Card><CardHeader>Total Value Locked</CardHeader>
   <CardBody tag='h1'>{formatter.format(TVL)}</CardBody>
   </Card>)
@@ -797,25 +801,15 @@ function TranquilFinancePage(props)
 {
   if(props.data === "") return (<div><Spinner/></div>);
 
-  if(props.data === "") return (<div><Spinner/></div>);
-
   var xAxisData = [];
-  var yAxisData = [
-    137981827.5585,
-    141003257.627989,
-    145921995.902802,
-    142472184.51456,
-    147596425.796277,
-    161257580.321767,
-    159933766.428641,
-    164365845.749821,
-    167365845.321767
-  ];
+  var yAxisData = [];
 
-  props.data[0].data.forEach( item => {
+  props.data[4].data.forEach( item => {
     xAxisData.push(item.DAY_DATE.substr(0,10))
-    //yAxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18 * 0.33)
+    yAxisData.push(parseFloat(item.TRANQ_TVL))
   });
+
+
 
   const chartOptions = {
     responsive: true,
@@ -834,6 +828,7 @@ function TranquilFinancePage(props)
     labels: xAxisData,
     datasets: [
       {
+        type: 'line',
         label: 'Total Value Locked Tranquil ($)',
         data: yAxisData,
         borderColor: 'rgb(255, 99, 132)',
@@ -862,7 +857,7 @@ function TVLPage()
                 axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tvl_dfk_lp"),
                 axios.get("https://us-east1-dfkwatch-328521.cloudfunctions.net/xJewelRatioHistory"),
                 axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_multichain_bridge"),
-                
+                axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tranquil_tvl"),
               ])
         .then(axios.spread((...responses) => {
           setFetchData(responses)
@@ -968,8 +963,8 @@ function DfkTvlPage(props)
   fetchData2.data.forEach( item => {
     if (limit > 0)
     {
-      y2AxisData.push(item.balance * 7)
-      y3AxisData.push(item.balance * 7 + yAxisData[8-limit])
+      y2AxisData.push(item.balance * TODO_JEWEL_PRICE)
+      y3AxisData.push(item.balance * TODO_JEWEL_PRICE + yAxisData[8-limit])
       limit-=1;
     }
   });
