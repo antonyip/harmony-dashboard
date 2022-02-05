@@ -8,6 +8,12 @@ import {
     Spinner,
     Collapse,
     //Alert,
+    TabContent, 
+    TabPane, 
+    Nav, 
+    NavItem, 
+    NavLink, 
+    Button,
 } from "reactstrap";
 import axios from "axios"
 import { useEffect, useState } from "react";
@@ -515,6 +521,7 @@ function StakingPage() {
     labels: xAxisData,
     datasets: [
       {
+        type: 'bar',
         label: 'Total Staked Value (ONE)',
         data: y3AxisData,
         borderColor: 'rgba(62, 200, 250, 0.8)',
@@ -764,6 +771,7 @@ function StakedOneTVLPage(props)
     labels: xAxisData,
     datasets: [
       {
+        type: 'bar',
         label: 'Total Staked ONE ($)',
         data: yAxisData,
         borderColor: 'rgba(62, 200, 250, 0.8)',
@@ -800,9 +808,11 @@ function TVLPageInner(props)
   const TVLMultiBridge = props.data[3].data[props.data[3].data.length - 1].DAILY_TVL;
   const TVLTranq = props.data[4].data[props.data[4].data.length - 1].TRANQ_TVL;
   const TVL = TVLONE+TVLDFK+TVLMultiBridge+TVLTranq;
-  return (<Card><CardHeader>Total Value Locked</CardHeader>
-  <CardBody tag='h1'>{formatter.format(TVL)}</CardBody>
-  </Card>)
+
+  return (
+    <Card>
+      <CardBody tag='h1'>{formatter.format(TVL)}</CardBody>
+    </Card>)
 }
 
 function TranquilFinancePage(props)
@@ -836,7 +846,7 @@ function TranquilFinancePage(props)
     labels: xAxisData,
     datasets: [
       {
-        type: 'line',
+        type: 'bar',
         label: 'Total Value Locked Tranquil ($)',
         data: yAxisData,
         borderColor: 'rgba(62, 200, 250, 0.8)',
@@ -914,6 +924,7 @@ function TVLPage()
             </CardBody>
             </Collapse>
           </Card>
+          <br />
           <BridgesPage></BridgesPage>
         </CardBody>
       </Card>
@@ -1036,34 +1047,88 @@ function DfkTvlPage(props)
 }
 
 function Summary() {
+
+  const [activeTab, setActiveTab] = useState('1');
+
   return (
     <Container>
-      <br></br>
-      <Card>
-      <CardHeader>Harmony Blockchain Statictics</CardHeader>
-      <Row>
-        <Col xs='6'><DailyBlocks /></Col>
-        <Col xs='6'><DailyGas /></Col>
-      </Row>
-      <Row>
-        <Col xs='6'><DailyTransactions /></Col>
-        <Col xs='6'><DailyHRC20 /></Col>
-      </Row>
-      </Card>
-      <br />
-      <Card>
-      <CardHeader>Harmony Address Statictics</CardHeader>
-      <Row>
-        <Col xs='6'><DailyAddresses /></Col>
-        <Col xs='6'><DailyNewAddresses /></Col>
-      </Row>
-      </Card>
-      <br />
-      <StakingPage></StakingPage>
-      <br />
-      <StakingPage2></StakingPage2>
-      <br />
-      <TVLPage></TVLPage>
+      <br/>
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={'a'}
+              onClick={() => { setActiveTab('1'); }}
+            >
+              Block Stats
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={'b'}
+              onClick={() => { setActiveTab('2'); }}
+            >
+              Address Stats
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={'b'}
+              onClick={() => { setActiveTab('3'); }}
+            >
+              Staking Stats
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={'b'}
+              onClick={() => { setActiveTab('4'); }}
+            >
+              Validator Stats
+            </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink
+                className={'b'}
+                onClick={() => { setActiveTab('5'); }}
+              >
+                Total Value Locked
+              </NavLink>
+          </NavItem>
+        </Nav>
+        <br />
+      <TabContent activeTab={activeTab}>
+        <TabPane tabId="1">
+          <Card>
+          <CardHeader>Harmony Blockchain Statictics</CardHeader>
+          <Row>
+            <Col xs='6'><DailyBlocks /></Col>
+            <Col xs='6'><DailyGas /></Col>
+          </Row>
+          <Row>
+            <Col xs='6'><DailyTransactions /></Col>
+            <Col xs='6'><DailyHRC20 /></Col>
+          </Row>
+          </Card>
+        </TabPane>
+      <TabPane tabId="2">
+        <Card>
+        <CardHeader>Harmony Address Statictics</CardHeader>
+        <Row>
+          <Col xs='6'><DailyAddresses /></Col>
+          <Col xs='6'><DailyNewAddresses /></Col>
+        </Row>
+        </Card>
+      </TabPane>
+      <TabPane tabId="3">
+      <StakingPage />
+      </TabPane>
+      <TabPane tabId="4">
+      <StakingPage2 />
+      </TabPane>
+      <TabPane tabId="5">
+      <TVLPage />
+      </TabPane>
+      </TabContent>
     </Container>
   );
 }

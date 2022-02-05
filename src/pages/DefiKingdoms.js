@@ -1652,45 +1652,39 @@ function GameWatch() {
 
 function DefiKingdoms() {
   return (
-    <>
-    <br></br>
     <Container>
-      
-      {/* <Alert color="danger">
-        Data ingestion has some issues... so the "Game Stats" aren't accurate.. (26-28 Jan 2022)
-      </Alert> */}
+      <br />
       <Card>
         <CardImg src="https://aws1.discourse-cdn.com/business7/uploads/harmony1/original/2X/6/68ef6c77e396b64cbf1c4ad9f458e373df9528d2.gif" />
       </Card>
       <br></br>
       <Card>
         <CardHeader>DefiKingdoms - Currency Prices</CardHeader>
-        <PriceWatch></PriceWatch> 
+        <PriceWatch />
       </Card>
       <br></br>
       <Card>
         <CardHeader>DefiKingdoms - Jewels</CardHeader>
-        <BankWatch></BankWatch>
+        <BankWatch />
       </Card>
       <br></br>
       <Card>
         <CardHeader>DefiKingdoms - Liquidity Pools</CardHeader>
-        <PoolWatch></PoolWatch>
-        <PoolWatch2></PoolWatch2>
+        <PoolWatch />
+        <PoolWatch2 />
       </Card>
       <br></br>
       <Card>
         <CardHeader>DefiKingdoms - Game Stats</CardHeader>
-        <GameWatch></GameWatch>
-        <HeroWatch></HeroWatch>
+        <GameWatch />
+        <HeroWatch />
       </Card>
       <br></br>
       <Card>
         <CardHeader>DefiKingdoms - Circulating Items Inventory</CardHeader>
-        <ItemWatch></ItemWatch>
+        <ItemWatch />
       </Card>
     </Container>
-    </>
   );
 }
 
