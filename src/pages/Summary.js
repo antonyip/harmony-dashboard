@@ -7,7 +7,7 @@ import {
     Container,
     Spinner,
     Collapse,
-    Alert,
+    //Alert,
 } from "reactstrap";
 import axios from "axios"
 import { useEffect, useState } from "react";
@@ -90,8 +90,8 @@ function DailyTransactions() {
       {
         label: 'Daily Transactions',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -153,8 +153,8 @@ function DailyAddresses() {
       {
         label: 'Daily Active Addresses',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -236,16 +236,16 @@ function DailyNewAddresses() {
         type: 'line',
         label: 'Cumulative New Addresses',
         data: y2AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(60, 145, 250, 0.8)',
+        backgroundColor: 'rgba(60, 145, 250, 0.8)',
         yAxisID: 'y2',
       },
       {
         type: 'bar',
         label: 'Daily New Addresses',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
         yAxisID: 'y1',
       },
     ],
@@ -308,8 +308,8 @@ function DailyBlocks() {
       {
         label: 'Daily Blocks',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -371,8 +371,8 @@ function DailyGas() {
       {
         label: 'Daily Gas Usage',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -434,8 +434,8 @@ function DailyHRC20() {
       {
         label: 'Daily HRC20 Transfers',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -505,8 +505,8 @@ function StakingPage() {
       {
         label: 'Median Staked Value (ONE)',
         data: y2AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -517,8 +517,8 @@ function StakingPage() {
       {
         label: 'Total Staked Value (ONE)',
         data: y3AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -529,8 +529,8 @@ function StakingPage() {
       {
         label: 'Circulating Supply (ONE)',
         data: y4AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -541,8 +541,8 @@ function StakingPage() {
       {
         label: 'Total Supply (ONE)',
         data: y5AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -550,14 +550,21 @@ function StakingPage() {
 
   return (
     <>
-    <Row>
-      <Col xs='6'><Bar options={chartOptions} data={chartData} /></Col>
-      <Col xs='6'><Bar options={chartOptions} data={chartData2} /></Col>
-    </Row>
-    <Row>
-      <Col xs='6'><Bar options={chartOptions} data={chartData3} /></Col>
-      <Col xs='6'><Bar options={chartOptions} data={chartData4} /></Col>
-    </Row>
+      <Card>
+        <CardHeader>Harmony Staking Statictics</CardHeader>
+      <Row>
+        <Col xs='6'><Bar options={chartOptions} data={chartData} /></Col>
+        <Col xs='6'><Bar options={chartOptions} data={chartData2} /></Col>
+      </Row>
+      </Card>
+      <br />
+      <Card>
+        <CardHeader>Harmony Supply Statictics</CardHeader>
+      <Row>
+        <Col xs='6'><Bar options={chartOptions} data={chartData3} /></Col>
+        <Col xs='6'><Bar options={chartOptions} data={chartData4} /></Col>
+      </Row>
+      </Card>
     </>
   );
 }
@@ -617,8 +624,8 @@ function StakingPage2() {
       {
         label: 'Number of On-Chain Active Delgators',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -629,8 +636,8 @@ function StakingPage2() {
       {
         label: 'Number of On-Chain Active Validators',
         data: y4AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -641,21 +648,22 @@ function StakingPage2() {
       {
         label: 'Total Number of Registered Validators',
         data: y5AxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
 
 
   return (
-    <>
+    <Card>
+      <CardHeader>Harmony Validator Statictics</CardHeader>
     <Row>
       <Col xs='4'><Bar options={chartOptions} data={chartData} /></Col>
       <Col xs='4'><Bar options={chartOptions} data={chartData3} /></Col>
       <Col xs='4'><Bar options={chartOptions} data={chartData4} /></Col>
     </Row>
-    </>
+    </Card>
   );
 }
 
@@ -710,8 +718,8 @@ function MultiChainPage()
       {
         label: 'Multichain Bridge TVL',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -758,8 +766,8 @@ function StakedOneTVLPage(props)
       {
         label: 'Total Staked ONE ($)',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -831,8 +839,8 @@ function TranquilFinancePage(props)
         type: 'line',
         label: 'Total Value Locked Tranquil ($)',
         data: yAxisData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -875,12 +883,16 @@ function TVLPage()
         <CardHeader>Total Value Locked</CardHeader>
         <CardBody>
           <TVLPageInner data={fetchData} />
+          <br />
           <StakedOneTVLPage data={fetchData} />
+          <br />
           <DfkTvlPage data={fetchData} />
+          <br />
           <TranquilFinancePage data={fetchData} />
+          <br />
           <Card>
             <CardHeader>TVL Others [WIP]</CardHeader>
-            <Collapse isOpen={true}>
+            <Collapse isOpen={false}>
             <CardBody>
               <Card>
               <CardBody>
@@ -915,8 +927,11 @@ function BridgesPage()
   <CardHeader>Bridges</CardHeader>
   <CardBody>
     <MultiChainPage></MultiChainPage>
+    <br />
     <Card><CardHeader>BTC Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
+    <br />
     <Card><CardHeader>ETH Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
+    <br />
     <Card><CardHeader>ONE Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
   </CardBody>
   </Card>
@@ -989,22 +1004,22 @@ function DfkTvlPage(props)
         type:'bar',
         label: 'DFK LP TVL',
         data: yAxisData,
-        borderColor: 'rgb(255, 0, 0)',
-        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+        borderColor: 'rgba(60, 145, 250, 0.8)',
+        backgroundColor: 'rgba(60, 145, 250, 0.8)',
       },
       {
         type:'bar',
         label: 'DFK Staked TVL',
         data: y2AxisData,
-        borderColor: 'rgb(0, 99, 0)',
-        backgroundColor: 'rgba(0, 99, 0, 0.5)',
+        borderColor: 'rgb(0, 155, 0)',
+        backgroundColor: 'rgba(0, 155, 0, 0.5)',
       },
       {
         type:'line',
         label: 'DFK Total TVL',
         data: y3AxisData,
-        borderColor: 'rgb(0, 0, 132)',
-        backgroundColor: 'rgba(0, 0, 132, 0.5)',
+        borderColor: 'rgba(62, 200, 250, 0.8)',
+        backgroundColor: 'rgba(62, 200, 250, 0.8)',
       }
     ],
   };
@@ -1024,7 +1039,7 @@ function Summary() {
   return (
     <Container>
       <br></br>
-    <Card>
+      <Card>
       <CardHeader>Harmony Blockchain Statictics</CardHeader>
       <Row>
         <Col xs='6'><DailyBlocks /></Col>
@@ -1034,14 +1049,21 @@ function Summary() {
         <Col xs='6'><DailyTransactions /></Col>
         <Col xs='6'><DailyHRC20 /></Col>
       </Row>
+      </Card>
+      <br />
+      <Card>
+      <CardHeader>Harmony Address Statictics</CardHeader>
       <Row>
         <Col xs='6'><DailyAddresses /></Col>
         <Col xs='6'><DailyNewAddresses /></Col>
       </Row>
+      </Card>
+      <br />
       <StakingPage></StakingPage>
+      <br />
       <StakingPage2></StakingPage2>
+      <br />
       <TVLPage></TVLPage>
-    </Card>
     </Container>
   );
 }
