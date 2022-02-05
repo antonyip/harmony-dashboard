@@ -559,18 +559,22 @@ function StakingPage() {
     <>
       <Card>
         <CardHeader>Harmony Staking Statictics</CardHeader>
+        <CardBody>
       <Row>
         <Col xs='6'><Bar options={chartOptions} data={chartData} /></Col>
         <Col xs='6'><Bar options={chartOptions} data={chartData2} /></Col>
       </Row>
+      </CardBody>
       </Card>
       <br />
       <Card>
         <CardHeader>Harmony Supply Statictics</CardHeader>
+        <CardBody>
       <Row>
         <Col xs='6'><Bar options={chartOptions} data={chartData3} /></Col>
         <Col xs='6'><Bar options={chartOptions} data={chartData4} /></Col>
       </Row>
+      </CardBody>
       </Card>
     </>
   );
@@ -665,11 +669,13 @@ function StakingPage2() {
   return (
     <Card>
       <CardHeader>Harmony Validator Statictics</CardHeader>
+      <CardBody>
     <Row>
       <Col xs='4'><Bar options={chartOptions} data={chartData} /></Col>
       <Col xs='4'><Bar options={chartOptions} data={chartData3} /></Col>
       <Col xs='4'><Bar options={chartOptions} data={chartData4} /></Col>
     </Row>
+    </CardBody>
     </Card>
   );
 }
@@ -781,7 +787,7 @@ function StakedOneTVLPage(props)
   };
 
   return (
-    <Card><CardHeader>Staked ONE TVL</CardHeader>
+    <Card xs={6}><CardHeader>Staked ONE TVL</CardHeader>
     <CardBody>
       <Line data={chartData} options={chartOptions} />
     </CardBody>
@@ -811,6 +817,7 @@ function TVLPageInner(props)
 
   return (
     <Card>
+      <CardHeader>Total Value Locked</CardHeader>
       <CardBody tag='h1'>{formatter.format(TVL)}</CardBody>
     </Card>)
 }
@@ -889,18 +896,19 @@ function TVLPage()
   if (error) return <div>Error occured!</div>;
 
   return (
-      <Card>
-        <CardHeader>Total Value Locked</CardHeader>
-        <CardBody>
+        <>
           <TVLPageInner data={fetchData} />
           <br />
-          <StakedOneTVLPage data={fetchData} />
+          <Row>
+          <Col md={6}><StakedOneTVLPage data={fetchData} /></Col>
           <br />
-          <DfkTvlPage data={fetchData} />
+          <Col md={6}><DfkTvlPage data={fetchData} /></Col>
+          </Row>
           <br />
-          <TranquilFinancePage data={fetchData} />
+          <Row>
+          <Col md={6}><TranquilFinancePage data={fetchData} /></Col>
           <br />
-          <Card>
+          {/* <Card>
             <CardHeader>TVL Others [WIP]</CardHeader>
             <Collapse isOpen={false}>
             <CardBody>
@@ -923,30 +931,33 @@ function TVLPage()
               </Card>
             </CardBody>
             </Collapse>
-          </Card>
-          <br />
-          <BridgesPage></BridgesPage>
-        </CardBody>
-      </Card>
+          </Card> 
+          <br /> */}
+          <Col md={6}><BridgesPage></BridgesPage></Col>
+          </Row>
+        </>
       );
 }
 
 function BridgesPage()
 {
-  return (
-  <Card>
-  <CardHeader>Bridges</CardHeader>
-  <CardBody>
-    <MultiChainPage></MultiChainPage>
-    <br />
-    <Card><CardHeader>BTC Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
-    <br />
-    <Card><CardHeader>ETH Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
-    <br />
-    <Card><CardHeader>ONE Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
-  </CardBody>
-  </Card>
-  );
+  return <MultiChainPage />;
+  /*
+    return (
+    <Card>
+    <CardHeader>Bridges</CardHeader>
+    <CardBody>
+      <MultiChainPage></MultiChainPage>
+      <br />
+      <Card><CardHeader>BTC Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
+      <br />
+      <Card><CardHeader>ETH Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
+      <br />
+      <Card><CardHeader>ONE Bridge [WIP]</CardHeader><CardBody></CardBody></Card>
+    </CardBody>
+    </Card>
+    );
+  */
 }
 
 function DfkTvlPage(props)
@@ -1120,13 +1131,13 @@ function Summary() {
         </Card>
       </TabPane>
       <TabPane tabId="3">
-      <StakingPage />
+        <StakingPage />
       </TabPane>
       <TabPane tabId="4">
-      <StakingPage2 />
+        <StakingPage2 />
       </TabPane>
       <TabPane tabId="5">
-      <TVLPage />
+        <TVLPage />
       </TabPane>
       </TabContent>
     </Container>
