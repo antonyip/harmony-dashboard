@@ -204,7 +204,6 @@ function BankPie(props) {
   const [lockedJewelSupply, setLockedJewelSupply] = useState(268522000);
   const [lpJewelSupply, setLpJewelSupply] = useState(22973000);
   useEffect( () => {
-
     // unlockedSupply
     axios.post("https://api.harmony.one",{
     "jsonrpc": "2.0",
@@ -260,6 +259,107 @@ function BankPie(props) {
     })
   } ,[]);
 
+  // dfk specific
+
+  const [questWallet,setQuestWallet] = useState(2500000)
+  useEffect( () => {
+    // unlockedSupply
+    axios.post("https://api.harmony.one",{
+    "jsonrpc": "2.0",
+    "method": "hmy_call",
+    "params": [
+        {
+            "to": "0x72cb10c6bfa5624dd07ef608027e366bd690048f",
+            "data": "0x70a082310000000000000000000000005ca5bcd91929c7152ca577e8c001c9b5a185f568"
+        },
+        "latest"
+    ],
+    "id": 1
+    }).then( 
+      res => {
+      setQuestWallet(parseInt(res.data.result,16)/10**18)
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+  
+  // dev fund
+  const [devWallet,setDevWallet] = useState(7000000)
+  useEffect( () => {
+    // unlockedSupply
+    axios.post("https://api.harmony.one",{
+    "jsonrpc": "2.0",
+    "method": "hmy_call",
+    "params": [
+        {
+            "to": "0x72cb10c6bfa5624dd07ef608027e366bd690048f",
+            "data": "0x70a08231000000000000000000000000a4b9a93013a5590db92062cf58d4b0ab4f35dbfb"
+        },
+        "latest"
+    ],
+    "id": 1
+    }).then( 
+      res => {
+        setDevWallet(parseInt(res.data.result,16)/10**18)
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+  
+  
+  
+  // marketing fund
+  const [marketWallet,setMarketWallet] = useState(5000000)
+  useEffect( () => {
+    // unlockedSupply
+    axios.post("https://api.harmony.one",{
+    "jsonrpc": "2.0",
+    "method": "hmy_call",
+    "params": [
+        {
+            "to": "0x72cb10c6bfa5624dd07ef608027e366bd690048f",
+            "data": "0x70a082310000000000000000000000003875e5398766a29c1b28cc2068a0396cba36ef99"
+        },
+        "latest"
+    ],
+    "id": 1
+    }).then( 
+      res => {
+        setMarketWallet(parseInt(res.data.result,16)/10**18)
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+  
+  
+  
+  //team payment
+  const [teamWallet,setTeamWallet] = useState(500000)
+  useEffect( () => {
+    // unlockedSupply
+    axios.post("https://api.harmony.one",{
+    "jsonrpc": "2.0",
+    "method": "hmy_call",
+    "params": [
+        {
+            "to": "0x72cb10c6bfa5624dd07ef608027e366bd690048f",
+            "data": "0x70a082310000000000000000000000002b12d9a2480d6dd9f71dabaa366c87134195b679"
+        },
+        "latest"
+    ],
+    "id": 1
+    }).then( 
+      res => {
+        setTeamWallet(parseInt(res.data.result,16)/10**18)
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+  } ,[]);
+  
   
 
   if (error) return <CardBody>Error Loading</CardBody>;
@@ -280,13 +380,15 @@ function BankPie(props) {
     },
   };
 
-  var jQuestRewards = 2387129; // rough estimate based on kingdom watch  TODO: pull data from blockchain
-  var jDevTeam = 6784755 +  4822886 + 701050; // rough estimate based on kingdom watch  TODO: pull data from blockchain
+  
+  var jQuestRewards = questWallet;
+  var jDevTeam = devWallet +  marketWallet + teamWallet;
   var jBank = props.bank;
   var jLP = lpJewelSupply;
   var jLocked = lockedJewelSupply
   var jWallet = unlockedJewelSupply - jDevTeam - jBank - jLP - jQuestRewards
   var jUnallocated = totalJewelSupply - jWallet - jLocked - jDevTeam - jBank - jLP - jQuestRewards
+  console.log(jQuestRewards, jDevTeam)
   const pieData = {
     labels: ['DevTeam', 'Bank', 'LP', 'Players', 'QuestRewards', 'Locked', 'Unallocated'],
     datasets: [
@@ -360,6 +462,107 @@ function BankPie2(props) {
     })
   } ,[]);
 
+    // dfk specific
+
+    const [questWallet,setQuestWallet] = useState(2500000)
+    useEffect( () => {
+      // unlockedSupply
+      axios.post("https://api.harmony.one",{
+      "jsonrpc": "2.0",
+      "method": "hmy_call",
+      "params": [
+          {
+              "to": "0x72cb10c6bfa5624dd07ef608027e366bd690048f",
+              "data": "0x70a082310000000000000000000000005ca5bcd91929c7152ca577e8c001c9b5a185f568"
+          },
+          "latest"
+      ],
+      "id": 1
+      }).then( 
+        res => {
+        setQuestWallet(parseInt(res.data.result,16)/10**18)
+      }).catch( err => {
+        console.log(err)
+        setError(true);
+      })
+    } ,[]);
+    
+    // dev fund
+    const [devWallet,setDevWallet] = useState(7000000)
+    useEffect( () => {
+      // unlockedSupply
+      axios.post("https://api.harmony.one",{
+      "jsonrpc": "2.0",
+      "method": "hmy_call",
+      "params": [
+          {
+              "to": "0x72cb10c6bfa5624dd07ef608027e366bd690048f",
+              "data": "0x70a08231000000000000000000000000a4b9a93013a5590db92062cf58d4b0ab4f35dbfb"
+          },
+          "latest"
+      ],
+      "id": 1
+      }).then( 
+        res => {
+          setDevWallet(parseInt(res.data.result,16)/10**18)
+      }).catch( err => {
+        console.log(err)
+        setError(true);
+      })
+    } ,[]);
+    
+    
+    
+    // marketing fund
+    const [marketWallet,setMarketWallet] = useState(5000000)
+    useEffect( () => {
+      // unlockedSupply
+      axios.post("https://api.harmony.one",{
+      "jsonrpc": "2.0",
+      "method": "hmy_call",
+      "params": [
+          {
+              "to": "0x72cb10c6bfa5624dd07ef608027e366bd690048f",
+              "data": "0x70a082310000000000000000000000003875e5398766a29c1b28cc2068a0396cba36ef99"
+          },
+          "latest"
+      ],
+      "id": 1
+      }).then( 
+        res => {
+          setMarketWallet(parseInt(res.data.result,16)/10**18)
+      }).catch( err => {
+        console.log(err)
+        setError(true);
+      })
+    } ,[]);
+    
+    
+    
+    //team payment
+    const [teamWallet,setTeamWallet] = useState(500000)
+    useEffect( () => {
+      // unlockedSupply
+      axios.post("https://api.harmony.one",{
+      "jsonrpc": "2.0",
+      "method": "hmy_call",
+      "params": [
+          {
+              "to": "0x72cb10c6bfa5624dd07ef608027e366bd690048f",
+              "data": "0x70a082310000000000000000000000002b12d9a2480d6dd9f71dabaa366c87134195b679"
+          },
+          "latest"
+      ],
+      "id": 1
+      }).then( 
+        res => {
+          setTeamWallet(parseInt(res.data.result,16)/10**18)
+      }).catch( err => {
+        console.log(err)
+        setError(true);
+      })
+    } ,[]);
+
   if (error) return <CardBody>Error Loading</CardBody>;
   if (fetchData === "") return <CardBody><Spinner /></CardBody>;
 
@@ -377,8 +580,8 @@ function BankPie2(props) {
     },
   };
 
-  var jQuestRewards = 2387129; // rough estimate based on kingdom watch  TODO: pull data from blockchain
-  var jDevTeam = 6784755 + 4822886 + 701050; // rough estimate based on kingdom watch  TODO: pull data from blockchain
+  var jQuestRewards = questWallet; // rough estimate based on kingdom watch  TODO: pull data from blockchain
+  var jDevTeam = devWallet + marketWallet + teamWallet; // rough estimate based on kingdom watch  TODO: pull data from blockchain
   var jBank = props.bank;
   var jLP = lpJewelSupply;
   var jWallet = unlockedJewelSupply - jDevTeam - jBank - jLP - jQuestRewards
