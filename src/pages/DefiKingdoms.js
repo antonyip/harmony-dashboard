@@ -26,6 +26,18 @@ import {
 } from 'chart.js';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 function generateLPChartOptions(title)
 {
   return {
@@ -126,16 +138,6 @@ function PriceCol(props) {
     }
   });
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
   const chartOptions = {
     responsive: true,
     plugins: {
@@ -184,7 +186,14 @@ function PriceWatch() {
   } ,[]);
 
   if (error) return <CardBody>Error Loading</CardBody>;
-  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
+  if (fetchData === "") return (
+    <Row>
+      <Col xs={3}><Spinner/></Col>
+      <Col xs={3}><Spinner/></Col>
+      <Col xs={3}><Spinner/></Col>
+      <Col xs={3}><Spinner/></Col>
+    </Row>
+    );
 
   return (
     <Row>
@@ -389,7 +398,7 @@ function BankPie(props) {
   var jLocked = lockedJewelSupply
   var jWallet = unlockedJewelSupply - jDevTeam - jBank - jLP - jQuestRewards
   var jUnallocated = totalJewelSupply - jWallet - jLocked - jDevTeam - jBank - jLP - jQuestRewards
-  console.log(jQuestRewards, jDevTeam)
+  
   const pieData = {
     labels: ['DevTeam', 'Bank', 'LP', 'Players', 'QuestRewards', 'Locked', 'Unallocated'],
     datasets: [
@@ -651,15 +660,6 @@ function BankWatch() {
       limit -= 1;
     }
   })
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
 
   const chartOptions = {
     responsive: true,
@@ -685,8 +685,6 @@ function BankWatch() {
       }
     ],
   };
-
-  ChartJS.register(ArcElement, Tooltip, Legend);
 
   const chartDataRatio = {
     labels: xAxisData,
@@ -714,17 +712,17 @@ function BankWatch() {
   );
 }
 
-function PoolWatch() {
+function LPPool(props)
+{
+  const dataElementName = props.dataElementName;
+  const backendAPI = props.backendAPI;
+  const chartElementName = props.chartElementName;
+  const chartElementColor = props.chartElementColor;
+
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
-  const [fetchData2, setFetchData2] = useState("");
-  const [fetchData3, setFetchData3] = useState("");
-  const [fetchData4, setFetchData4] = useState("");
-  const [fetchData5, setFetchData5] = useState("");
-  const [fetchData6, setFetchData6] = useState("");
-
   useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_one_lp").then( 
+    axios.get(backendAPI).then( 
       res => {
       setFetchData(res);
     }).catch( err => {
@@ -733,402 +731,126 @@ function PoolWatch() {
     })
   } ,[]);
 
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ust_lp").then( 
-      res => {
-      setFetchData2(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_wmatic_lp").then( 
-      res => {
-      setFetchData3(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_bscbnb_lp").then( 
-      res => {
-      setFetchData4(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_busd_lp").then( 
-      res => {
-      setFetchData5(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_avax_lp").then( 
-      res => {
-      setFetchData6(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-
   if (error) return <CardBody>Error <Spinner /></CardBody>;
   if (fetchData === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData2 === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData3 === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData4 === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData5 === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData6 === "") return <CardBody><Spinner /></CardBody>;
+
+  var xAxisData = []
+  var yAxisData1= []
+  var yAxisData2= []
 
   var limit = 8;
-  var x1AxisData = []
-  var y1AxisData1= []
-  var y1AxisData2= []
-
-  var x2AxisData = []
-  var y2AxisData1= []
-  var y2AxisData2= []
-
-  var x3AxisData = []
-  var y3AxisData1= []
-  var y3AxisData2= []
-
-  var x4AxisData = []
-  var y4AxisData1= []
-  var y4AxisData2= []
-
-  var x5AxisData = []
-  var y5AxisData1= []
-  var y5AxisData2= []
-
-  var x6AxisData = []
-  var y6AxisData1= []
-  var y6AxisData2= []
-
-  limit = 8;
   fetchData.data.forEach( element => {
     if (limit > 0)
     {
-      x1AxisData.push(element.DAY_DATE.substr(0,10))
-      y1AxisData1.push(element.JEWEL);
-      y1AxisData2.push(element.WONE);
+      xAxisData.push(element.DAY_DATE.substr(0,10))
+      yAxisData1.push(element.JEWEL);
+      yAxisData2.push(element[dataElementName]);
       limit -= 1;
     }
   })
 
-  limit = 8;
-  fetchData2.data.forEach( element => {
-    if (limit > 0)
-    {
-      x2AxisData.push(element.DAY_DATE.substr(0,10))
-      y2AxisData1.push(element.JEWEL);
-      y2AxisData2.push(element.UST);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData3.data.forEach( element => {
-    if (limit > 0)
-    {
-      x3AxisData.push(element.DAY_DATE.substr(0,10))
-      y3AxisData1.push(element.JEWEL);
-      y3AxisData2.push(element.WMATIC);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData4.data.forEach( element => {
-    if (limit > 0)
-    {
-      x4AxisData.push(element.DAY_DATE.substr(0,10))
-      y4AxisData1.push(element.JEWEL);
-      y4AxisData2.push(element.BNB);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData5.data.forEach( element => {
-    if (limit > 0)
-    {
-      x5AxisData.push(element.DAY_DATE.substr(0,10))
-      y5AxisData1.push(element.JEWEL);
-      y5AxisData2.push(element.BUSD);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData6.data.forEach( element => {
-    if (limit > 0)
-    {
-      x6AxisData.push(element.DAY_DATE.substr(0,10))
-      y6AxisData1.push(element.JEWEL);
-      y6AxisData2.push(element.AVAX);
-      limit -= 1;
-    }
-  })
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
-  const chartOptions = generateLPChartOptions("JEWEL-ONE LP")
-  const chartOptions2 = generateLPChartOptions("JEWEL-UST LP")
-  const chartOptions3 = generateLPChartOptions("JEWEL-MATIC LP")
-  const chartOptions4 = generateLPChartOptions("JEWEL-BNB LP")
-  const chartOptions5 = generateLPChartOptions("JEWEL-BUSD LP")
-  const chartOptions6 = generateLPChartOptions("JEWEL-AVAX LP")
-
-  const chartData = generateLPChartData({xAxis: x1AxisData,  y2Color:"rgba(10, 175, 225, 0.5)", data1: y1AxisData1, data2: y1AxisData2, y1Name: "JEWEL", y2Name:"ONE"})
-  const chartData2 = generateLPChartData({xAxis: x2AxisData, y2Color:"rgba(32, 50, 182, 0.5)",  data1: y2AxisData1, data2: y2AxisData2, y1Name: "JEWEL", y2Name:"UST"})
-  const chartData3 = generateLPChartData({xAxis: x3AxisData, y2Color:"rgba(130, 71, 240, 0.5)",  data1: y3AxisData1, data2: y3AxisData2, y1Name: "JEWEL", y2Name:"MATIC"})
-  const chartData4 = generateLPChartData({xAxis: x4AxisData, y2Color:"rgba(235, 180, 46, 0.5)",  data1: y4AxisData1, data2: y4AxisData2, y1Name: "JEWEL", y2Name:"BNB"})
-  const chartData5 = generateLPChartData({xAxis: x5AxisData, y2Color:"rgba(200, 150, 25, 0.5)",  data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"BUSD"})
-  const chartData6 = generateLPChartData({xAxis: x6AxisData, y2Color:"rgba(232, 60, 60, 0.5)",  data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"AVAX"})
+  const chartOptions = generateLPChartOptions("JEWEL-" + chartElementName + " LP")
+  const chartData = generateLPChartData({
+    xAxis: xAxisData,
+    y2Color: chartElementColor,
+    data1: yAxisData1,
+    data2: yAxisData2,
+    y1Name: "JEWEL",
+    y2Name: chartElementName})
 
   return (
-    <>
-    <Row>
-        <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
-        <Col xs='4'><Line data={chartData2} options={chartOptions2}></Line></Col>
-        <Col xs='4'><Line data={chartData3} options={chartOptions3}></Line></Col>
-        </Row>
-        <Row>
-        <Col xs='4'><Line data={chartData4} options={chartOptions4}></Line></Col>
-        <Col xs='4'><Line data={chartData5} options={chartOptions5}></Line></Col>
-        <Col xs='4'><Line data={chartData6} options={chartOptions6}></Line></Col> 
-    </Row>
-    </>
+    <Line data={chartData} options={chartOptions}></Line>
   )
 }
 
-function PoolWatch2() {
-  const [error, setError] = useState(false);
-  const [fetchData, setFetchData] = useState("");
-  const [fetchData2, setFetchData2] = useState("");
-  const [fetchData3, setFetchData3] = useState("");
-  const [fetchData4, setFetchData4] = useState("");
-  const [fetchData5, setFetchData5] = useState("");
-  const [fetchData6, setFetchData6] = useState("");
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ftm_lp").then( 
-      res => {
-      setFetchData(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1usdc_lp").then( 
-      res => {
-      setFetchData2(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1eth_lp").then( 
-      res => {
-      setFetchData3(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1btc_lp").then( 
-      res => {
-      setFetchData4(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_luna_lp").then( 
-      res => {
-      setFetchData5(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-  useEffect( () => {
-    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_avax_lp").then( 
-      res => {
-      setFetchData6(res);
-    }).catch( err => {
-      console.log(err)
-      setError(true);
-    })
-  } ,[]);
-
-
-  if (error) return <CardBody>Error <Spinner /></CardBody>;
-  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData2 === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData3 === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData4 === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData5 === "") return <CardBody><Spinner /></CardBody>;
-  if (fetchData6 === "") return <CardBody><Spinner /></CardBody>;
-
-  var limit = 8;
-  var x1AxisData = []
-  var y1AxisData1= []
-  var y1AxisData2= []
-
-  var x2AxisData = []
-  var y2AxisData1= []
-  var y2AxisData2= []
-
-  var x3AxisData = []
-  var y3AxisData1= []
-  var y3AxisData2= []
-
-  var x4AxisData = []
-  var y4AxisData1= []
-  var y4AxisData2= []
-
-  var x5AxisData = []
-  var y5AxisData1= []
-  var y5AxisData2= []
-
-  var x6AxisData = []
-  var y6AxisData1= []
-  var y6AxisData2= []
-
-  limit = 8;
-  fetchData.data.forEach( element => {
-    if (limit > 0)
-    {
-      x1AxisData.push(element.DAY_DATE.substr(0,10))
-      y1AxisData1.push(element.JEWEL);
-      y1AxisData2.push(element.FTM);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData2.data.forEach( element => {
-    if (limit > 0)
-    {
-      x2AxisData.push(element.DAY_DATE.substr(0,10))
-      y2AxisData1.push(element.JEWEL);
-      y2AxisData2.push(element.USDC);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData3.data.forEach( element => {
-    if (limit > 0)
-    {
-      x3AxisData.push(element.DAY_DATE.substr(0,10))
-      y3AxisData1.push(element.JEWEL);
-      y3AxisData2.push(element.ETH);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData4.data.forEach( element => {
-    if (limit > 0)
-    {
-      x4AxisData.push(element.DAY_DATE.substr(0,10))
-      y4AxisData1.push(element.JEWEL);
-      y4AxisData2.push(element.BTC);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData5.data.forEach( element => {
-    if (limit > 0)
-    {
-      x5AxisData.push(element.DAY_DATE.substr(0,10))
-      y5AxisData1.push(element.JEWEL);
-      y5AxisData2.push(element.LUNA);
-      limit -= 1;
-    }
-  })
-
-  limit = 8;
-  fetchData6.data.forEach( element => {
-    if (limit > 0)
-    {
-      x6AxisData.push(element.DAY_DATE.substr(0,10))
-      y6AxisData1.push(element.JEWEL);
-      y6AxisData2.push(element.AVAX);
-      limit -= 1;
-    }
-  })
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
-  const chartOptions = generateLPChartOptions("JEWEL-FTM LP")
-  const chartOptions2 = generateLPChartOptions("JEWEL-USDC LP")
-  const chartOptions3 = generateLPChartOptions("JEWEL-ETH LP")
-  const chartOptions4 = generateLPChartOptions("JEWEL-BTC LP")
-  const chartOptions5 = generateLPChartOptions("JEWEL-LUNA LP")
-  const chartOptions6 = generateLPChartOptions("unused")
-
-  const chartData = generateLPChartData( {xAxis: x1AxisData, y2Color:"rgba(30, 100, 255, 0.5)", data1: y1AxisData1, data2: y1AxisData2, y1Name: "JEWEL", y2Name:"FTM"})
-  const chartData2 = generateLPChartData({xAxis: x2AxisData, y2Color:"rgba(40, 120, 200, 0.5)", data1: y2AxisData1, data2: y2AxisData2, y1Name: "JEWEL", y2Name:"USDC"})
-  const chartData3 = generateLPChartData({xAxis: x3AxisData, y2Color:"rgba(114, 114, 114, 0.5)", data1: y3AxisData1, data2: y3AxisData2, y1Name: "JEWEL", y2Name:"ETH"})
-  const chartData4 = generateLPChartData({xAxis: x4AxisData, y2Color:"rgba(240, 140, 25, 0.5)", data1: y4AxisData1, data2: y4AxisData2, y1Name: "JEWEL", y2Name:"BTC"})
-  const chartData5 = generateLPChartData({xAxis: x5AxisData, y2Color:"rgba(250, 210, 6, 0.5)", data1: y5AxisData1, data2: y5AxisData2, y1Name: "JEWEL", y2Name:"LUNA"})
-  const chartData6 = generateLPChartData({xAxis: x6AxisData, y2Color:"rgba(0, 155, 0, 0.5)", data1: y6AxisData1, data2: y6AxisData2, y1Name: "JEWEL", y2Name:"unused"})
-
-  // pool2
+function PoolWatch() {
+  
   return (
     <>
     <Row>
-      <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
-      <Col xs='4'><Line data={chartData2} options={chartOptions2}></Line></Col>
-      <Col xs='4'><Line data={chartData3} options={chartOptions3}></Line></Col>
+      <Col xs='4'>
+        <LPPool dataElementName="WONE"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_one_lp'
+                chartElementName = "ONE"
+                chartElementColor = "rgba(10, 175, 225, 0.5)"
+        />
+      </Col>
+      <Col xs='4'>
+        <LPPool dataElementName="UST"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ust_lp'
+                chartElementName = "UST"
+                chartElementColor = "rgba(32, 50, 182, 0.5)"
+        />
+      </Col>
+      <Col xs='4'>
+        <LPPool dataElementName="WMATIC"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_wmatic_lp'
+                chartElementName = "MATIC"
+                chartElementColor = "rgba(130, 71, 240, 0.5)"
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col xs='4'>
+        <LPPool dataElementName="BNB"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_bscbnb_lp'
+                chartElementName = "BNB"
+                chartElementColor = "rgba(235, 180, 46, 0.5)"
+        />
+      </Col>
+      <Col xs='4'>
+        <LPPool dataElementName="BUSD"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_busd_lp'
+                chartElementName = "BUSD"
+                chartElementColor = "rgba(200, 150, 25, 0.5)"
+        />
+      </Col>
+      <Col xs='4'>
+        <LPPool dataElementName="AVAX"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_avax_lp'
+                chartElementName = "AVAX"
+                chartElementColor = "rgba(232, 60, 60, 0.5)"
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col xs='4'>
+        <LPPool dataElementName="FTM"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ftm_lp'
+                chartElementName = "FTM"
+                chartElementColor = "rgba(30, 100, 255, 0.5)"
+        />
+      </Col>
+      <Col xs='4'>
+        <LPPool dataElementName="USDC"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1usdc_lp'
+                chartElementName = "USDC"
+                chartElementColor = "rgba(40, 120, 200, 0.5)"
+        />
+      </Col>
+      <Col xs='4'>
+        <LPPool dataElementName="ETH"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1eth_lp'
+                chartElementName = "ETH"
+                chartElementColor = "rgba(114, 114, 114, 0.5)"
+        />
+      </Col>
       </Row>
       <Row>
-      
-      <Col xs='4'><Line data={chartData4} options={chartOptions4}></Line></Col>
-      <Col xs='4'><Line data={chartData5} options={chartOptions5}></Line></Col>
-      {/* <Col xs='4'><Line data={chartData6} options={chartOptions6}></Line></Col> */}
+      <Col xs='4'>
+        <LPPool dataElementName="BTC"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1btc_lp'
+                chartElementName = "BTC"
+                chartElementColor = "rgba(240, 140, 25, 0.5)"
+        />
+      </Col>
+      <Col xs='4'>
+        <LPPool dataElementName="LUNA"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_luna_lp'
+                chartElementName = "LUNA"
+                chartElementColor = "rgba(250, 210, 6, 0.5)"
+        />
+      </Col>
     </Row>
     </>
   )
@@ -1148,9 +870,6 @@ function HeroWatch() {
       console.log(err)
       setError(true);
     })
-  } ,[]);
-
-  useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_hero_levels").then( 
       res => {
       setFetchData2(res);
@@ -1158,9 +877,6 @@ function HeroWatch() {
       console.log(err)
       setError(true);
     })
-  } ,[]);
-
-  useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_potions_crafted").then( 
       res => {
       setFetchData3(res);
@@ -1220,16 +936,7 @@ function HeroWatch() {
       limit -= 1;
     }
   })
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+
 
   const chartOptions = {
     responsive: true,
@@ -1363,16 +1070,6 @@ function ItemGraph(props) {
       limit -= 1;
     }
   })
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
 
   const chartOptions = {
     responsive: true,
@@ -1515,17 +1212,6 @@ function GameWatch() {
   if (fetchData === "") return <CardBody><Spinner /></CardBody>;
   if (fetchDataHero === "") return <CardBody><Spinner /></CardBody>;
   if (fetchDataQuest === "") return <CardBody><Spinner /></CardBody>;
-  
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
 
   var limit = 8;
   var xAxisData = []
@@ -1672,7 +1358,6 @@ function DefiKingdoms() {
       <Card>
         <CardHeader>DefiKingdoms - Liquidity Pools</CardHeader>
         <PoolWatch />
-        <PoolWatch2 />
       </Card>
       <br></br>
       <Card>

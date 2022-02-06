@@ -670,44 +670,33 @@ function StakingPage2() {
     <Card>
       <CardHeader>Harmony Validator Statictics</CardHeader>
       <CardBody>
-    <Row>
-      <Col xs='4'><Bar options={chartOptions} data={chartData} /></Col>
-      <Col xs='4'><Bar options={chartOptions} data={chartData3} /></Col>
-      <Col xs='4'><Bar options={chartOptions} data={chartData4} /></Col>
-    </Row>
+        <Row>
+          <Col xs='4'><Bar options={chartOptions} data={chartData} /></Col>
+          <Col xs='4'><Bar options={chartOptions} data={chartData3} /></Col>
+          <Col xs='4'><Bar options={chartOptions} data={chartData4} /></Col>
+        </Row>
     </CardBody>
     </Card>
   );
 }
 
-function MultiChainPage()
+function MultiChainPage(props)
 {
   const [error, setError] = useState(false);
-  const [fetchData, setFetchData] = useState("");
 
-  useEffect( () => {
-  axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_multichain_bridge").then(
-    res => {
-      setFetchData(res);
-    }).catch( err => {
-      setError(true);
-      console.log(err)
-    })
-  }, []);
 
   if (error) return <div>Something went wrong...</div>;
-  if (fetchData === "") return <div><Spinner /></div>;
+  if (props.data === "") return <div><Spinner /></div>;
 
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
   METRIC_PERIOD: "daily"
   TXS_COUNT: 1258
   */
-  //console.log(data.data);
   
   var xAxisData = []
   var yAxisData = []
-  fetchData.data.forEach( item => {
+  props.data.data.forEach( item => {
     xAxisData.push(item.DAY_DATE.substr(0,10))
     yAxisData.push(item.DAILY_TVL)
   });
@@ -755,7 +744,7 @@ function StakedOneTVLPage(props)
   var xAxisData = [];
   var yAxisData = [];
 
-  props.data[0].data.forEach( item => {
+  props.data.data.forEach( item => {
     xAxisData.push(item.DAY_DATE.substr(0,10))
     yAxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18 * TODO_WONE_PRICE)
   });
@@ -806,13 +795,18 @@ var formatter = new Intl.NumberFormat('en-US', {
 
 function TVLPageInner(props)
 {
-  if(props.data === "") return (<div><Spinner/></div>);
+  if(props.data[0] === "") return (<div><Spinner/></div>);
+  if(props.data[1] === "") return (<div><Spinner/></div>);
+  if(props.data[2] === "") return (<div><Spinner/></div>);
+  if(props.data[3] === "") return (<div><Spinner/></div>);
+  if(props.data[4] === "") return (<div><Spinner/></div>);
 
   const TVLONE = props.data[0].data[props.data[0].data.length - 1].TOTAL_STAKING / 10**18 * TODO_WONE_PRICE;
   const TVLDFK = props.data[1].data[props.data[1].data.length - 1].TOTAL_VALUE_LOCKED
                   + props.data[2].data[0].balance * TODO_JEWEL_PRICE
-  const TVLMultiBridge = props.data[3].data[props.data[3].data.length - 1].DAILY_TVL;
-  const TVLTranq = props.data[4].data[props.data[4].data.length - 1].TRANQ_TVL;
+  const TVLTranq = props.data[3].data[props.data[3].data.length - 1].TRANQ_TVL;
+  const TVLMultiBridge = props.data[4].data[props.data[4].data.length - 1].DAILY_TVL;
+  
   const TVL = TVLONE+TVLDFK+TVLMultiBridge+TVLTranq;
 
   return (
@@ -829,7 +823,7 @@ function TranquilFinancePage(props)
   var xAxisData = [];
   var yAxisData = [];
 
-  props.data[4].data.forEach( item => {
+  props.data.data.forEach( item => {
     xAxisData.push(item.DAY_DATE.substr(0,10))
     yAxisData.push(parseFloat(item.TRANQ_TVL))
   });
@@ -875,38 +869,70 @@ function TranquilFinancePage(props)
 function TVLPage()
 {
   const [error, setError] = useState(false);
-  const [fetchData, setFetchData] = useState("");
+  const [multichainData, setMultichainData] = useState("");
+  const [tranquilData, setTranquilData] = useState("");
+  const [dailyStakedData, setdailyStakedData] = useState("");
+  const [dailydfktvlData, setdailydfktvlData] = useState("");
+  const [xJewelData, setxJewelData] = useState("");
 
+  // onload
   useEffect( () => {
-    axios.all([ axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_staked_data"),
-                axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tvl_dfk_lp"),
-                axios.get("https://us-east1-dfkwatch-328521.cloudfunctions.net/xJewelRatioHistory"),
-                axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_multichain_bridge"),
-                axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tranquil_tvl"),
-              ])
-        .then(axios.spread((...responses) => {
-          setFetchData(responses)
-        }))
-        .catch( err => {
-          setError(true);
-          console.log(err)
-        })
+
+    axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_staked_data").then(
+      res => {
+        setdailyStakedData(res);
+      }).catch( err => {
+        setError(true);
+        console.log(err)
+      })
+
+    axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tvl_dfk_lp").then(
+      res => {
+        setdailydfktvlData(res);
+      }).catch( err => {
+        setError(true);
+        console.log(err)
+      })
+
+    axios.get("https://us-east1-dfkwatch-328521.cloudfunctions.net/xJewelRatioHistory").then(
+      res => {
+        setxJewelData(res);
+      }).catch( err => {
+        setError(true);
+        console.log(err)
+      })
+    
+    axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_multichain_bridge").then(
+      res => {
+        setMultichainData(res);
+      }).catch( err => {
+        setError(true);
+        console.log(err)
+      })
+
+    axios.get("https://dfkreport.antonyip.com/harmony-backend/?q=daily_tranquil_tvl").then(
+      res => {
+        setTranquilData(res);
+      }).catch( err => {
+        setError(true);
+        console.log(err)
+      })
   },[])
 
   if (error) return <div>Error occured!</div>;
 
   return (
         <>
-          <TVLPageInner data={fetchData} />
+          <TVLPageInner data={[dailyStakedData, dailydfktvlData, xJewelData, tranquilData, multichainData]} />
           <br />
           <Row>
-          <Col md={6}><StakedOneTVLPage data={fetchData} /></Col>
+          <Col md={6}><StakedOneTVLPage data={dailyStakedData} /></Col>
           <br />
-          <Col md={6}><DfkTvlPage data={fetchData} /></Col>
+          <Col md={6}><DfkTvlPage data={dailydfktvlData} jewelData={xJewelData} /></Col>
           </Row>
           <br />
           <Row>
-          <Col md={6}><TranquilFinancePage data={fetchData} /></Col>
+          <Col md={6}><TranquilFinancePage data={tranquilData} /></Col>
           <br />
           {/* <Card>
             <CardHeader>TVL Others [WIP]</CardHeader>
@@ -933,15 +959,15 @@ function TVLPage()
             </Collapse>
           </Card> 
           <br /> */}
-          <Col md={6}><BridgesPage></BridgesPage></Col>
+          <Col md={6}><BridgesPage multichainData={multichainData}/></Col>
           </Row>
         </>
       );
 }
 
-function BridgesPage()
+function BridgesPage(props)
 {
-  return <MultiChainPage />;
+  return <MultiChainPage data={props.multichainData}/>;
   /*
     return (
     <Card>
@@ -966,9 +992,10 @@ function DfkTvlPage(props)
   //const [fetchData2, setFetchData2] = useState("");
 
   if(props.data === "") return (<div><Spinner/></div>);
+  if(props.jewelData === "") return (<div><Spinner/></div>);
 
-  const fetchData = props.data[1];
-  const fetchData2 = props.data[2];
+  const fetchData = props.data;
+  const fetchData2 = props.jewelData;
 
   if (fetchData === "") return <div><Spinner /></div>;
   if (fetchData2 === "") return <div><Spinner /></div>;
