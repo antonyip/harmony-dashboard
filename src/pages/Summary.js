@@ -1135,7 +1135,7 @@ function Summary() {
         <br />
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <Card>
+          <Card rerender={activeTab}>
           <CardHeader>Harmony Blockchain Statictics</CardHeader>
           <Row>
             <Col xs='6'><DailyBlocks /></Col>
@@ -1148,7 +1148,7 @@ function Summary() {
           </Card>
         </TabPane>
       <TabPane tabId="2">
-        <Card>
+        <Card rerender={activeTab}>
         <CardHeader>Harmony Address Statictics</CardHeader>
         <Row>
           <Col xs='6'><DailyAddresses /></Col>
@@ -1157,13 +1157,13 @@ function Summary() {
         </Card>
       </TabPane>
       <TabPane tabId="3">
-        <StakingPage />
+        <StakingPage rerender={activeTab}/>
       </TabPane>
       <TabPane tabId="4">
-        <StakingPage2 />
+        <StakingPage2 rerender={activeTab}/>
       </TabPane>
       <TabPane tabId="5">
-        <TVLPage />
+        <TVLPage rerender={activeTab}/>
       </TabPane>
       </TabContent>
     </Container>
