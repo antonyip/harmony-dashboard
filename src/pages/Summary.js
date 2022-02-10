@@ -1090,7 +1090,6 @@ function Summary() {
 
   return (
     <Container>
-      <br/>
         <Nav tabs>
           <NavItem>
             <NavLink

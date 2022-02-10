@@ -28,6 +28,24 @@
   color: #61dafb;
 }
 
+.MainPage {
+  
+  background-color: #ffffffcc;
+}
+
+.NavigationBar-text {
+  color: #4093c4;
+}
+
+.NavigationBar-mdao {
+  color: #dd610e;
+}
+
+.SubPage {
+  color: #1b295e;
+  background-color: #1b295e;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

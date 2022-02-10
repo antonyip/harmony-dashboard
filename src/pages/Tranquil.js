@@ -8,7 +8,6 @@ import {
 function Tranquil() {
   return (
     <Container>
-      <br />
       <Card><CardHeader>[WIP] Tranquil Finance</CardHeader>
       <CardBody>
         Work in progress

@@ -1106,53 +1106,52 @@ function ItemWatch() {
  
   return (
     <>
-    <Row>
+      <Row>
         <ItemGraph token_address='0x043f9bd9bb17dfc90de3d416422695dd8fa44486' token_color='rgba(50,50,150,0.8)' token_name="Ragweed" />
         <ItemGraph token_address='0x094243dfabfbb3e6f71814618ace53f07362a84c' token_color='rgba(50,50,150,0.8)' token_name="Redleaf" />
         <ItemGraph token_address='0x1771dec8d9a29f30d82443de0a69e7b6824e2f53' token_color='rgba(50,50,150,0.8)' token_name="Anti-Blind Potion" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0x19b020001ab0c12ffa93e1fdef90c7c37c8c71ef' token_color='rgba(50,50,150,0.8)' token_name="Mana" />
-        
         <ItemGraph token_address='0x19b9f05cde7a61ab7aae5b0ed91aa62ff51cf881' token_color='rgba(50,50,150,0.8)' token_name="Spiderfruit" />
         <ItemGraph token_address='0x2493cfdacc0f9c07240b5b1c4be08c62b8eeff69' token_color='rgba(50,50,150,0.8)' token_name="Silverfin" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0x24ea0d436d3c2602fbfefbe6a16bbc304c963d04' token_color='rgba(50,50,150,0.8)' token_name="Gaia's Tears" />
         <ItemGraph token_address='0x2789f04d22a845dc854145d3c289240517f2bcf0' token_color='rgba(50,50,150,0.8)' token_name="Health" />
         <ItemGraph token_address='0x372caf681353758f985597a35266f7b330a2a44d' token_color='rgba(50,50,150,0.8)' token_name="ShimmerSkin" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0x3a4edcf3312f44ef027acfd8c21382a5259936e7' token_color='rgba(50,50,150,0.8)' token_name="Gold" />
         <ItemGraph token_address='0x3db1fd0ad479a46216919758144fd15a21c3e93c' token_color='rgba(50,50,150,0.8)' token_name="Yellow Egg" />
         <ItemGraph token_address='0x600541ad6ce0a8b5dae68f086d46361534d20e80' token_color='rgba(50,50,150,0.8)' token_name="Goldvein" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0x68ea4640c5ce6cc0c9a1f17b7b882cb1cbeaccd7' token_color='rgba(50,50,150,0.8)' token_name="Darkweed" />
         <ItemGraph token_address='0x6b10ad6e3b99090de20bf9f95f960addc35ef3e2' token_color='rgba(50,50,150,0.8)' token_name="Rockroot" />
         <ItemGraph token_address='0x6d605303e9ac53c59a3da1ece36c9660c7a71da5' token_color='rgba(50,50,150,0.8)' token_name="Green Egg" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0x6e1bc01cc52d165b357c42042cf608159a2b81c1' token_color='rgba(50,50,150,0.8)' token_name="Ambertaffy" />
         <ItemGraph token_address='0x78aed65a2cc40c7d8b0df1554da60b38ad351432' token_color='rgba(50,50,150,0.8)' token_name="Bloater" />
         <ItemGraph token_address='0x7e120334d9affc0982719a4eacc045f78bf41c68' token_color='rgba(50,50,150,0.8)' token_name="Magic Resistance Potion" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0x872dd1595544ce22ad1e0174449c7ece6f0bb01b' token_color='rgba(50,50,150,0.8)' token_name="Swiftness Potion" />
         <ItemGraph token_address='0x87361363a75c9a6303ce813d0b2656c34b68ff52' token_color='rgba(50,50,150,0.8)' token_name="Full Health" />
         <ItemGraph token_address='0x8bf4a0888451c6b5412bcad3d9da3dcf5c6ca7be' token_color='rgba(50,50,150,0.8)' token_name="Lantern-Eye" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0x959ba19508827d1ed2333b1b503bd5ab006c710e' token_color='rgba(50,50,150,0.8)' token_name="Stamina Potion" />
         <ItemGraph token_address='0x95d02c1dc58f05a015275eb49e107137d9ee81dc' token_color='rgba(50,50,150,0.8)' token_name="Grey Egg" />
         <ItemGraph token_address='0x9678518e04fe02fb30b55e2d0e554e26306d0892' token_color='rgba(50,50,150,0.8)' token_name="Blue Egg" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0xa1f8b0e88c51a45e152934686270ddf4e3356278' token_color='rgba(50,50,150,0.8)' token_name="Anti-Poison Potion" />
         <ItemGraph token_address='0xac5c49ff7e813de1947dc74bbb1720c353079ac9' token_color='rgba(50,50,150,0.8)' token_name="Bluestem" />
         <ItemGraph token_address='0xb80a07e13240c31ec6dc0b5d72af79d461da3a70' token_color='rgba(50,50,150,0.8)' token_name="Sailfish" />
-        </Row>
-    <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0xc0214b37fcd01511e6283af5423cf24c96bb9808' token_color='rgba(50,50,150,0.8)' token_name="Milkweed" />
         <ItemGraph token_address='0xc5891912718ccffcc9732d1942ccd98d5934c2e1' token_color='rgba(50,50,150,0.8)' token_name="Redgill" />
         <ItemGraph token_address='0xcdffe898e687e941b124dfb7d24983266492ef1d' token_color='rgba(50,50,150,0.8)' token_name="Swift-Thistle" />
@@ -1161,13 +1160,16 @@ function ItemWatch() {
         <ItemGraph token_address='0xdc2c698af26ff935cd1c50eef3a4a933c62af18d' token_color='rgba(50,50,150,0.8)' token_name="Full Mana" />
         <ItemGraph token_address='0xe4cfee5bf05cef3418da74cfb89727d8e4fee9fa' token_color='rgba(50,50,150,0.8)' token_name="Ironscale" />
         <ItemGraph token_address='0xfb03c364969a0bb572ce62b8cd616a7ddeb4c09a' token_color='rgba(50,50,150,0.8)' token_name="Toughness Potion" />
-        </Row>
-        <Row>
+      </Row>
+      <Row>
         <ItemGraph token_address='0x27dc6aaad95580edf25f8b9676f1b984e09e413d' token_color='rgba(50,50,150,0.8)' token_name="Atonement Crystal" />
         <ItemGraph token_address='0x1f3f655079b70190cb79ce5bc5ae5f19daf2a6cf' token_color='rgba(50,50,150,0.8)' token_name="Lesser Atonement Crystal" />
         <ItemGraph token_address='0x9edb3da18be4b03857f3d39f83e5c6aad67bc148' token_color='rgba(50,50,150,0.8)' token_name="Golden Egg" />
-        </Row>
-      </>
+      </Row>
+      <Row>
+        <ItemGraph token_address='0x6d4f4bc32df561a35c05866051cbe9c92759da29' token_color='rgba(50,50,150,0.8)' token_name="Lesser Chaos Stone" />
+      </Row>
+    </>
   )
 }
 
@@ -1340,7 +1342,6 @@ function GameWatch() {
 function DefiKingdoms() {
   return (
     <Container>
-      <br />
       <Card>
         <CardImg src="https://aws1.discourse-cdn.com/business7/uploads/harmony1/original/2X/6/68ef6c77e396b64cbf1c4ad9f458e373df9528d2.gif" />
       </Card>
