@@ -1044,6 +1044,8 @@ function HeroWatch() {
 function ItemGraph(props) {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
+
+  const token_decimals = props.token_decimals ? props.token_decimals : 0;
   
   useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=token_total_supply&token_address="+props.token_address).then( 
@@ -1066,7 +1068,7 @@ function ItemGraph(props) {
     if (limit > 0)
     {
       xAxisData.push(element.DAY_DATE.substr(0,10))
-      yAxisData.push(element.SUPPLY);
+      yAxisData.push(element.SUPPLY / 10**token_decimals);
       limit -= 1;
     }
   })
@@ -1122,7 +1124,7 @@ function ItemWatch() {
         <ItemGraph token_address='0x372caf681353758f985597a35266f7b330a2a44d' token_color='rgba(50,50,150,0.8)' token_name="ShimmerSkin" />
       </Row>
       <Row>
-        <ItemGraph token_address='0x3a4edcf3312f44ef027acfd8c21382a5259936e7' token_color='rgba(50,50,150,0.8)' token_name="Gold" />
+        <ItemGraph token_address='0x3a4edcf3312f44ef027acfd8c21382a5259936e7' token_color='rgba(50,50,150,0.8)' token_name="Gold" token_decimals="3"/>
         <ItemGraph token_address='0x3db1fd0ad479a46216919758144fd15a21c3e93c' token_color='rgba(50,50,150,0.8)' token_name="Yellow Egg" />
         <ItemGraph token_address='0x600541ad6ce0a8b5dae68f086d46361534d20e80' token_color='rgba(50,50,150,0.8)' token_name="Goldvein" />
       </Row>
