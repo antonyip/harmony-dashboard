@@ -1170,6 +1170,8 @@ function ItemWatch() {
       </Row>
       <Row>
         <ItemGraph token_address='0x6d4f4bc32df561a35c05866051cbe9c92759da29' token_color='rgba(50,50,150,0.8)' token_name="Lesser Chaos Stone" />
+        <ItemGraph token_address='0x17f3b5240c4a71a3bbf379710f6fa66b9b51f224' token_color='rgba(50,50,150,0.8)' token_name="Greater Atonement Crystal" />
+        
       </Row>
     </>
   )

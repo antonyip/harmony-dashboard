@@ -874,6 +874,8 @@ function TVLPage()
   const [dailyStakedData, setdailyStakedData] = useState("");
   const [dailydfktvlData, setdailydfktvlData] = useState("");
   const [xJewelData, setxJewelData] = useState("");
+  const [jewelPriceData , setJewelPriceData] = useState("");
+  const [onePriceData , setOnePriceData] = useState("");
 
   // onload
   useEffect( () => {
@@ -917,18 +919,34 @@ function TVLPage()
         setError(true);
         console.log(err)
       })
+
+    axios.get("https://dfkreport.antonyip.com/token-price-one").then(
+        res => {
+          setOnePriceData(res);
+        }).catch( err => {
+          setError(true);
+          console.log(err)
+        })
+
+    axios.get("https://dfkreport.antonyip.com/token-price-jewel").then(
+          res => {
+            setJewelPriceData(res);
+          }).catch( err => {
+            setError(true);
+            console.log(err)
+          })
   },[])
 
   if (error) return <div>Error occured!</div>;
 
   return (
         <>
-          <TVLPageInner data={[dailyStakedData, dailydfktvlData, xJewelData, tranquilData, multichainData]} />
+          <TVLPageInner data={[dailyStakedData, dailydfktvlData, xJewelData, tranquilData, multichainData, jewelPriceData, onePriceData]} />
           <br />
           <Row>
           <Col md={6}><StakedOneTVLPage data={dailyStakedData} /></Col>
           <br />
-          <Col md={6}><DfkTvlPage data={dailydfktvlData} jewelData={xJewelData} /></Col>
+          <Col md={6}><DfkTvlPage data={dailydfktvlData} jewelData={xJewelData} jewelPrice={jewelPriceData} /></Col>
           </Row>
           <br />
           <Row>
@@ -996,9 +1014,11 @@ function DfkTvlPage(props)
 
   const fetchData = props.data;
   const fetchData2 = props.jewelData;
+  const fetchData3 = props.jewelPrice;
 
   if (fetchData === "") return <div><Spinner /></div>;
   if (fetchData2 === "") return <div><Spinner /></div>;
+  if (fetchData3 === "") return <div><Spinner /></div>;
 
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
