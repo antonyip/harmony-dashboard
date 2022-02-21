@@ -10,4 +10,4 @@ curl -d '{
         "order": "DESC"
     }],
     "id": 1
-}' -H 'Content-Type:application/json' -X POST 'https://api.harmony.one'
+}' -H 'Content-Type:application/json' -X POST 'https://harmony-0-rpc.gateway.pokt.network'
