@@ -164,7 +164,7 @@ function PriceCol(props) {
   };
 
   return (
-    <Col xs='3'>
+    <Col md={3}>
       <Line options={chartOptions} data={chartData} />
     </Col>
   );
@@ -188,10 +188,10 @@ function PriceWatch() {
   if (error) return <CardBody>Error Loading</CardBody>;
   if (fetchData === "") return (
     <Row>
-      <Col xs={3}><Spinner/></Col>
-      <Col xs={3}><Spinner/></Col>
-      <Col xs={3}><Spinner/></Col>
-      <Col xs={3}><Spinner/></Col>
+      <Col md={3}><Spinner/></Col>
+      <Col md={3}><Spinner/></Col>
+      <Col md={3}><Spinner/></Col>
+      <Col md={3}><Spinner/></Col>
     </Row>
     );
 
@@ -704,10 +704,10 @@ function BankWatch() {
 */
   return (
     <Row>
-      <Col xs='2'><BankPie bank={yAxisDataBalance[yAxisDataBalance.length - 1]}/></Col>
-      <Col xs='4'><Line options={chartOptions} data={chartDataTotalJewel} /></Col>
-      <Col xs='4'><Line options={chartOptions} data={chartDataRatio} /></Col>
-      <Col xs='2'><BankPie2 bank={yAxisDataBalance[yAxisDataBalance.length - 1]}/></Col>
+      <Col md={2}><BankPie bank={yAxisDataBalance[yAxisDataBalance.length - 1]}/></Col>
+      <Col md={4}><Line options={chartOptions} data={chartDataTotalJewel} /></Col>
+      <Col md={4}><Line options={chartOptions} data={chartDataRatio} /></Col>
+      <Col md={2}><BankPie2 bank={yAxisDataBalance[yAxisDataBalance.length - 1]}/></Col>
     </Row>
   );
 }
@@ -768,21 +768,21 @@ function PoolWatch() {
   return (
     <>
     <Row>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="WONE"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_one_lp'
                 chartElementName = "ONE"
                 chartElementColor = "rgba(10, 175, 225, 0.5)"
         />
       </Col>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="UST"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ust_lp'
                 chartElementName = "UST"
                 chartElementColor = "rgba(32, 50, 182, 0.5)"
         />
       </Col>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="WMATIC"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_wmatic_lp'
                 chartElementName = "MATIC"
@@ -791,21 +791,21 @@ function PoolWatch() {
       </Col>
     </Row>
     <Row>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="BNB"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_bscbnb_lp'
                 chartElementName = "BNB"
                 chartElementColor = "rgba(235, 180, 46, 0.5)"
         />
       </Col>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="BUSD"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_busd_lp'
                 chartElementName = "BUSD"
                 chartElementColor = "rgba(200, 150, 25, 0.5)"
         />
       </Col>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="AVAX"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_avax_lp'
                 chartElementName = "AVAX"
@@ -814,21 +814,21 @@ function PoolWatch() {
       </Col>
     </Row>
     <Row>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="FTM"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ftm_lp'
                 chartElementName = "FTM"
                 chartElementColor = "rgba(30, 100, 255, 0.5)"
         />
       </Col>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="USDC"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1usdc_lp'
                 chartElementName = "USDC"
                 chartElementColor = "rgba(40, 120, 200, 0.5)"
         />
       </Col>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="ETH"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1eth_lp'
                 chartElementName = "ETH"
@@ -837,14 +837,14 @@ function PoolWatch() {
       </Col>
       </Row>
       <Row>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="BTC"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1btc_lp'
                 chartElementName = "BTC"
                 chartElementColor = "rgba(240, 140, 25, 0.5)"
         />
       </Col>
-      <Col xs='4'>
+      <Col md={4}>
         <LPPool dataElementName="LUNA"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_luna_lp'
                 chartElementName = "LUNA"
@@ -1034,9 +1034,9 @@ function HeroWatch() {
   
   return (
     <Row>
-      <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
-      <Col xs='4'><Bar data={chartData2} options={chartOptions}></Bar></Col>
-      <Col xs='4'><Bar data={chartData3} options={chartOptions}></Bar></Col>
+      <Col md={4}><Bar data={chartData} options={chartOptions}></Bar></Col>
+      <Col md={4}><Bar data={chartData2} options={chartOptions}></Bar></Col>
+      <Col md={4}><Bar data={chartData3} options={chartOptions}></Bar></Col>
     </Row>
   )
 }
@@ -1099,7 +1099,7 @@ function ItemGraph(props) {
   };
 
   return (
-    <Col xs='4'><Line data={chartData} options={chartOptions}></Line></Col>
+    <Col md={4}><Line data={chartData} options={chartOptions}></Line></Col>
   )
 
 }
@@ -1335,9 +1335,9 @@ function GameWatch() {
   
   return (
     <Row>
-      <Col xs='4'><Bar data={chartData} options={chartOptions}></Bar></Col>
-      <Col xs='4'><Bar data={chartData2} options={chartOptions2}></Bar></Col>
-      <Col xs='4'><Bar data={chartData3} options={chartOptions3}></Bar></Col>
+      <Col md={4}><Bar data={chartData} options={chartOptions}></Bar></Col>
+      <Col md={4}><Bar data={chartData2} options={chartOptions2}></Bar></Col>
+      <Col md={4}><Bar data={chartData3} options={chartOptions3}></Bar></Col>
     </Row>
   )
 }

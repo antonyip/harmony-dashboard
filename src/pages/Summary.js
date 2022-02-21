@@ -561,8 +561,8 @@ function StakingPage() {
         <CardHeader>Harmony Staking Statictics</CardHeader>
         <CardBody>
       <Row>
-        <Col xs='6'><Bar options={chartOptions} data={chartData} /></Col>
-        <Col xs='6'><Bar options={chartOptions} data={chartData2} /></Col>
+        <Col md={6}><Bar options={chartOptions} data={chartData} /></Col>
+        <Col md={6}><Bar options={chartOptions} data={chartData2} /></Col>
       </Row>
       </CardBody>
       </Card>
@@ -571,8 +571,8 @@ function StakingPage() {
         <CardHeader>Harmony Supply Statictics</CardHeader>
         <CardBody>
       <Row>
-        <Col xs='6'><Bar options={chartOptions} data={chartData3} /></Col>
-        <Col xs='6'><Bar options={chartOptions} data={chartData4} /></Col>
+        <Col md={6}><Bar options={chartOptions} data={chartData3} /></Col>
+        <Col md={6}><Bar options={chartOptions} data={chartData4} /></Col>
       </Row>
       </CardBody>
       </Card>
@@ -671,9 +671,9 @@ function StakingPage2() {
       <CardHeader>Harmony Validator Statictics</CardHeader>
       <CardBody>
         <Row>
-          <Col xs='4'><Bar options={chartOptions} data={chartData} /></Col>
-          <Col xs='4'><Bar options={chartOptions} data={chartData3} /></Col>
-          <Col xs='4'><Bar options={chartOptions} data={chartData4} /></Col>
+          <Col md={4}><Bar options={chartOptions} data={chartData} /></Col>
+          <Col md={4}><Bar options={chartOptions} data={chartData3} /></Col>
+          <Col md={4}><Bar options={chartOptions} data={chartData4} /></Col>
         </Row>
     </CardBody>
     </Card>
@@ -776,7 +776,7 @@ function StakedOneTVLPage(props)
   };
 
   return (
-    <Card xs={6}><CardHeader>Staked ONE TVL</CardHeader>
+    <Card md={6}><CardHeader>Staked ONE TVL</CardHeader>
     <CardBody>
       <Line data={chartData} options={chartOptions} />
     </CardBody>
@@ -1158,12 +1158,12 @@ function Summary() {
           <Card rerender={activeTab}>
           <CardHeader>Harmony Blockchain Statictics</CardHeader>
           <Row>
-            <Col xs='6'><DailyBlocks /></Col>
-            <Col xs='6'><DailyGas /></Col>
+            <Col md={6}><DailyBlocks /></Col>
+            <Col md={6}><DailyGas /></Col>
           </Row>
           <Row>
-            <Col xs='6'><DailyTransactions /></Col>
-            <Col xs='6'><DailyHRC20 /></Col>
+            <Col md={6}><DailyTransactions /></Col>
+            <Col md={6}><DailyHRC20 /></Col>
           </Row>
           </Card>
         </TabPane>
@@ -1171,8 +1171,8 @@ function Summary() {
         <Card rerender={activeTab}>
         <CardHeader>Harmony Address Statictics</CardHeader>
         <Row>
-          <Col xs='6'><DailyAddresses /></Col>
-          <Col xs='6'><DailyNewAddresses /></Col>
+          <Col md={6}><DailyAddresses /></Col>
+          <Col md={6}><DailyNewAddresses /></Col>
         </Row>
         </Card>
       </TabPane>

@@ -130,21 +130,21 @@ function DailyBorrow()
 
   return (
   <Container>
-    <Row xs='12'>
-      <Col xs='6'>ONE<Line data={chartData1} /></Col>
-      <Col xs='6'>stONE<Line data={chartData2} /></Col>
+    <Row>
+      <Col xs={12} md={6}>ONE<Line data={chartData1} /></Col>
+      <Col xs={12} md={6}>stONE<Line data={chartData2} /></Col>
     </Row>
     <br/>
-    <Row xs='12'>
-      <Col xs='4'>1ETH<Line data={chartData3} /></Col>
-      <Col xs='4'>1BTC<Line data={chartData4} /></Col>
-      <Col xs='4'>1WBTC<Line data={chartData5} /></Col>
+    <Row>
+      <Col xs={12} md={4}>1ETH<Line data={chartData3} /></Col>
+      <Col xs={12} md={4}>1BTC<Line data={chartData4} /></Col>
+      <Col xs={12} md={4}>1WBTC<Line data={chartData5} /></Col>
     </Row>
     <br/>
-    <Row xs='12'>
-      <Col xs='4'>1USDC<Line data={chartData6} /></Col>
-      <Col xs='4'>1USDT<Line data={chartData7} /></Col>
-      <Col xs='4'>1DAI<Line data={chartData8} /></Col>
+    <Row>
+      <Col xs={12} md={4}>1USDC<Line data={chartData6} /></Col>
+      <Col xs={12} md={4}>1USDT<Line data={chartData7} /></Col>
+      <Col xs={12} md={4}>1DAI<Line data={chartData8} /></Col>
     </Row>
   </Container>
     );
