@@ -729,7 +729,7 @@ function LPPool(props)
       console.log(err)
       setError(true);
     })
-  } ,[]);
+  } ,[backendAPI]);
 
   if (error) return <CardBody>Error <Spinner /></CardBody>;
   if (fetchData === "") return <CardBody><Spinner /></CardBody>;

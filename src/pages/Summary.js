@@ -6,14 +6,14 @@ import {
     Row,
     Container,
     Spinner,
-    Collapse,
+    //Collapse,
     //Alert,
     TabContent, 
     TabPane, 
     Nav, 
     NavItem, 
     NavLink, 
-    Button,
+    //Button,
 } from "reactstrap";
 import axios from "axios"
 import { useEffect, useState } from "react";
@@ -682,10 +682,6 @@ function StakingPage2() {
 
 function MultiChainPage(props)
 {
-  const [error, setError] = useState(false);
-
-
-  if (error) return <div>Something went wrong...</div>;
   if (props.data === "") return <div><Spinner /></div>;
 
   /*
