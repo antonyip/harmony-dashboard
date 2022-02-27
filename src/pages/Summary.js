@@ -351,7 +351,7 @@ function DailyGas() {
   var yAxisData = []
   fetchData.data.forEach( item => {
     xAxisData.push(item.METRIC_DATE.substr(0,10))
-    yAxisData.push(item.GAS_TOTAL)
+    yAxisData.push(item.GAS_TOTAL / 10**9)
   });
 
   const chartOptions = {
@@ -362,7 +362,7 @@ function DailyGas() {
       },
       title: {
         display: false,
-        text: 'Daily Gas Usage',
+        text: 'Daily Gas Usage (ONE)',
       },
     },
   };
