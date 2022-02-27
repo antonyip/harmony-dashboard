@@ -31,10 +31,6 @@ import {
 
 import { Line , Bar } from 'react-chartjs-2';
 
-
-const TODO_JEWEL_PRICE = 7;
-const TODO_WONE_PRICE = 0.33;
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -736,13 +732,25 @@ function MultiChainPage(props)
 function StakedOneTVLPage(props)
 {
   if(props.data === "") return (<div><Spinner/></div>);
+  if (props.onePrice === "") return (<div><Spinner/></div>);
 
   var xAxisData = [];
   var yAxisData = [];
 
-  props.data.data.forEach( item => {
+  var limit = 7;
+  var priceData = [];
+  props.onePrice.data.forEach(item => {
+    if (limit > 0)
+    {
+      priceData.push(item.PRICE);
+    }
+  })
+
+  priceData.reverse();
+
+  props.data.data.forEach( (item, index) => {
     xAxisData.push(item.DAY_DATE.substr(0,10))
-    yAxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18 * TODO_WONE_PRICE)
+    yAxisData.push(parseFloat(item.TOTAL_STAKING) / 10**18 * priceData[index])
   });
 
   const chartOptions = {
@@ -796,10 +804,12 @@ function TVLPageInner(props)
   if(props.data[2] === "") return (<div><Spinner/></div>);
   if(props.data[3] === "") return (<div><Spinner/></div>);
   if(props.data[4] === "") return (<div><Spinner/></div>);
+  if(props.data[5] === "") return (<div><Spinner/></div>);
+  if(props.data[6] === "") return (<div><Spinner/></div>);
 
-  const TVLONE = props.data[0].data[props.data[0].data.length - 1].TOTAL_STAKING / 10**18 * TODO_WONE_PRICE;
+  const TVLONE = props.data[0].data[props.data[0].data.length - 1].TOTAL_STAKING / 10**18 * props.data[6].data[0].PRICE;
   const TVLDFK = props.data[1].data[props.data[1].data.length - 1].TOTAL_VALUE_LOCKED
-                  + props.data[2].data[0].balance * TODO_JEWEL_PRICE
+                  + props.data[2].data[0].balance * props.data[5].data[0].PRICE
   const TVLTranq = props.data[3].data[props.data[3].data.length - 1].TRANQ_TVL;
   const TVLMultiBridge = props.data[4].data[props.data[4].data.length - 1].DAILY_TVL;
   
@@ -940,7 +950,7 @@ function TVLPage()
           <TVLPageInner data={[dailyStakedData, dailydfktvlData, xJewelData, tranquilData, multichainData, jewelPriceData, onePriceData]} />
           <br />
           <Row>
-          <Col md={6}><StakedOneTVLPage data={dailyStakedData} /></Col>
+          <Col md={6}><StakedOneTVLPage data={dailyStakedData} onePrice={onePriceData} /></Col>
           <br />
           <Col md={6}><DfkTvlPage data={dailydfktvlData} jewelData={xJewelData} jewelPrice={jewelPriceData} /></Col>
           </Row>
@@ -1016,6 +1026,7 @@ function DfkTvlPage(props)
   if (fetchData2 === "") return <div><Spinner /></div>;
   if (fetchData3 === "") return <div><Spinner /></div>;
 
+  const latestJewelPrice = fetchData3.data[0].PRICE
   /*
   METRIC_DATE: "2022-01-27 00:00:00.000"
   METRIC_PERIOD: "daily"
@@ -1043,8 +1054,8 @@ function DfkTvlPage(props)
   fetchData2.data.forEach( item => {
     if (limit > 0)
     {
-      y2AxisData.push(item.balance * TODO_JEWEL_PRICE)
-      y3AxisData.push(item.balance * TODO_JEWEL_PRICE + yAxisData[8-limit])
+      y2AxisData.push(item.balance * latestJewelPrice)
+      y3AxisData.push(item.balance * latestJewelPrice + yAxisData[8-limit])
       limit-=1;
     }
   });
