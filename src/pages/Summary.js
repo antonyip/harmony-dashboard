@@ -371,7 +371,7 @@ function DailyGas() {
     labels: xAxisData,
     datasets: [
       {
-        label: 'Daily Gas Usage',
+        label: 'Daily Gas Usage (ONE)',
         data: yAxisData,
         borderColor: 'rgba(62, 200, 250, 0.8)',
         backgroundColor: 'rgba(62, 200, 250, 0.8)',
