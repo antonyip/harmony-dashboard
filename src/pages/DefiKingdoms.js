@@ -1099,7 +1099,7 @@ function ItemGraph(props) {
   };
 
   return (
-    <Col md={4}><Line data={chartData} options={chartOptions}></Line></Col>
+    <Col md={6} lg={4}><Line data={chartData} options={chartOptions}></Line></Col>
   )
 
 }
@@ -1148,8 +1148,40 @@ function ItemWatch() {
             ['0x9edb3da18be4b03857f3d39f83e5c6aad67bc148','rgba(50,50,150,0.8)',"Golden Egg"],
             ['0x6d4f4bc32df561a35c05866051cbe9c92759da29','rgba(50,50,150,0.8)',"Lesser Chaos Stone"],
             ['0x17f3b5240c4a71a3bbf379710f6fa66b9b51f224','rgba(50,50,150,0.8)',"Greater Atonement Crystal"],
-            ['0x8f655142104478724bbc72664042ea09ebbf7b38','rgba(50,50,150,0.8)',"Moksha Rune"]
-        ].sort((a,b) => { return a[2]<b[2] }).map( n => {
+            ['0x8f655142104478724bbc72664042ea09ebbf7b38','rgba(50,50,150,0.8)',"Moksha Rune"],
+            ['0xab464901afbc61bac440a97fa568ac42885da58b','rgba(50,50,150,0.8)',"Lesser Might Crystal"],
+            ['0xb368f69be6eda74700763672aeb2ae63f3d20ae6','rgba(50,50,150,0.8)',"Might Crystal"],
+            ['0x39927a2cee5580d63a163bc402946c7600300373','rgba(50,50,150,0.8)',"Lesser Finesse Crystal"],
+            ['0xc6a58efc320a7afdb1cd662eaf6de10ee17103f2','rgba(50,50,150,0.8)',"Finesse Crystal"],
+            ['0xf5c26f2f34e9245c3a9ea0b0e7ea7b33e6404da0','rgba(50,50,150,0.8)',"Lesser Swiftness Crystal"],
+            ['0x5d7f20e3b0f1406bf038175218ea7e9b4838908c','rgba(50,50,150,0.8)',"Swiftness Crystal"],
+            ['0x0d8403e47445db9e316e36f476dacd5827220bdd','rgba(50,50,150,0.8)',"Lesser Vigor Crystal"],
+            ['0xbba50bd111dc586fd1f2b1476b6ec505800a3fd0','rgba(50,50,150,0.8)',"Vigor Crystal"],
+            ['0x3017609b9a59b77b708d783835b6ff94a3d9e337','rgba(50,50,150,0.8)',"Lesser Fortitude Crystal"],
+            ['0x603919aeb55eb13f9cde94274fc54ab2bd2dece7','rgba(50,50,150,0.8)',"Fortitude Crystal"],
+            ['0x17ff2016c9eccfbf4fc4da6ef95fe646d2c9104f','rgba(50,50,150,0.8)',"Lesser Wit Crystal"],
+            ['0x3619fc2386fbbc19ddc39d29a72457e758cfad69','rgba(50,50,150,0.8)',"Wit Crystal"],
+            ['0xc63b76f710e9973b8989678eb16234cfadc8d9db','rgba(50,50,150,0.8)',"Lesser Insight Crystal"],
+            ['0x117e60775584cdfa4f414e22b075f31cc9c3207c','rgba(50,50,150,0.8)',"Insight Crystal"],
+            ['0x13af184aea970fe79e3bb7a1b0b156b195fb1f40','rgba(50,50,150,0.8)',"Lesser Fortune Crystal"],
+            ['0x6d777c64f0320d8a5b31be0fdeb694007fc3ed45','rgba(50,50,150,0.8)',"Fortune Crystal"],
+            ['0xe4e7c0c693d8a7fc159776a993495378705464a7','rgba(50,50,150,0.8)',"Lesser Might Stone"],
+            ['0x6382781fe94caadc71027c0457c9cbeff06e204c','rgba(50,50,150,0.8)',"Might Stone"],
+            ['0xbb5614d466b77d50dded994892dfe6f0aca4eebb','rgba(50,50,150,0.8)',"Lesser Finesse Stone"],
+            ['0xd0b689cb5de0c15792aa456c89d64038c1f2eedc','rgba(50,50,150,0.8)',"Finesse Stone"],
+            ['0xd9a8abc0ce1adc23f1c1813986c9a9c21c9e7510','rgba(50,50,150,0.8)',"Lesser Swiftness Stone"],
+            ['0x08f362517ad4119d93bbcd20825c2e4119abb495','rgba(50,50,150,0.8)',"Swiftness Stone"],
+            ['0xb00cbf5cd5e7b321436c2d3d8078773522d2f073','rgba(50,50,150,0.8)',"Lesser Vigor Stone"],
+            ['0x9df75917ac9747b4a70fa033e4b0182d85b62857','rgba(50,50,150,0.8)',"Vigor Stone"],
+            ['0x1f57eb682377f5ad6276b9315412920bdf9530f6','rgba(50,50,150,0.8)',"Lesser Fortitude Stone"],
+            ['0x17fa96ba9d9c29e4b96d29a7e89a4e7b240e3343','rgba(50,50,150,0.8)',"Fortitude Stone"],
+            ['0x4ff7a020ec1100d36d5c81f3d4815f2e9c704b59','rgba(50,50,150,0.8)',"Lesser Wit Stone"],
+            ['0x939ea05c81aac48f7c10bdb08615082b82c80c63','rgba(50,50,150,0.8)',"Wit Stone"],
+            ['0x762b98b3758d0a5eb95b3e4a1e2914ce0a80d99c','rgba(50,50,150,0.8)',"Lesser Insight Stone"],
+            ['0x9d71bb9c781fc2ebdd3d6cb709438e3c71200149','rgba(50,50,150,0.8)',"Insight Stone"],
+            ['0x6d6ea1d2dc1df6eaa2153f212d25cf92d13be628','rgba(50,50,150,0.8)',"Lesser Fortune Stone"],
+            ['0x5da2effe9857dcecb786e13566ff37b92e1e6862','rgba(50,50,150,0.8)',"Fortune Stone"],
+        ].sort((a,b) => { return a[2]<b[2] ? -1 : 1; }).map( n => {
             return (
                 <ItemGraph token_address={n[0]} token_color={n[1]} token_name={n[2]}/>
             );
