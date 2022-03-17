@@ -1107,7 +1107,7 @@ function ItemGraph(props) {
 function ItemWatch() {
  
   return (
-    <>
+    <Row>
       {
          [
             ['0x043f9bd9bb17dfc90de3d416422695dd8fa44486','rgba(50,50,150,0.8)',"Ragweed"],
@@ -1187,7 +1187,7 @@ function ItemWatch() {
             );
         })
         }
-    </>
+    </Row>
   )
 }
 
