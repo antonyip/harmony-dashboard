@@ -1184,7 +1184,7 @@ function ItemWatch() {
           ['0x45b53e55b5c0a10fdd4fe2079a562d5702f3a033',0,'rgba(50,50,150,0.8)',"Chaos Crystal"],
           ['0xa509c34306adf6168268a213cc47d336630bf101',0,'rgba(50,50,150,0.8)',"Lesser Chaos Crystal"],
           ['0x3633f956410163a98d58d2d928b38c64a488654e',0,'rgba(50,50,150,0.8)',"Chaos Stone"],
-        ].sort((a,b) => { return a[2]<b[2] ? -1 : 1; }).map( n => {
+        ].sort((a,b) => { return a[3]<b[3] ? -1 : 1; }).map( n => {
             return (
                 <ItemGraph token_address={n[0]} token_decimals={n[1]} token_color={n[2]} token_name={n[3]}/>
             );
