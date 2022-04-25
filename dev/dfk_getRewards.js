@@ -1,15 +1,13 @@
 const axios = require('axios')
-const axiosRetry = require('axios-retry');
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 
-axiosRetry(axios, { retries: 5 });
+let myAddress = '0x0ba43bae4613e03492e4c17af3b014b6c3202b9d'
 
 const getHistory = async () => {
     const rv = await axios.post('https://harmony-0-rpc.gateway.pokt.network', {
         'jsonrpc':'2.0',
         'method':'hmy_getTransactionsHistory',
         'params':[{
-            'address': '0x0ba43bae4613e03492e4c17af3b014b6c3202b9d',
+            'address': myAddress,
             'pageIndex': 0,
             'pageSize': 1000,
             'fullTx': true,
@@ -97,7 +95,7 @@ async function main()
 
     const results = await Promise.all(promises);
 
-    results.forEach((element) => {
+    results.reverse().forEach((element) => {
         console.log('-- start reward -- ', element.result.blockNumber, element.result.transactionHash);
         element.result.logs.forEach((log) => {
             if (log.topics[0] === '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef')
