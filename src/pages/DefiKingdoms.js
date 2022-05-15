@@ -782,6 +782,13 @@ function PoolWatch() {
                 chartElementColor = "rgba(130, 71, 240, 0.5)"
         />
       </Col>
+      <Col md={4}>
+        <LPPool dataElementName="BTC"
+                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1btc_lp'
+                chartElementName = "BTC"
+                chartElementColor = "rgba(240, 140, 25, 0.5)"
+        />
+      </Col>
     </Row>
     <Row>
       <Col md={4}>
@@ -829,15 +836,6 @@ function PoolWatch() {
         />
       </Col>
       </Row>
-      <Row>
-      <Col md={4}>
-        <LPPool dataElementName="BTC"
-                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1btc_lp'
-                chartElementName = "BTC"
-                chartElementColor = "rgba(240, 140, 25, 0.5)"
-        />
-      </Col>
-    </Row>
     </>
   )
 }
