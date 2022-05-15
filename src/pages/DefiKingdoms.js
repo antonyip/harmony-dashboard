@@ -776,13 +776,6 @@ function PoolWatch() {
         />
       </Col>
       <Col md={4}>
-        <LPPool dataElementName="UST"
-                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_ust_lp'
-                chartElementName = "UST"
-                chartElementColor = "rgba(32, 50, 182, 0.5)"
-        />
-      </Col>
-      <Col md={4}>
         <LPPool dataElementName="WMATIC"
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_wmatic_lp'
                 chartElementName = "MATIC"
@@ -842,13 +835,6 @@ function PoolWatch() {
                 backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_1btc_lp'
                 chartElementName = "BTC"
                 chartElementColor = "rgba(240, 140, 25, 0.5)"
-        />
-      </Col>
-      <Col md={4}>
-        <LPPool dataElementName="LUNA"
-                backendAPI = 'https://dfkreport.antonyip.com/dfk-backend/?q=daily_jewel_luna_lp'
-                chartElementName = "LUNA"
-                chartElementColor = "rgba(250, 210, 6, 0.5)"
         />
       </Col>
     </Row>
