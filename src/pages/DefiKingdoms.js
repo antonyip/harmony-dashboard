@@ -1104,6 +1104,7 @@ function ItemWatch() {
           ['0x2789f04d22a845dc854145d3c289240517f2bcf0',0,'rgba(50,50,150,0.8)',"Health"],
           ['0x372caf681353758f985597a35266f7b330a2a44d',0,'rgba(50,50,150,0.8)',"ShimmerSkin"],
           ['0x3a4edcf3312f44ef027acfd8c21382a5259936e7',3,'rgba(50,50,150,0.8)',"Gold"],
+          ['0x66f5bfd910cd83d3766c4b39d13730c911b2d286',0,'rgba(50,50,150,0.8)',"Shva's Rune"],
           ['0x3db1fd0ad479a46216919758144fd15a21c3e93c',0,'rgba(50,50,150,0.8)',"Yellow Egg"],
           ['0x600541ad6ce0a8b5dae68f086d46361534d20e80',0,'rgba(50,50,150,0.8)',"Goldvein"],
           ['0x68ea4640c5ce6cc0c9a1f17b7b882cb1cbeaccd7',0,'rgba(50,50,150,0.8)',"Darkweed"],
