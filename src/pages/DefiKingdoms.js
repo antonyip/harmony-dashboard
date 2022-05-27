@@ -1025,6 +1025,164 @@ function HeroWatch() {
   )
 }
 
+function EggWatch() {
+
+  const [error, setError] = useState(false);
+  const [fetchData, setFetchData] = useState("");
+  //const [fetchData2, setFetchData2] = useState("");
+  //const [fetchData3, setFetchData3] = useState("");
+
+  useEffect( () => {
+    axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_egg_hatches").then( 
+      res => {
+        setFetchData(res);
+    }).catch( err => {
+      console.log(err)
+      setError(true);
+    })
+
+  } ,[]);
+
+  if (error) return <CardBody>Error <Spinner /></CardBody>;
+  if (fetchData === "") return <CardBody><Spinner /></CardBody>;
+
+  var limit = 8;
+  var xAxisData = []
+  var yAxisData = []
+  //var yAxisData2 = []
+
+  // var x2AxisData = []
+  // var y2AxisData = []
+  // var y2AxisData2 = []
+
+  // var x3AxisData = []
+  // var y3AxisData = []
+  // var y3AxisData2 = []
+
+  limit = 8
+  fetchData.data.forEach( element => {
+    if (limit > 0)
+    {
+      xAxisData.push(element.DAY_DATE.substr(0,10))
+      yAxisData.push(element.EGG_CRACK);
+      //yAxisData2.push(element.EGG_CRACK);
+      limit -= 1;
+    }
+  })
+  /*
+  limit = 8
+  fetchData2.data.forEach( element => {
+    if (limit > 0)
+    {
+      x2AxisData.push(element.DAY_DATE.substr(0,10))
+      y2AxisData.push(element.HERO_LEVEL);
+      y2AxisData2.push(element.HERO_LEVEL_JEWEL);
+      limit -= 1;
+    }
+  })
+
+  limit = 8
+  fetchData3.data.forEach( element => {
+    if (limit > 0)
+    {
+      x3AxisData.push(element.DAY_DATE.substr(0,10))
+      y3AxisData.push(element.POTION_CRAFT_COUNT);
+      y3AxisData2.push(element.GOLD_USED);
+      limit -= 1;
+    }
+  })
+*/
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Daily Eggs Cracked',
+      },
+    },
+    scales: {
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+        },
+      },
+  };
+
+  
+  const chartData = {
+    labels: xAxisData,
+    datasets: [
+      {
+        type: 'bar',
+        label: "Daily Eggs Cracked",
+        data: yAxisData,
+        borderColor: 'rgb(0, 155, 0)',
+        backgroundColor: 'rgba(0, 155, 0, 0.5)',
+        yAxisID: 'y1',
+      },
+    ],
+  };
+
+  /*
+  const chartData2 = {
+    labels: x2AxisData,
+    datasets: [
+      {
+        type: 'line',
+        label: "Daily Hero Level-ups (Jewels Spent)",
+        data: y2AxisData2,
+        borderColor: 'rgb(0, 155, 0)',
+        backgroundColor: 'rgba(0, 155, 0, 0.5)',
+        yAxisID: 'y2',
+      },
+      {
+        type: 'bar',
+        label: "Daily Hero Level-ups",
+        data: y2AxisData,
+        borderColor: 'rgb(115, 132, 110)',
+        backgroundColor: 'rgba(115, 132, 110, 0.9)',
+        yAxisID: 'y1',
+      },
+    ],
+  };
+
+  const chartData3 = {
+    labels: x3AxisData,
+    datasets: [
+      {
+        type: 'line',
+        label: "Daily Potions Crafted (Gold Spent)",
+        data: y3AxisData2,
+        borderColor: 'rgba(205, 140, 0, 1)',
+        backgroundColor: 'rgba(205, 140, 0, 0.5)',
+        yAxisID: 'y2',
+      },
+      {
+        type: 'bar',
+        label: "Daily Potions Crafted",
+        data: y3AxisData,
+        borderColor: 'rgb(115, 32, 10)',
+        backgroundColor: 'rgba(115, 32, 10, 0.9)',
+        yAxisID: 'y1',
+      },
+    ],
+  };
+  */
+  
+  return (
+    <Row>
+      <Col md={4}><Bar data={chartData} options={chartOptions}></Bar></Col>
+      {/* <Col md={4}><Bar data={chartData2} options={chartOptions}></Bar></Col>
+      <Col md={4}><Bar data={chartData3} options={chartOptions}></Bar></Col> */}
+    </Row>
+  )
+}
+
 function ItemGraph(props) {
   const [error, setError] = useState(false);
   const [fetchData, setFetchData] = useState("");
@@ -1186,33 +1344,30 @@ function GameWatch() {
   const [fetchDataQuest, setFetchDataQuest] = useState("");
 
   useEffect( () => {
+
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_new_profiles").then( 
       res => {
       setFetchData(res);
     }).catch( err => {
       console.log(err)
       setError(true);
-    })
-  } ,[]);
+    });
 
-  useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_hero_summons").then( 
       res => {
         setFetchDataHero(res);
     }).catch( err => {
       console.log(err)
       setError(true);
-    })
-  } ,[]);
+    });
 
-  useEffect( () => {
     axios.get("https://dfkreport.antonyip.com/dfk-backend/?q=daily_quest_completed").then( 
       res => {
         setFetchDataQuest(res);
     }).catch( err => {
       console.log(err)
       setError(true);
-    })
+    });
   } ,[]);
   
 
@@ -1371,6 +1526,7 @@ function DefiKingdoms() {
         <CardHeader>DefiKingdoms - Game Stats</CardHeader>
         <GameWatch />
         <HeroWatch />
+        <EggWatch />
       </Card>
       <br></br>
       <Card>
